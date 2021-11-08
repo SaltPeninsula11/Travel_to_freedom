@@ -1,12 +1,159 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" >
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>旅行計画作成</title>
+    <style>
+        /* 黄金レイアウト↓↓*/
+body {
+    width: auto;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#container {
+    display: flex;
+    flex: 1;
+    
+}
+
+.main {
+    flex: 1;
+
+}
+
+
+#footer {
+    height: 100px;
+    color: #fff;
+    background-color: black;
+}
+
+@media screen and (max-width:900px) {
+    body, nav-l, nav-r{
+        width: 100%;
+    }
+    #container {
+        flex-direction: column;
+    }
+    .main {
+        order: -1;
+    }
+}
+/* 黄金レイアウト↑↑*/
+
+.navbar {
+    height: 70px;
+    background: #fff;
+    padding-left: 16px;
+    padding-right: 16px;
+    /* border-bottom: 1px solid #dfe3e8; */
+    border-radius: 0;
+}
+
+.navbar .navbar-brand {
+    padding-left: 0;
+    font-size: 24px;
+    padding-right: 50px;
+}
+
+.navbar a {
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+}
+
+.navbar .sign-up-btn {
+    min-width: 110px;
+    /* max-height: 36px; */
+}
+
+.img-example {
+    position: relative;
+    
+}
+
+.img-example p {
+    position: absolute;
+    font-weight: bold;
+    font-size: 5em;
+    top: 30%;
+    left: 25%;
+}
+
+.img-example img {
+    width: 100%;
+}
+
+.sub-title {
+    margin-top: 2rem;
+    margin-left: 90px;
+}
+        .split{
+            display: table;
+            width: 100%;    
+        }
+        .split-item{
+            display: table-cell;
+            padding: 80px;
+            width: 50%;
+        }
+        .split-left{
+            background: #000;
+            color: #fff;
+            position: relative;
+        }
+        .split-left__inner{
+            height: 100%;
+            width: 50%;
+        }
+        .split-right__inner{
+            height: 8000px;
+        }        
+    </style>
 </head>
 <body>
-    <h1>Love Julia</h1>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light ">
+            <a href="">Travel to Freedom</a>
+            <div id="navbarCollapse" class="caollapse navbar-collapse justify-content-start">
+              <div class="navbar-nav ml-auto">
+                <a href="" class="nav-item nav-link">旅行計画</a>
+              </div>
+              <div class="navbar-nav ml-auto action-button">
+                <div class="nav-item">
+                  <a href="" class="nav-item nav-link">ログイン</a>
+                </div>
+                <div class="nav-item">
+                  <a href="" class="nav-link mr-4">会員登録</a>
+                </div>
+              </div>
+            </div>
+          </nav>
+    </header>
+
+    <section class="main">
+        <h1>計画を立てる</h1>
+        <div class="split">
+            <div class="split-item split-left">
+                <div class="split-left__inner">
+                    left
+                </div><!--split-left__inner-->
+            </div><!--split-item split-left-->
+            <div class="split-item split-right">
+                <div class="split-right__inner">
+                    right
+                </div><!--split-right__inner-->
+            </div><!--split-item split-right-->
+        </div><!--split-->
+    </section>
+
+    <footer></footer>
 </body>
 </html>
