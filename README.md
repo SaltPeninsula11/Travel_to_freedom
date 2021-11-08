@@ -1,36 +1,38 @@
-# Travel_Darkness
-
-#とらべる
-
+# Schedule_management
 # 開発環境について
-
 ## 開発について
-
-### 開発開始のコマンド
-
-1. git pull remote <ブランチ名>
+#### Dockerを使った開発開始のコマンド
+1. $git pull origin <ブランチ名>
 2. $docker-compose up --build -d
-   #docker-compose.yml を元にコンテナの作成
-   ※Creating schedule_management_app_1 ... done が出れば OK
+#docker-compose.ymlを元にコンテナの作成 
+※Creating schedule_management_app_1 ... done が出ればOK
 3. $docker-compose exec app bash 
 #1.で作成されているコンテナ内に入る 
 ※入っていると$root@<適当数字>:/Django になっている
-4. $pipenv install --system
-   #pipenv で管理しているパッケージをコンテナ内に適用
-
-### 開発終了のコマンド
-
-1. $exit #コンテナから出る
-   ※コンテナ内なのかを確認
-2. $docker-compose down #コンテナ,イメージ,ボリュームの削除
-   ※やらないとコンテナ関係の残骸が溜まって PC の容量を食う
+4. $pipenv install --system 
+#pipenvで管理しているパッケージをコンテナ内に適用
+#### Dockerを使った開発終了のコマンド
+1. $exit #コンテナから出る 
+※コンテナ内なのかを確認
+2. $docker-compose down 
+#コンテナ,イメージ,ボリュームの削除 
+※やらないとコンテナ関係の残骸が溜まってPCの容量を食う
 3. $git add .
 4. $git commit -m <コメント>
 5. $git push origin <ブランチ名>
-6. GitHub から pull request を出す
-
-## Docker のコマンド
-
+※ブランチ名が長くてめんどくさい場合は、$git push でもok(現在のブランチ名を要確認)
+6. GitHubからpull requestを出す
+#### Dockerを使わない開発開始のコマンド
+1. $git pull origin <ブランチ名>
+2. $pipenv install
+3. $pipenv shell
+#### Dockerを使わない開発終了のコマンド
+1. $exit
+2. $git add .
+3. $git commit -m <コメント>
+4. $git push origin <ブランチ名>
+※ブランチ名が長くてめんどくさい場合は、$git push でもok(現在のブランチ名を要確認)
+## Dockerのコマンド
 ```
 $docker-compose up --build -d #コンテナの起動 -dオプションでバックエンド起動許可
 $docker-compose exec app bash #コンテナ内に入る
@@ -38,18 +40,14 @@ $docker-compose down #コンテナ,イメージ,ボリュームの削除 ※や�
 $docker ps -a #コンテナが動いているか確認 ※動いている場合STATUS項目がUp、閉じている場合はExitedになっている
 $docker images #コンテナのイメージ一覧を表示
 ```
-
-## Pipenv のコマンド
-
+## Pipenvのコマンド
 ```
 $pipenv install <パッケージ> #パッケージをインストールする時 ※pip install <パッケージ> とやっていることは同じ
 $pipenv install --system #pipenvが持っているパッケージをローカルに全てインストール
 $pipenv shell #仮想環境に入る ※VSCodeのshellの所がpipenvになっていればOK
 $exit #pipenvの仮想環境から出る
 ```
-
-## Git コマンド
-
+## Gitコマンド
 ```
 $git clone <SSHurl>
 $git pull remote <ブランチ名> #GitHubから指定したブランチの内容をfeath+margeする ※$git pull --allで全てのブランチの変更をpull
@@ -66,12 +64,10 @@ $git push origin <ブランチ名> #確定している変更を指定したブ�
 [remove]・・・削除(ファイル)
 例：$git commit -m "[update] カレンダー機能の追加" $git commit -m "[add] 開発環境の構築"
 ```
-
-## GitHub の branch について
-
+## GitHubのbranchについて
 - main #デプロイ用
-  - hotfix #リリース,デプロイ後のバグ修正
-  - develop #開発用
-    - feature #機能作成時に使用
-    - release #リリース,デプロイの準備用
-    - bugfix #開発中に見つけたバグを修正
+    - hotfix #リリース,デプロイ後のバグ修正
+    - develop #開発用
+        - feature/#~ #機能作成時に使用
+        - release #リリース,デプロイの準備用
+        - bugfix #開発中に見つけたバグを修正
