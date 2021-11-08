@@ -52,7 +52,7 @@ $exit #pipenvの仮想環境から出る
 $git clone <SSHurl>
 $git pull remote <ブランチ名> #GitHubから指定したブランチの内容をfeath+margeする ※$git pull --allで全てのブランチの変更をpull
 $git fetch <SSHurl> #GitHubからコードをステージに適用
-$git marge #ステージの内容をワークツリーに適用
+$git marge origin <ブランチ名> #ステージの内容をワークツリーに適用
 $git add <ファイル名> #ワークツリーの変更箇所をステージ ※$git add . ワークツリーの変更を全てステージにあげる
 $git commit -m <コメント> #ステージに上がっている変更を確定 ※例：git commit -m "[add] 開発環境の構築"
 $git push origin <ブランチ名> #確定している変更を指定したブランチにpush
