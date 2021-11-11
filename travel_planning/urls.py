@@ -3,5 +3,5 @@ from . import views
 
 app_name = 'travel_planning'
 urlpatterns = [
-    path('',views.SampleView.as_view(), name='smaple'),
+    path('',views.MapView.as_view(), name='map'),
 ]
