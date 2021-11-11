@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="https://unpkg.com/vue@next"></script>
+    <div id="app">
+        <div style="display: flex;">
+            <div style="width:50%; height:calc(100vh - 120px);">
+                <ul v-for="(marker, index) in markerList" :key="index">
+                    <li>
+                        <h3>${marker.title}</h3>
+                        <div v-if="index < routeList.length">
+                            <h4>かかる時間: ${routeList[index].routes[0].legs[0].duration.text}</h4>
+                            <ul v-for="step in routeList[index].routes[0].legs[0].steps" :key="step.instructions">
+                                <li v-html="step.instructions"></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+            <div id="maps" style="width:50%; height:calc(100vh - 120px);"></div>
+        </div>
+        <button @click="searchRoute">ルート検索</button>
+    </div>
+    <script src=" ./js/key.js"></script>
+    <script src=" ./js/tools.js"></script>
+    <script src=" ./js/app.js"></script>
+</body>
+
+</html>
