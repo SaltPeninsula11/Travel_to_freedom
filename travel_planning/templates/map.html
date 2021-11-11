@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <title>Feel Good Room</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Travel to Freedom</title>
     <link rel="stylesheet" href="./style.css">
     <style>
         body {
@@ -15,47 +16,52 @@
             display: flex;
             flex-direction: column;
         }
-        
-        
+
+
         #container {
             display: flex;
             flex: 1;
-            
+
         }
-        
+
         .main {
             flex: 1;
-        
+
         }
-        
+
         .nav-l {
-            flex: 1;
-            background-color: green
+            flex: 1.1;
+
         }
-        
+
         .nav-r {
             flex: 1;
-        
+
         }
-        
+
         #footer {
             height: 100px;
             color: #fff;
             background-color: black;
         }
-        
+
         @media screen and (max-width:900px) {
-            body, nav-l, nav-r{
+
+            body,
+            nav-l,
+            nav-r {
                 width: 100%;
             }
+
             #container {
                 flex-direction: column;
             }
+
             .main {
                 order: -1;
             }
         }
-        
+
         .navbar {
             height: 70px;
             background: #fff;
@@ -64,26 +70,47 @@
             /* border-bottom: 1px solid #dfe3e8; */
             border-radius: 0;
         }
-        
+
         .navbar .navbar-brand {
             padding-left: 0;
             font-size: 24px;
             padding-right: 50px;
         }
-        
+
         .navbar a {
             color: rgb(0, 0, 0);
             font-size: 16px;
         }
-        
+
         .navbar .sign-up-btn {
             min-width: 110px;
             /* max-height: 36px; */
         }
+
         #map {
             width: 100%;
             height: 100%;
+            border-radius: 8px;
         }
+
+        #results {
+            width: 98.5%;
+            height: 200px;
+            border: 1px dotted;
+            padding: 10px;
+            overflow-y: scroll;
+            background: white;
+        }
+
+        .p-0 {
+            padding-left: 0;
+        }
+
+        .scroll-box {
+            overflow-y: scroll;
+            height: 475px;
+        }
+        
     </style>
 </head>
 
@@ -105,32 +132,281 @@
         </div>
     </nav>
     <div id="container">
-        <nav class="nav-l">left</nav>
+        <nav class="nav-l">
+            <div class="container">
+                <table>
+                    <tr>
+                        <td>検索場所</td>
+                        <td><input type="text" id="addressInput" value="松戸駅"></td>
+                    </tr>
+                    <tr>
+                        <td>KeyWord:</td>
+                        <td><input type="text" id="keywordInput" value="ラーメン"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="button" value="情報取得" onclick="getPlaces();">
+                        </td>
+                        
+                    </tr>
+                </table>
+
+                ★結果★<br />
+                <div id="results" hidden></div>
+               
+                <div class="container">
+                    <div class="row scroll-box" id="cardDisplay">
+                        
+                    </div>
+                <br>
+                
+                <div class="results" hidden></div>
+            </div>
+        </nav>
 
         <aside class="nav-r">
-            <div id="map""></div>
-        </aside> 
-  </div>
+            <div id="map"></div>
+        </aside>
+    </div>
 
 
+    <script>
+        var map;
 
-<script>
-var map;
-
-function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: {
-            lat: 34.7019399,
-            lng: 135.51002519999997
-        },
-        zoom: 19
-    });
-}
-</script>
-<script src="./assets/js/script.js"></script>
-<script
-    src="https://maps.googleapis.com/maps/api/js?language=ja&key=AIzaSyB9mt8qbGA3zIqOYoVj4hhGaMrYDxmR7pU&callback=initMap">
-</script>
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {
+                    lat: 34.7019399,
+                    lng: 135.51002519999997
+                },
+                zoom: 19
+            });
+        }
+        
+        var placesList;
+        
+        function getPlaces(){
+          
+          //結果表示クリア
+          document.getElementById("results").innerHTML = "";
+          //placesList配列を初期化
+          placesList = new Array();
+          
+          //入力した検索場所を取得
+          var addressInput = document.getElementById("addressInput").value;
+          if (addressInput == "") {
+            return;
+          }
+          
+          //検索場所の位置情報を取得
+          var geocoder = new google.maps.Geocoder();
+          geocoder.geocode(
+            {
+              address: addressInput
+            },
+            function(results, status) {
+              if (status == google.maps.GeocoderStatus.OK) {
+                //取得した緯度・経度を使って周辺検索
+                startNearbySearch(results[0].geometry.location);
+              }
+              else {
+                alert(addressInput + "：位置情報が取得できませんでした。");
+              }
+            });
+        }
+        
+        /*
+         位置情報を使って周辺検索
+          latLng : 位置座標（google.maps.LatLng）
+        */
+        function startNearbySearch(latLng){
+          
+          //読み込み中表示
+          document.getElementById("results").innerHTML = "Now Loading...";
+          
+          //Mapインスタンス生成
+          var map = new google.maps.Map(
+            document.createElement("div")
+          );
+          
+          //PlacesServiceインスタンス生成
+          var service = new google.maps.places.PlacesService(map);
+          
+          //入力したKeywordを取得
+          var keywordInput = document.getElementById("keywordInput").value;
+          
+          //周辺検索
+          service.nearbySearch(
+            {
+              location: latLng,
+              radius: 800,
+              type: ['restaurant'],
+              keyword: keywordInput,
+              language: 'ja'
+            },
+            // displayResults
+            displayCards
+          );
+        }
+        
+        /*
+         周辺検索の結果表示
+         ※nearbySearchのコールバック関数
+          results : 検索結果
+          status ： 実行結果ステータス
+          pagination : ページネーション
+        */
+        // function displayResults(results, status, pagination) {
+            
+        //   if(status == google.maps.places.PlacesServiceStatus.OK) {
+          
+        //     //検索結果をplacesList配列に連結
+        //     placesList = placesList.concat(results);
+            
+        //     //pagination.hasNextPage==trueの場合、
+        //     //続きの検索結果あり
+        //     if (pagination.hasNextPage) {
+              
+        //       //pagination.nextPageで次の検索結果を表示する
+        //       //※連続実行すると取得に失敗するので、
+        //       //1秒くらい間隔をおく
+        //       setTimeout(pagination.nextPage(), 1000);
+            
+        //     //pagination.hasNextPage==falseになったら
+        //     //全ての情報が取得できているので、
+        //     //結果を表示する
+        //     } else {
+              
+        //       //placesList配列をループして、
+        //       //結果表示のHTMLタグを組み立てる
+        //       var resultHTML = "<ol>";
+              
+        //       for (var i = 0; i < placesList.length; i++) {
+        //         place = placesList[i];
+                
+        //         //ratingがないのものは「---」に表示変更
+        //         var rating = place.rating;
+        //         if(rating == undefined) rating = "---";
+                
+        //         //表示内容（評価＋名称）
+        //         var content = "【" + rating + "】 " + place.name;
+                
+        //         resultHTML += "<li>";
+        //         resultHTML += content;
+        //         resultHTML += "</li>";
+        //       }
+              
+        //       resultHTML += "</ol>";
+              
+        //       //結果表示
+        //       document.getElementById("results").innerHTML = resultHTML;
+        //     }
+          
+        //   } else {
+        //     //エラー表示
+        //     var results = document.getElementById("results");
+        //     if(status == google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
+        //       results.innerHTML = "検索結果が0件です。";
+        //     } else if(status == google.maps.places.PlacesServiceStatus.ERROR) {
+        //       results.innerHTML = "サーバ接続に失敗しました。";
+        //     } else if(status == google.maps.places.PlacesServiceStatus.INVALID_REQUEST) {
+        //       results.innerHTML = "リクエストが無効でした。";
+        //     } else if(status == google.maps.places.PlacesServiceStatus.OVER_QUERY_LIMIT) {
+        //       results.innerHTML = "リクエストの利用制限回数を超えました。";
+        //     } else if(status == google.maps.places.PlacesServiceStatus.REQUEST_DENIED) {
+        //       results.innerHTML = "サービスが使えない状態でした。";
+        //     } else if(status == google.maps.places.PlacesServiceStatus.UNKNOWN_ERROR) {
+        //       results.innerHTML = "原因不明のエラーが発生しました。";
+        //     }
+        
+        //   }
+        // }
+        
+        /*
+         周辺検索の結果表示（カード形式）
+         ※nearbySearchのコールバック関数
+          results : 検索結果
+          status ： 実行結果ステータス
+          pagination : ページネーション
+        */
+        function displayCards(results, status, pagination) {
+          var card = document.getElementById("cardDisplay");
+          if(status == google.maps.places.PlacesServiceStatus.OK) {
+            //検索結果をplacesList配列に連結
+            placesList = placesList.concat(results);
+            
+            //pagination.hasNextPage==trueの場合、
+            //続きの検索結果あり
+            if (pagination.hasNextPage) {
+              //pagination.nextPageで次の検索結果を表示する
+              //※連続実行すると取得に失敗するので、
+              //1秒くらい間隔をおく
+              setTimeout(pagination.nextPage(), 1000);
+            
+            //pagination.hasNextPage==falseになったら
+            //全ての情報が取得できているので、
+            //結果を表示する
+            } else {
+              card.innerHTML = "";
+              
+              for (var i = 0; i < 20; i++){
+                place = placesList[i];
+                // console.log(place.photos[0].getUrl());
+        
+                if(placesList[i].rating == undefined) {
+                    placesList[i].rating = -1;
+                }
+        
+                placesList.sort(function(a,b){
+                  if(a.rating > b.rating) return -1;
+                  if(a.rating < b.rating) return 1;
+                  return 0;
+                });
+        
+                
+                card.insertAdjacentHTML(
+                  "beforeend", 
+                  '\
+                  <div class="col-sm mt-3 p-0">\
+                    <div class="card" style="width: 22rem;">\
+                      <img src="'+ place.photos[0].getUrl() +'" alt="" width="100%" height="250">\
+                      <div class="card-body">\
+                        <h5 class="card-title">'+ place.name +'</h5>\
+                        <p class="card-text">' + place.rating + '</p>\
+                        <a href="#" class="btn btn-primary">詳しく見る</a>\
+                      </div>\
+                    </div>\
+                  </div>'
+                );
+              }
+            }
+          } else {
+            //エラー表示
+            var results = document.getElementById("results");
+            if(status == google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
+              alert("検索結果が0件です。");
+            } else if(status == google.maps.places.PlacesServiceStatus.ERROR) {
+              alert("サーバ接続に失敗しました。");
+            } else if(status == google.maps.places.PlacesServiceStatus.INVALID_REQUEST) {
+              alert("リクエストが無効でした。");
+            } else if(status == google.maps.places.PlacesServiceStatus.OVER_QUERY_LIMIT) {
+              alert("リクエストの利用制限回数を超えました。");
+            } else if(status == google.maps.places.PlacesServiceStatus.REQUEST_DENIED) {
+              alert("サービスが使えない状態でした。");
+            } else if(status == google.maps.places.PlacesServiceStatus.UNKNOWN_ERROR) {
+              alert("原因不明のエラーが発生しました。");
+            }
+          }
+        } 
+        
+        
+        
+    </script>
+    <script src="./assets/js/script.js"></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?language=ja&key=AIzaSyAIvDT6aSB8xK3ASJLRpicJ_SZV8KngMLM&callback=initMap"></script> -->
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIvDT6aSB8xK3ASJLRpicJ_SZV8KngMLM&libraries=places&callback=initMap">
+    </script>
 </body>
 
 </html>
