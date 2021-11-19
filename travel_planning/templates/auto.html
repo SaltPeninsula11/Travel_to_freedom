@@ -10,3 +10,61 @@
     
 </body>
 </html>
+
+<div class="container">
+    <div class="radiobox">
+        <table>
+            <div class="form-group">
+                <input type="text" class="form-control mt-2" id="addressInput" name="hoge"
+                    placeholder="施設・地域">
+            </div>
+            <input type="button" class="btn btn-outline-primary mb-1" value="情報取得" onclick="getPlaces();">
+            <button class="btn btn-outline-primary ml-1 mb-1" id="routeSearch">ルート検索</button>
+            <button class="btn btn-outline-primary ml-1 mb-1" id="deleteRoute">ルート削除</button>
+        </table>
+    </div>
+
+    <div id="results" hidden></div>
+
+    <div class="container">
+        <div class="row scroll-box" id="cardDisplay">
+
+        </div>
+        <br>
+
+        <div class="results" hidden></div>
+
+        <div id="memo" class="memo">
+            <div class="openbtn4"><span></span><span></span></div>
+
+            <div class="memoSpace">
+                <table class="memoTable">
+                    <tr>
+                        <td class="timeDisplay">
+                            <h2>09:00</h2>
+                        </td>
+                        <td>
+                            <div class="placeTable">
+                                <table>
+                                    <tr>
+                                        <td rowspan="2">
+                                            <div class="placePhoto">画像</div>
+                                        </td>
+                                        <td>
+                                            <h3>名称</h3>
+                                        </td>
+                                        <td rowspan="2">
+                                            <button>×</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>HH:MM～HH:MM</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
