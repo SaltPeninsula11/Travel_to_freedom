@@ -13,11 +13,11 @@
  * https://www.ibm.com/docs/ja/mpf/7.1.0?topic=logger-javascript-module-example
  */
 // 読み込み順序遅延
-document.addEventListener('DOMContentLoaded', function () {
-    const sc = document.createElement('script');
-    sc.src = `https://maps.googleapis.com/maps/api/js?key=${pageOption.GOOGLE_MAPS_API_KEY}&libraries=places&callback=initMap`;
-    document.body.appendChild(sc);
-});
+// document.addEventListener('DOMContentLoaded', function () {
+//     const sc = document.createElement('script');
+//     sc.src = `https://maps.googleapis.com/maps/api/js?key=${pageOption.GOOGLE_MAPS_API_KEY}&libraries=places&callback=initMap`;
+//     document.body.appendChild(sc);
+// });
 
 /**
  * 関数のラッピング用オブジェクト

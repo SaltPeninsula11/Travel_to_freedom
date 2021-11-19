@@ -26,4 +26,6 @@ function initMap() {
         },
 
     }).mount('#app');
+
+    
 }
