@@ -1,12 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <title>Document</title>
+
+    <style>
+        body {
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        #container {
+            display: flex;
+            flex: 1;
+
+        }
+
+        .main {
+            flex: 1;
+
+        }
+
+        .nav-l {
+            flex: 1.1;
+
+        }
+
+        .nav-r {
+            flex: 1;
+
+        }
+
+        #footer {
+            height: 100px;
+            color: #fff;
+            background-color: black;
+        }
+
+        @media screen and (max-width:900px) {
+
+            body,
+            nav-l,
+            nav-r {
+                width: 100%;
+            }
+
+            #container {
+                flex-direction: column;
+            }
+
+            .main {
+                order: -1;
+            }
+        }
+
+
+        #map {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+        }
+    </style>
 </head>
+
 <body>
-    
+    <nav id="main_nav" class="navbar navbar-expand-lg navbar-light bg-white shadow">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand h1" href="">
+                Travel to freedom
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbar-toggler-success" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="align-self-center collapse navbar-collapse flex-fill bg-white d-lg-flex justify-content-lg-between"
+                id="navbar-toggler-success">
+                <div class="flex-fill mx-xl-5 mb-2">
+                    <ul class="nav navbar-nav d-flex justify-content-between mx-xl-5 text-dark">
+                        <li class="nav-item">
+                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="">旅行計画</a>
+                        </li>
+                </div>
+                <div class="align-self-center d-flex">
+                    <div class="hidden fixed nav-item top-0 right-0 px-6 sm:block">
+                        <a href="" class="nav-link btn-outline-primary rounded-pill px-3 mb-2"
+                            style="float: left">ログイン</a>
+                        <a href="" class="nav-link btn-outline-primary rounded-pill px-3 mb-2"
+                            style="float: left">会員登録</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div id="container">
+        <nav class="nav-l">
+            <div class="change m-5">
+                <input type="button" value="自動">
+                <input type="button" value="カスタム">
+            </div>
+            <div class="container ml-5">
+                <h1>初期情報入力フォーム</h1>
+                <table>
+                    <div class="form-group w-75">
+                        <label for="exampleInputEmail1">aaaaaaaaaa</label>
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    </div>
+                    <div class="form-group w-75">
+                        <label for="exampleInputEmail1">aaaaaaaaaa</label>
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    </div>
+                    <div class="form-group w-75">
+                        <label for="exampleInputEmail1">aaaaaaaaaa</label>
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    </div>
+                    <div class="form-group w-75">
+                        <label for="exampleInputEmail1">aaaaaaaaaa</label>
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    </div>
+                </table>
+            </div>
+        </nav>
+        <aside class="nav-r">
+            <div id="map"></div>
+        </aside>
+    </div>
+
+    <script>
+        var map;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {
+                    lat: 34.7019399,
+                    lng: 135.51002519999997
+                },
+                mapTypeControl: false, //マップタイプ コントロール
+                fullscreenControl: false, //全画面表示コントロール
+
+                zoom: 19
+            });
+        }
+    </script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?language=ja&key=AIzaSyAIvDT6aSB8xK3ASJLRpicJ_SZV8KngMLM&libraries=places&callback=initMap"></script> -->
+    <script src="https://maps.googleapis.com/maps/api/js?language=ja&key=AIzaSyAIvDT6aSB8xK3ASJLRpicJ_SZV8KngMLM&libraries=places&callback=initMap"></script>
 </body>
+
 </html>

@@ -9,9 +9,9 @@
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" integrity="sha512-wnea99uKIC3TJF7v4eKk4Y+lMz2Mklv18+r4na2Gn1abDRPPOeef95xTzdwGD9e6zXJBteMIhZ1+68QC5byJZw==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
   <title>Travel to Freedom</title>
-  <link rel="stylesheet" href="./style.css">
-  <link rel="stylesheet" href="./tamaki/shiozakiStyle.css">
-  <link rel="stylesheet" href="./tamaki/font.css">
+  <!-- <link rel="stylesheet" href="./style.css"> -->
+  <!-- <link rel="stylesheet" href="./tamaki/shiozakiStyle.css"> -->
+  <!-- <link rel="stylesheet" href="./tamaki/font.css"> -->
   <style>
     body {
       margin: 0 auto;
@@ -368,7 +368,6 @@
         </div>
     </div>
 </nav>
-<div id="container">
     <nav class="nav-l">
         <div class="container">
             <div class="radiobox">
@@ -432,7 +431,7 @@
     <aside class="nav-r">
         <div id="map"></div>
     </aside>
-</div>
+
 <script>
   var map;
 
@@ -572,16 +571,16 @@ document.getElementById("deleteRoute").addEventListener('click', () => {
  * ここまで
  */
 
-function initMap() {
+ function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
-    center: {
-      lat: 34.7019399,
-      lng: 135.51002519999997
-    },
-    mapTypeControl: false, //マップタイプ コントロール
-    fullscreenControl: false, //全画面表示コントロール
+      center: {
+          lat: 34.7019399,
+          lng: 135.51002519999997
+      },
+      mapTypeControl: false, //マップタイプ コントロール
+      fullscreenControl: false, //全画面表示コントロール
 
-    zoom: 19
+      zoom: 19
   });
 }
 
@@ -1218,10 +1217,8 @@ function displayCards(results, status, pagination) {
   <script src="./assets/js/tools.js"></script>
   <script src="./assets/js/sample.js"></script>
   <script src="./assets/js/shiozaki.js"></script>
-  <!-- <script src="https://maps.googleapis.com/maps/api/js?language=ja&key=AIzaSyAIvDT6aSB8xK3ASJLRpicJ_SZV8KngMLM&libraries=places&callback=initMap"></script> -->
-  <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDeL7_U--qzVwi963J1elplZfLTCIsduZQ&libraries=places&callback=initMap">
-  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?language=ja&key=AIzaSyAIvDT6aSB8xK3ASJLRpicJ_SZV8KngMLM&libraries=places&callback=initMap"></script>
+  <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDeL7_U--qzVwi963J1elplZfLTCIsduZQ&libraries=places&callback=initMap"></script> -->
   <script>
     $(function () {
       $('.pagination').paginathing({ //親要素のclassを記述
