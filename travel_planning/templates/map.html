@@ -41,8 +41,6 @@
             <div class="hidden fixed nav-item top-0 right-0 px-6 sm:block">
               <a href="" class="nav-link btn-outline-primary rounded-pill px-3 mb-2" style="float: left">ログイン</a>
               <a href="" class="nav-link btn-outline-primary rounded-pill px-3 mb-2" style="float: left">会員登録</a>
-              <!-- <router-link to="/" class="nav-link btn-outline-primary rounded-pill px-3 mb-2" style="float: left"><a href="">カスタムページ</a></router-link> -->
-              <!-- <router-link to="/auto" class="nav-link btn-outline-primary rounded-pill px-3 mb-2" style="float: left"><a href="">自動作成ページ</a></router-link> -->
             </div>
           </div>
         </div>
@@ -53,81 +51,36 @@
         <div class="container">
           <div class="radiobox">
               <table>
+                <!-- 以下<div id=app>内でのみVue適用 -->
                 <div id='app'>
-                  <input type="button" class="btn btn-outline-primary mb-1" value="情報取得" onclick="getPlaces();">
-                  <button class="btn btn-outline-primary ml-1 mb-1" id="routeSearch">ルート検索</button>
-                  <button class="btn btn-outline-primary ml-1 mb-1" id="deleteRoute">ルート削除</button>
-                  <router-link to="/" class="nav-link btn-outline-primary rounded-pill px-3 mb-2" style="float: left"><button class="btn btn-outline-primary ml-1 mb-1" >カスタム</button></router-link>
-                  <router-link to="/auto" class="nav-link btn-outline-primary rounded-pill px-3 mb-2" style="float: left"><button class="btn btn-outline-primary ml-1 mb-1">オート</button></router-link>
+                  <!-- SPA オートページ遷移ボタン -->
+                  <router-link to="/" class="nav-link btn-outline-primary rounded-pill px-3 mb-2" style="float: left"><button class="btn btn-outline-primary ml-1 mb-1" >オート</button></router-link>
+                  <!-- SPA カスタムページ遷移ボタン -->
+                  <router-link to="/auto" class="nav-link btn-outline-primary rounded-pill px-3 mb-2" style="float: left"><button class="btn btn-outline-primary ml-1 mb-1">カスタム</button></router-link>
                   <div class="form-group">
-                    <input type="text" class="form-control mt-2" id="addressInput" name="hoge"
-                        placeholder="施設・地域">
                     <router-view/>
                   </div>
                 </div>
               </table>
           </div>
       
-          <div id="results" hidden></div>
-      
-          <div class="container">
-              <div class="row scroll-box" id="cardDisplay">
-      
-              </div>
-              <br>
-      
-              <div class="results" hidden></div>
-      
-              <div id="memo" class="memo">
-                  <div class="openbtn4"><span></span><span></span></div>
-      
-                  <div class="memoSpace">
-                      <table class="memoTable">
-                          <tr>
-                              <td class="timeDisplay">
-                                  <h2>09:00</h2>
-                              </td>
-                              <td>
-                                  <div class="placeTable">
-                                      <table>
-                                          <tr>
-                                              <td rowspan="2">
-                                                  <div class="placePhoto">画像</div>
-                                              </td>
-                                              <td>
-                                                  <h3>名称</h3>
-                                              </td>
-                                              <td rowspan="2">
-                                                  <button>×</button>
-                                              </td>
-                                          </tr>
-                                          <tr>
-                                              <td>HH:MM～HH:MM</td>
-                                          </tr>
-                                      </table>
-                                  </div>
-                              </td>
-                          </tr>
-                      </table>
-                  </div>
-              </div>
-          </div>
-        <!-- <router-view /> -->
       </nav>
     <aside class="nav-r">
       <div id="map"></div>
     </aside>
     </div>
   <script>
-      // Vue.jsの処理
-    const Custom = { template: '<h1>sample</h1>' }
-    const Auto = { template: '<h1>I LOVE Julia</h1>' }
+    // ___________________Vue.jsで使用_________________________________
+    // カスタムページテンプレート(``内に記述してください)
+    const CUSTOM_PAGE_COMPONENT = { template: `` }
+    // オートページテンプレート
+    const AUTO_PAGE_COMPONENT = { template: `` }
 
     const router = new VueRouter({
       mode: 'history',
       routes: [
-        { path:'',component: Custom },
-        { path:'/auto',component: Auto },
+        { path:'',component: CUSTOM_PAGE_COMPONENT },
+        { path:'/auto',component: AUTO_PAGE_COMPONENT },
       ]
     })
     
@@ -139,6 +92,7 @@
       },
       router,
     })
+    // ___________________________________________________________
 
     var map;
 
