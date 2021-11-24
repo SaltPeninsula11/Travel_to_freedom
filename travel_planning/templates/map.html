@@ -8,61 +8,138 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" integrity="sha512-wnea99uKIC3TJF7v4eKk4Y+lMz2Mklv18+r4na2Gn1abDRPPOeef95xTzdwGD9e6zXJBteMIhZ1+68QC5byJZw==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <title>Travel to Freedom</title>
   <!-- <link rel="stylesheet" href="./style.css"> -->
   <!-- <link rel="stylesheet" href="./tamaki/shiozakiStyle.css"> -->
   <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
   <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
-  <script src="https://unpkg.com/http-vue-loader"></script>
+  <!-- <script src="https://unpkg.com/http-vue-loader"></script> -->
 </head>
 
 <body>
-  <nav id="main_nav" class="navbar navbar-expand-lg navbar-light bg-white shadow">
-    <div class="container d-flex justify-content-between align-items-center">
-      <a class="navbar-brand h1" href="">
-        Travel to freedom
-      </a>
-      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
-        data-bs-target="#navbar-toggler-success" aria-controls="navbarSupportedContent" aria-expanded="false"
-        aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    <nav id="main_nav" class="navbar navbar-expand-lg navbar-light bg-white shadow">
+      <div class="container d-flex justify-content-between align-items-center">
+        <a class="navbar-brand h1" href="">
+          Travel to Freedom
+        </a>
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbar-toggler-success" aria-controls="navbarSupportedContent" aria-expanded="false"
+          aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-      <div class="align-self-center collapse navbar-collapse flex-fill bg-white d-lg-flex justify-content-lg-between"
-        id="navbar-toggler-success">
-        <div class="flex-fill mx-xl-5 mb-2">
-          <ul class="nav navbar-nav d-flex justify-content-between mx-xl-5 text-dark">
-            <li class="nav-item">
-              <a class="nav-link btn-outline-primary rounded-pill px-3" href="">旅行計画</a>
-            </li>
-        </div>
-        <div class="align-self-center d-flex">
-          <div class="hidden fixed nav-item top-0 right-0 px-6 sm:block">
-            <a href="" class="nav-link btn-outline-primary rounded-pill px-3 mb-2" style="float: left">ログイン</a>
-            <a href="" class="nav-link btn-outline-primary rounded-pill px-3 mb-2" style="float: left">会員登録</a>
-            <div id='app'>
-              <router-link to="/"><button>カスタムページ</button></router-link>
-              <router-link to="/auto"><button>自動作成ページ</button></router-link>
+        <div class="align-self-center collapse navbar-collapse flex-fill bg-white d-lg-flex justify-content-lg-between"
+          id="navbar-toggler-success">
+          <div class="flex-fill mx-xl-5 mb-2">
+            <ul class="nav navbar-nav d-flex justify-content-between mx-xl-5 text-dark">
+              <li class="nav-item">
+                <a class="nav-link btn-outline-primary rounded-pill px-3" href="">旅行計画</a>
+              </li>
+          </div>
+          <div class="align-self-center d-flex">
+            <div class="hidden fixed nav-item top-0 right-0 px-6 sm:block">
+              <a href="" class="nav-link btn-outline-primary rounded-pill px-3 mb-2" style="float: left">ログイン</a>
+              <a href="" class="nav-link btn-outline-primary rounded-pill px-3 mb-2" style="float: left">会員登録</a>
+              <!-- <router-link to="/" class="nav-link btn-outline-primary rounded-pill px-3 mb-2" style="float: left"><a href="">カスタムページ</a></router-link> -->
+              <!-- <router-link to="/auto" class="nav-link btn-outline-primary rounded-pill px-3 mb-2" style="float: left"><a href="">自動作成ページ</a></router-link> -->
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </nav>
-  <div id="container">
-    <nav class="nav-l" id="app">
-      <!-- Vue.jsでの切り替え -->
-      <router-view />
     </nav>
-
+    <div id="container">
+      <nav class="nav-l">
+        <div class="container">
+          <div class="radiobox">
+              <table>
+                <div id='app'>
+                  <input type="button" class="btn btn-outline-primary mb-1" value="情報取得" onclick="getPlaces();">
+                  <button class="btn btn-outline-primary ml-1 mb-1" id="routeSearch">ルート検索</button>
+                  <button class="btn btn-outline-primary ml-1 mb-1" id="deleteRoute">ルート削除</button>
+                  <router-link to="/" class="nav-link btn-outline-primary rounded-pill px-3 mb-2" style="float: left"><button class="btn btn-outline-primary ml-1 mb-1" >カスタム</button></router-link>
+                  <router-link to="/auto" class="nav-link btn-outline-primary rounded-pill px-3 mb-2" style="float: left"><button class="btn btn-outline-primary ml-1 mb-1">オート</button></router-link>
+                  <div class="form-group">
+                    <input type="text" class="form-control mt-2" id="addressInput" name="hoge"
+                        placeholder="施設・地域">
+                    <router-view/>
+                  </div>
+                </div>
+              </table>
+          </div>
+      
+          <div id="results" hidden></div>
+      
+          <div class="container">
+              <div class="row scroll-box" id="cardDisplay">
+      
+              </div>
+              <br>
+      
+              <div class="results" hidden></div>
+      
+              <div id="memo" class="memo">
+                  <div class="openbtn4"><span></span><span></span></div>
+      
+                  <div class="memoSpace">
+                      <table class="memoTable">
+                          <tr>
+                              <td class="timeDisplay">
+                                  <h2>09:00</h2>
+                              </td>
+                              <td>
+                                  <div class="placeTable">
+                                      <table>
+                                          <tr>
+                                              <td rowspan="2">
+                                                  <div class="placePhoto">画像</div>
+                                              </td>
+                                              <td>
+                                                  <h3>名称</h3>
+                                              </td>
+                                              <td rowspan="2">
+                                                  <button>×</button>
+                                              </td>
+                                          </tr>
+                                          <tr>
+                                              <td>HH:MM～HH:MM</td>
+                                          </tr>
+                                      </table>
+                                  </div>
+                              </td>
+                          </tr>
+                      </table>
+                  </div>
+              </div>
+          </div>
+        <!-- <router-view /> -->
+      </nav>
     <aside class="nav-r">
       <div id="map"></div>
     </aside>
-  </div>
-  </div>
-
-
+    </div>
   <script>
+      // Vue.jsの処理
+    const Custom = { template: '<h1>sample</h1>' }
+    const Auto = { template: '<h1>I LOVE Julia</h1>' }
+
+    const router = new VueRouter({
+      mode: 'history',
+      routes: [
+        { path:'',component: Custom },
+        { path:'/auto',component: Auto },
+      ]
+    })
+    
+    var app = new Vue({
+      delimiters: ['[[', ']]'],
+      el: '#app',
+      data: {
+        title: "LOVE JULIA"
+      },
+      router,
+    })
+
     var map;
 
     /**
@@ -744,7 +821,8 @@
     //メモ機能  
     var toggleMemo = false;
 
-    $(".openbtn4").click(function () {
+    $('.openbtn4').click(function() {
+      // console.log("クリックされました");
       $(this).toggleClass('active');
       ToggleMemo();
     });
@@ -824,84 +902,6 @@
          </table>'
       );
     }
-
-    // Vue.jsの処理
-    const Custom = {
-      template: `<div class="container">
-    <div class="radiobox">
-        <table>
-            <div class="form-group">
-                <input type="text" class="form-control mt-2" id="addressInput" name="hoge"
-                    placeholder="施設・地域">
-            </div>
-            <input type="button" class="btn btn-outline-primary mb-1" value="情報取得" onclick="getPlaces();">
-            <button class="btn btn-outline-primary ml-1 mb-1" id="routeSearch">ルート検索</button>
-            <button class="btn btn-outline-primary ml-1 mb-1" id="deleteRoute">ルート削除</button>
-        </table>
-    </div>
-
-    <div id="results" hidden></div>
-
-    <div class="container">
-        <div class="row scroll-box" id="cardDisplay">
-
-        </div>
-        <br>
-
-        <div class="results" hidden></div>
-
-        <div id="memo" class="memo">
-            <div class="openbtn4"><span></span><span></span></div>
-
-            <div class="memoSpace">
-                <table class="memoTable">
-                    <tr>
-                        <td class="timeDisplay">
-                            <h2>09:00</h2>
-                        </td>
-                        <td>
-                            <div class="placeTable">
-                                <table>
-                                    <tr>
-                                        <td rowspan="2">
-                                            <div class="placePhoto">画像</div>
-                                        </td>
-                                        <td>
-                                            <h3>名称</h3>
-                                        </td>
-                                        <td rowspan="2">
-                                            <button>×</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>HH:MM～HH:MM</td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>` }
-
-    const Auto = { template: '<h1>I LOVE Julia</h1>' }
-
-    const router = new VueRouter({
-      mode: 'history',
-      routes: [
-        { path: '', component: Custom },
-        { path: '/auto', component: Auto },
-      ]
-    })
-
-    var app = new Vue({
-      delimiters: ['[[', ']]'],
-      el: '#app',
-      data: {
-      },
-      router,
-    })
 
   </script>
 
