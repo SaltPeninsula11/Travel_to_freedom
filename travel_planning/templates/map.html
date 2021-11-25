@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
@@ -7,11 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" integrity="sha512-wnea99uKIC3TJF7v4eKk4Y+lMz2Mklv18+r4na2Gn1abDRPPOeef95xTzdwGD9e6zXJBteMIhZ1+68QC5byJZw==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
-  <title>Travel to Freedom</title>
-  <link rel="stylesheet" href="./style.css">
-  <link rel="stylesheet" href="./tamaki/shiozakiStyle.css">
-  <link rel="stylesheet" href="./tamaki/font.css">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
   <style>
     body {
       margin: 0 auto;
@@ -116,136 +113,143 @@
 
     #memo {
       position: absolute;
-      left: 14px;
-      top: 168px;
+      left: -5px;
+      top: 207px;
     }
-    
+
     .memoSpace {
-        background-color: #DEDEDE;
-        width: 650px;
-        height: 400px;
-        overflow: auto;
+      background-color: #DEDEDE;
+      width: 650px;
+      height: 400px;
+      overflow: auto;
     }
-    
+
     .memoTable {
-        padding: 20em 20em;
-        width: 100%;
-        height: 100px;
+      padding: 20em 20em;
+      width: 100%;
+      height: 100px;
     }
-    
+
     .timeDisplay {
-        width: 100px;
+      width: 100px;
     }
-    
+
     .placeTable {
-        border: 2px solid #000000;
-        background-color: #888888;
-        border-radius: 5px;
-    
-        width: 80%;
-        height: 95%;
-    }
-    .placeTable table {
-        width: 100%;
-        height: 100%;
-    }
-    
-    .placePhoto {
-        width: 90px;
-        height: 90px;
-        border: 2px solid #000000;
-        background-color: #FFFFFF;
-        border-radius: 5px;
-    }
-    .placePhoto img {
-        width:auto;
-        height:auto;
-        max-width:100%;
-        max-height:100%;
-    }
-    
-    /*==================================================
-    　5-2-4 MENUがCLOSEに
-    ===================================*/
-    
-    /*ボタン外側※レイアウトによってpositionや形状は適宜変更してください*/
-    .openbtn4{
-      position: relative;/*ボタン内側の基点となるためrelativeを指定*/
-      background:#D54884;
-      cursor: pointer;
-        width: 60px;
-        height:60px;
+      border: 2px solid #000000;
+      background-color: #888888;
       border-radius: 5px;
-    
+
+      width: 80%;
+      height: 95%;
+    }
+
+    .placeTable table {
+      width: 100%;
+      height: 100%;
+    }
+
+    .placePhoto {
+      width: 90px;
+      height: 90px;
+      border: 2px solid #000000;
+      background-color: #FFFFFF;
+      border-radius: 5px;
+    }
+
+    .placePhoto img {
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    /*==================================================
+        　5-2-4 MENUがCLOSEに
+        ===================================*/
+
+    /*ボタン外側※レイアウトによってpositionや形状は適宜変更してください*/
+    .openbtn4 {
+      position: relative;
+      /*ボタン内側の基点となるためrelativeを指定*/
+      background: #bdbdbd;
+      cursor: pointer;
+      width: 60px;
+      height: 60px;
+      border-radius: 5px;
+
       transform: scale(0.6);
     }
-    
+
     /*ボタン内側*/
-    .openbtn4 span{
-        display: inline-block;
-        transition: all .4s;/*アニメーションの設定*/
-        position: absolute;
-        left: 19px;
-        height: 2px;
-        border-radius: 5px;
+    .openbtn4 span {
+      display: inline-block;
+      transition: all .4s;
+      /*アニメーションの設定*/
+      position: absolute;
+      left: 19px;
+      height: 2px;
+      border-radius: 5px;
       background: #fff;
-        width: 45%;
-      }
-    
-    
+      width: 45%;
+    }
+
+
     .openbtn4 span:nth-of-type(1) {
-      top:19px; 
+      top: 19px;
       transform: rotate(22.5deg);
     }
-    
+
     .openbtn4 span:nth-of-type(2) {
-      top:29px;
+      top: 29px;
       transform: rotate(-22.5deg);
     }
-    
+
     .openbtn4 span:nth-of-type(2)::after {
-      content:"Schedule";/*3つ目の要素のafterにMenu表示を指定*/
+      content: "Schedule";
+      /*3つ目の要素のafterにMenu表示を指定*/
       position: absolute;
-      top:5px;
-      left:-20px;
+      top: 5px;
+      left: -20px;
       color: #fff;
       font-size: 1px;
       text-transform: uppercase;
       transform: rotate(22.5deg);
     }
-    
+
     /*activeクラスが付与されると線が回転して×になり、Menu⇒Closeに変更*/
-    
+
     .openbtn4.active span:nth-of-type(1) {
-        top: 19px;
-        left: 23px;
-        transform: translateY(6px) rotate(-45deg);
-        width: 30%;
+      top: 19px;
+      left: 23px;
+      transform: translateY(6px) rotate(-45deg);
+      width: 30%;
     }
-    
-    .openbtn4.active span:nth-of-type(2){
-        top: 31px;
-        left: 23px;
-        transform: translateY(-6px) rotate(45deg);
-        width: 30%;
+
+    .openbtn4.active span:nth-of-type(2) {
+      top: 31px;
+      left: 23px;
+      transform: translateY(-6px) rotate(45deg);
+      width: 30%;
     }
-    
+
     .openbtn4.active span:nth-of-type(2)::after {
-      content:"Close";/*3つ目の要素のafterにClose表示を指定*/
-        transform: translateY(0) rotate(-45deg);
-      top:5px;
-      left:4px;
+      content: "Close";
+      /*3つ目の要素のafterにClose表示を指定*/
+      transform: translateY(0) rotate(-45deg);
+      top: 5px;
+      left: 4px;
     }
-    
+
     .memo {
       position: absolute;
     }
-    
+
     .wrapper {
       position: relative;
       top: 1px;
       left: 380px;
     }
+
     .balls-guruguru {
       position: absolute;
       left: 50%;
@@ -255,6 +259,7 @@
       height: 100px;
       background-color: #fff;
     }
+
     .ball {
       width: 50%;
       height: 20px;
@@ -263,6 +268,7 @@
       transform-origin: 100% 50%;
       left: 0;
     }
+
     .ball::before {
       content: '';
       display: block;
@@ -275,57 +281,74 @@
       top: 50%;
       transform: translateY(-50%);
     }
+
     .ball-1::before {
       animation: ball-guruguru 1s linear 0s infinite;
     }
+
     .ball-2 {
       transform: rotate(45deg);
     }
+
     .ball-2::before {
       animation: ball-guruguru 1s linear -0.125s infinite;
     }
+
     .ball-3 {
       transform: rotate(90deg);
     }
+
     .ball-3::before {
       animation: ball-guruguru 1s linear -0.25s infinite;
     }
+
     .ball-4 {
       transform: rotate(135deg);
     }
+
     .ball-4::before {
       animation: ball-guruguru 1s linear -0.375s infinite;
     }
+
     .ball-5 {
       transform: rotate(180deg);
     }
+
     .ball-5::before {
       animation: ball-guruguru 1s linear -0.5s infinite;
     }
+
     .ball-6 {
       transform: rotate(225deg);
     }
+
     .ball-6::before {
       animation: ball-guruguru 1s linear -0.625s infinite;
     }
+
     .ball-7 {
       transform: rotate(270deg);
     }
+
     .ball-7::before {
       animation: ball-guruguru 1s linear -0.75s infinite;
     }
+
     .ball-8 {
       transform: rotate(315deg);
     }
+
     .ball-8::before {
       animation: ball-guruguru 1s linear -0.875s infinite;
     }
+
     @keyframes ball-guruguru {
       0% {
         width: 20px;
         height: 20px;
         opacity: 1;
       }
+
       100% {
         width: 6px;
         height: 6px;
@@ -334,903 +357,898 @@
       }
     }
   </style>
-  
 </head>
 
 <body>
   <nav id="main_nav" class="navbar navbar-expand-lg navbar-light bg-white shadow">
     <div class="container d-flex justify-content-between align-items-center">
-        <a class="navbar-brand h1" href="">
-            Travel to freedom
-        </a>
-        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbar-toggler-success" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+      <a class="navbar-brand h1" href="">
+        Travel to freedom
+      </a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbar-toggler-success" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-        <div class="align-self-center collapse navbar-collapse flex-fill bg-white d-lg-flex justify-content-lg-between"
-            id="navbar-toggler-success">
-            <div class="flex-fill mx-xl-5 mb-2">
-                <ul class="nav navbar-nav d-flex justify-content-between mx-xl-5 text-dark">
-                    <li class="nav-item">
-                        <a class="nav-link btn-outline-primary rounded-pill px-3" href="">旅行計画</a>
-                    </li>
-            </div>
-            <div class="align-self-center d-flex">
-                <div class="hidden fixed nav-item top-0 right-0 px-6 sm:block">
-                    <a href="" class="nav-link btn-outline-primary rounded-pill px-3 mb-2"
-                        style="float: left">ログイン</a>
-                    <a href="" class="nav-link btn-outline-primary rounded-pill px-3 mb-2"
-                        style="float: left">会員登録</a>
-                </div>
-            </div>
+      <div class="align-self-center collapse navbar-collapse flex-fill bg-white d-lg-flex justify-content-lg-between"
+        id="navbar-toggler-success">
+        <div class="flex-fill mx-xl-5 mb-2">
+          <ul class="nav navbar-nav d-flex justify-content-between mx-xl-5 text-dark">
+            <li class="nav-item">
+              <a class="nav-link btn-outline-primary rounded-pill px-3" href="">旅行計画</a>
+            </li>
         </div>
+        <div class="align-self-center d-flex">
+          <div class="hidden fixed nav-item top-0 right-0 px-6 sm:block">
+            <a href="" class="nav-link btn-outline-primary rounded-pill px-3 mb-2" style="float: left">ログイン</a>
+            <a href="" class="nav-link btn-outline-primary rounded-pill px-3 mb-2" style="float: left">会員登録</a>
+          </div>
+        </div>
+      </div>
     </div>
-</nav>
-<div id="container">
-    <nav class="nav-l">
-        <div class="container">
-            <div class="radiobox">
-                <table>
-                    <div class="form-group">
-                        <input type="text" class="form-control mt-2" id="addressInput" name="hoge"
-                            placeholder="施設・地域">
-                    </div>
-                    <input type="button" class="btn btn-outline-primary mb-1" value="情報取得" onclick="getPlaces();">
-                    <button class="btn btn-outline-primary ml-1 mb-1" id="routeSearch">ルート検索</button>
-                    <button class="btn btn-outline-primary ml-1 mb-1" id="deleteRoute">ルート削除</button>
-                </table>
-            </div>
+  </nav>
+  <section id="container">
+    <nav class="nav-l m-5">
+      <div class="change">
+        <button type="submit" value="自動" class="">オート</button>
+        <button type="submit" value="カスタム">カスタム</button>
+      </div>
+      <div class="radiobox">
+        <!-- <div class="btn-group">
+          <input id="radio1" class="btn btn-info" name="hoge" type="radio" value="restaurant" />
+          <label for="radio1">飲食店</label>
+          <input id="radio2" class="" name="hoge" type="radio" value="tourist_attraction" />
+          <label for="radio2">観光地</label>
+          <input id="radio3" class="" name="hoge" type="radio" value="lodging" />
+          <label for="radio3">ホテル</label>
+        </div> -->
+        <div class="btn-group mt-3 mb-2" data-toggle="buttons-radio">
+          <button type="radio" class="btn btn-info" value="restaurant">飲食店</button>
+          <button type="radio" class="btn btn-info" value="tourist_attraction">観光地</button>
+          <button type="radio" class="btn btn-info" value="lodging">ホテル</button>
+        </div>
+        <form>
+          <div class="form-group">
+            <input type="text" class="form-control mt-2" id="addressInput" placeholder="施設・地域">
+          </div>
+          <input type="button" class="btn btn-outline-primary mb-1" value="情報取得" onclick="getPlaces();">
+          <button class="btn btn-outline-primary ml-1 mb-1" id="routeSearch">ルート検索</button>
+          <button class="btn btn-outline-primary ml-1 mb-1" id="deleteRoute">ルート削除</button>
+        </form>
+      </div>
 
-            <div id="results" hidden></div>
+      <div id="results" hidden></div>
 
-            <div class="container">
-                <div class="row scroll-box" id="cardDisplay">
+      <div class="container">
+        <div class="row scroll-box" id="cardDisplay"></div>
+        
 
-                </div>
-                <br>
+        <div class="results" hidden></div>
 
-                <div class="results" hidden></div>
+        <div id="memo" class="memo">
+          <div class="openbtn4"><span></span><span></span></div>
 
-                <div id="memo" class="memo">
-                    <div class="openbtn4"><span></span><span></span></div>
-
-                    <div class="memoSpace">
-                        <table class="memoTable">
-                            <tr>
-                                <td class="timeDisplay">
-                                    <h2>09:00</h2>
-                                </td>
-                                <td>
-                                    <div class="placeTable">
-                                        <table>
-                                            <tr>
-                                                <td rowspan="2">
-                                                    <div class="placePhoto">画像</div>
-                                                </td>
-                                                <td>
-                                                    <h3>名称</h3>
-                                                </td>
-                                                <td rowspan="2">
-                                                    <button>×</button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>HH:MM～HH:MM</td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
+          <div class="memoSpace">
+            <table class="memoTable">
+              <tr>
+                <td class="timeDisplay">
+                  <h2>09:00</h2>
+                </td>
+                <td>
+                  <div class="placeTable">
+                    <table>
+                      <tr>
+                        <td rowspan="2">
+                          <div class="placePhoto">画像</div>
+                        </td>
+                        <td>
+                          <h3>名称</h3>
+                        </td>
+                        <td rowspan="2">
+                          <button>×</button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>HH:MM～HH:MM</td>
+                      </tr>
+                    </table>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
     </nav>
-
     <aside class="nav-r">
-        <div id="map"></div>
+      <div id="map"></div>
     </aside>
-</div>
-<script>
-  var map;
+  </section>
 
-/**
- * コード追加
- * @author mizuki
- */
-
-/**
- * 検索結果のマーカーを格納
- */
-let markerList = [];
-
-/**
- * 検索結果のルートを格納
- */
-let routeList = [];
-
-/**
- * 選択したマーカーを格納
- */
-let selectList = [];
-
-/**
- * ルートやマーカー指定の結果を描画するdom
- */
-const resultEl = document.getElementById('routeResult');
-
-/**
- * 選択したマーカーを描画する
- */
-
-
-
-function createSelectListView(el, selectedArray) {
-  console.log("createSelectList");
-  let dom = '';
-  selectedArray.forEach(e => {
-    const li = document.createElement('li');
-    dom += `<li><h3>${e.title}<select name="route">`;
-    dom += `<option value="DRIVING" selected>車</option>`;
-    dom += `<option value="WALKING">歩き</option></select></h3></li>`;
-  });
-  el.innerHTML = dom;
-}
-
-/**
- * 選択したマーカーと検索したルートを描画する
- */
-function createRouteListView(el, selectedArray, resultArray) {
-  console.log("createSearchResult");
-  let dom = '';
-
-  for (let i = 0; i < selectedArray.length - 1; i++) {
-    console.log(selectedArray[i]);
-    dom += `<li><h3>${selectedArray[i].title}</h3>`
-    console.log(resultArray[i].request.travelMode);
-    console.log(resultArray[i].request.travelMode == 'DRIVING' ? '車' : '歩き');
-    dom += `<p>移動方法 : ${resultArray[i].request.travelMode == 'DRIVING' ? '車' : '歩き'}</p> `
-    dom += `<p> かかる時間: ${resultArray[i].routes[0].legs[0].duration.text}</p> <ul>`;
-    routeList[i].routes[0].legs[0].steps.forEach(e => {
-      dom += `<li>${e.instructions}</li>`
-    })
-    dom += `</ul></li> `;
-  }
-  dom += `<li> <h3>${selectedArray[selectedArray.length - 1].title}</h3>`
-  el.innerHTML = dom;
-}
-
-/**
- * 選択したマーカーからルートを検索しマップ上に描画する
- * 描画用domに描画する
- */
-function searchRoute(mapInstance, el, selectedArray, resultArray) {
-  console.log("searchRoute");
-  if (selectedArray.length >= 2) {
-    const data = document.getElementsByName('route');
-    for (let i = 0; i < selectedArray.length - 1; i++) {
-      const startLatlng = selectedArray[i].getPosition();
-      const endLatlng = selectedArray[i + 1].getPosition();
-      mapTools.commons.fetchRoute(startLatlng, endLatlng, 'DRIVING')
-        .then(response => {
-          response.renderer = mapTools.commons.viewRoute(response, mapInstance);
-          console.log(response);
-          resultArray.push(response);
-        })
-        .catch(e => {
-          alert("取得に失敗したよ");
-          console.error(e);
-        })
-        .then(() => {
-          createRouteListView(el, selectedArray, resultArray);
-        });
-    }
-  }
-}
-
-/**
- * ルート検索ボタン
- */
-document.getElementById("routeSearch").addEventListener('click', () => {
-  searchRoute(map, resultEl, markers, routeList);
-});
-
-/**
- * マーカー削除ボタン
- * 選択したマーカーを再設定する
- */
-// document.getElementById("deleteMarker").addEventListener('click', () => {
-//   mapTools.commons.deleteMarker(markerList);
-//   markerList = [];
-//   selectList.forEach(e => {
-//     e.setMap(map);
-//     markerList.push(e);
-//   });
-// });
-
-/**
- * 選択削除ボタン
- */
-// document.getElementById("deleteSelected").addEventListener('click', () => {
-//   selectList = [];
-//   createSelectListView(resultEl, selectList);
-// });
-
-/**
- * ルート削除ボタン
- */
-document.getElementById("deleteRoute").addEventListener('click', () => {
-  // console.log("deleteRoute");
-  mapTools.commons.deleteRenderer(routeList);
-  routeList = [];
-  createSelectListView(resultEl, selectList);
-})
-
-/**
- * ここまで
- */
-
-function initMap() {
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: {
-      lat: 34.7019399,
-      lng: 135.51002519999997
-    },
-    mapTypeControl: false, //マップタイプ コントロール
-    fullscreenControl: false, //全画面表示コントロール
-
-    zoom: 19
-  });
-}
-
-var placesList;
-
-function getPlaces() {
-
-  //結果表示クリア
-  document.getElementById("results").innerHTML = "";
-  //placesList配列を初期化
-  placesList = new Array();
-
-  //入力した検索場所を取得
-  var addressInput = document.getElementById("addressInput").value;
-  if (addressInput == "") {
-    return;
-  }
-
-  //検索場所の位置情報を取得
-  var geocoder = new google.maps.Geocoder();
-  geocoder.geocode({
-      address: addressInput
-    },
-    function (results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-        //取得した緯度・経度を使って周辺検索
-        startNearbySearch(results[0].geometry.location);
-      } else {
-        alert(addressInput + "：位置情報が取得できませんでした。");
-      }
-    });
-}
-
-/*
- 位置情報を使って周辺検索
-  latLng : 位置座標（google.maps.LatLng）
-*/
-function startNearbySearch(latLng) {
-
-  //読み込み中表示
-  document.getElementById("cardDisplay").innerHTML 
-  = 
-  "\
-<div class='wrapper'>\
-  <div class='balls-guruguru'>\
-    <span class='ball ball-1'></span>\
-    <span class='ball ball-2'></span>\
-    <span class='ball ball-3'></span>\
-    <span class='ball ball-4'></span>\
-    <span class='ball ball-5'></span>\
-    <span class='ball ball-6'></span>\
-    <span class='ball ball-7'></span>\
-    <span class='ball ball-8'></span>\
-  </div>\
-</div>\
-  ";
-
-  //Mapインスタンス生成
-  var map = new google.maps.Map(
-    document.createElement("div")
-  );
-
-  //PlacesServiceインスタンス生成
-  var service = new google.maps.places.PlacesService(map);
-
-  //入力したKeywordを取得
-  var keywordInput = document.getElementById("addressInput").value;
-
-  //周辺検索
-  service.nearbySearch({
-      location: latLng,
-      radius: 800,
-      type: ['tourist_attraction', 'restaurant'],
-      keyword: keywordInput,
-      language: 'ja'
-    },
-    displayCards
-  );
-}
-
-/*
- 周辺検索の結果表示（カード形式）
- ※nearbySearchのコールバック関数
-  results : 検索結果
-  status ： 実行結果ステータス
-  pagination : ページネーション
-*/
-function displayCards(results, status, pagination) {
-  var card = document.getElementById("cardDisplay");
-  if (status == google.maps.places.PlacesServiceStatus.OK) {
-    //検索結果をplacesList配列に連結
-    placesList = placesList.concat(results);
-
-    //pagination.hasNextPage==trueの場合、
-    //続きの検索結果あり
-    if (pagination.hasNextPage) {
-      //pagination.nextPageで次の検索結果を表示する
-      //※連続実行すると取得に失敗するので、
-      //1秒くらい間隔をおく
-      setTimeout(pagination.nextPage(), 1000);
-
-      //pagination.hasNextPage==falseになったら
-      //全ての情報が取得できているので、
-      //結果を表示する
-    } else {
-      card.innerHTML = "";
-
-      for (var i = 0; i < placesList.length; i++) {
-        placesList.sort(function (a, b) {
-          return b.rating - a.rating;
-        });
-
-        place = placesList[i];
-
-        //console.log(place);
-        var lat = place.geometry.location.lat();
-        var lng = place.geometry.location.lng();
-
-        //console.log(place.geometry.location);
-
-        // var rating = place.rating;
-        // if(rating == -1) rating = '---';
-
-        card.insertAdjacentHTML(
-          "beforeend",
-          '\
-          <div class="col-sm mt-3 p-0">\
-            <div class="card" style="width: 22rem;">\
-              <img src="' + place.photos[0].getUrl() + '" alt="" width="100%" height="250">\
-              <div class="card-body">\
-                <h5 class="card-title">' + place.name + '</h5>\
-                <p class="card-text">' + place.rating + '</p>\
-                <a href="#" class="btn btn-primary">詳しく見る</a>\
-                <div class="btn btn-primary" onclick="togglePin(\'' +
-          place.photos[0].getUrl() + '\', \'' +
-          place.name + '\', ' +
-          lat + ', ' + lng +
-          ');">追加</div>\
-              </div>\
-            </div>\
-          </div>'
-        );
-      }
-    }
-  } else {
-    //エラー表示
-    var results = document.getElementById("results");
-    if (status == google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
-      alert("検索結果が0件です。");
-    } else if (status == google.maps.places.PlacesServiceStatus.ERROR) {
-      alert("サーバ接続に失敗しました。");
-    } else if (status == google.maps.places.PlacesServiceStatus.INVALID_REQUEST) {
-      alert("リクエストが無効でした。");
-    } else if (status == google.maps.places.PlacesServiceStatus.OVER_QUERY_LIMIT) {
-      alert("リクエストの利用制限回数を超えました。");
-    } else if (status == google.maps.places.PlacesServiceStatus.REQUEST_DENIED) {
-      alert("サービスが使えない状態でした。");
-    } else if (status == google.maps.places.PlacesServiceStatus.UNKNOWN_ERROR) {
-      alert("原因不明のエラーが発生しました。");
-    }
-  }
-}
-/**
- * グーグルマップ
- * @external "google.maps.Map"
- * 
- * グーグルマップ マーカー
- * @external "google.maps.Marker"
- * 
- * グーグルマップ 緯度経度
- * @external "google.maps.LatLng"
- * 
- */
-/**
- * https://www.ibm.com/docs/ja/mpf/7.1.0?topic=logger-javascript-module-example
- */
-// 読み込み順序遅延
-// document.addEventListener('DOMContentLoaded', function () {
-//     const sc = document.createElement('script');
-//     sc.src = `https://maps.googleapis.com/maps/api/js?key=${pageOption.GOOGLE_MAPS_API_KEY}&libraries=places&callback=initMap`;
-//     document.body.appendChild(sc);
-// });
-
-/**
- * 関数のラッピング用オブジェクト
- * 
- */
- const mapTools = {};
- /**
-  * Vueを使わない用のオブジェクト
-  * @module commons
-  */
- mapTools.commons = (function () {
-     const MAP_INIT_LAT = 35.86219927057546;
-     const MAP_INIT_LNG = 139.9709143952686;
-     const MAP_INIT_ZOOM = 16;
- 
-     /**
-      * google maps apiのmapを表示させるelement name
-      */
-     let mapElmentName;
-     /**
-      * google maps apiのmapを表示させるdom
-      */
-     let mapEl;
- 
-     /**
-      * 
-      */
-     const init = function () {
-         mapElmentName = "map";
-     }
- 
- 
-     /**
-      * マップインスタンスを作成し返します
-      * @static
-      * @function createMapInstance - dom     
-      * @return {google.maps.Map} - googleマップインスタンス
-      * @author mizuki
-      * 
-      */
-     const createMapInstance = function (dom) {
-         const mapStyle = {
-             zoom: MAP_INIT_ZOOM,
-             center: new google.maps.LatLng(MAP_INIT_LAT, MAP_INIT_LNG),
-             clickableIcons: false,
-             disableDefaultUI: false,
-             keyboardShortcuts: false,
-             tilt: 0,
-         }
-         return new google.maps.Map(dom, mapStyle);
- 
-     }
- 
- 
- 
-     /**
-      * Mapインスタンスとマーカを入れる配列、緯度経度インスタンス、タイトルを受け取り、
-      * マーカーを作成し表示、それを返す
-      * @static
-      * @function createMarker
-      * @param {"google.maps.Map"} maps - 表示させたいmapインスタンス
-      * @param {"google.maps.LatLng"} latLngInstance - 表示させたい位置のLatLngインスタンス
-      * @param {String} markerTitle - マーカーを格納したい配列
-      * @param {Array<"google.maps.Marke">} markerList - マーカーを格納したい配列
-      * @author mizuki
-      * 
-      */
-     const createMarker = function (maps, latLngInstance, markerTitle) {
-         const markerOptions = {
-             position: latLngInstance,
-             map: maps,
-             title: markerTitle
-         }
-         const marker = new google.maps.Marker(markerOptions);
-         return marker
-     }
- 
- 
-     /**
-      * 与えられたマーカー配列のマーカーをマップから消す。
-      * **配列から削除するわけではない**
-      * @static
-      * @function deleteMarker
-      * @param {Array<"google.maps.Marker">} markerList -マーカーインスタンスリスト
-      * @return {Array<"google.maps.Marker">}
-      * @author mizuki
-      * 
-      */
-     const deleteMarker = function (markerList) {
-         console.log("deleteMaker");
-         return markerList.forEach(e => {
-             // e.setVisible(false);
-             e.setMap(null);
-         });
-     }
- 
- 
- 
-     /**
-      * directionsServiceで検索したルートをマップ上に描画してPromiseを返します
-      * @static
-      * @function viewRoute
-      * @param {"DirectionsResult"} response - directionsServiceの結果
-      * @param {"google.maps.Map"} mapInstance - ルートを表示させたいMapインスタンス
-      * @return {Promise} - 
-      * @author mizuki
-      * 
-      */
-     const viewRoute = function (response, mapInstance) {
-         return new google.maps.DirectionsRenderer({
-             map: mapInstance,
-             directions: response,
-             suppressMarkers: true
-         });
-     }
- 
-     const deleteRenderer = function (routeList) {
-         console.log("deleterenderer")
-         console.log(routeList);
-         return routeList.forEach(e => {
-             console.log(e);
-             // e.renderer.setVisible(false)
-             // e.renderer.setPanel(null);
-             e.renderer.setMap(null);
-             // e.renderer = null;
-         });
-     }
- 
-     /** 
-      * directionsServiceで二点間のルートを検索しPromiseを返します
-      * @static
-      * @function fetchRoute
-      * @param {"google.maps.LatLng"} startLatLng - ルートの開始地点
-      * @param {"google.maps.LatLng"} endLatLng - ルートの終了地点
-      * @param {String} mode - TravelModeの値いずれか
-      * @return {Promise} - 
-      * @author mizuki
-      * 
-      **/
-     const fetchRoute = function (startLatLng, endLatLng, mode) {
-         const directionsService = new google.maps.DirectionsService();
-         let request = {
-             origin: startLatLng,
-             destination: endLatLng,
-             travelMode: google.maps.DirectionsTravelMode[mode], // 移動手段
-         };
-         return directionsService.route(request)
-     }
- 
- 
-     /**
-      *渡されたインスタンスのマーカーリストからルート検索をして描画。
-      *ルートリストに入れる。
-      * @param {"google.maps.Map"} mapInstance - ルートを表示させたいMapインスタンス
-      * @param {Array<"google.maps.Marker">} selectList -マーカーインスタンスリスト
-      * @param {Array<"google.maps.DirectionsResult">} routeList -DirectionsResultリスト
-      * @author mizuki
-      * 
-      **/
-     const searchRoute = function (mapInstance, selectList, routeList) {
-         if (selectList.length >= 2) {
-             console.log("action");
-             this.deleteRenderer(routeList);
-             for (let i = 0; i < selectList.length - 1; i++) {
-                 const startLatlng = selectList[i].getPosition();
-                 const endLatlng = selectList[i + 1].getPosition();
-                 this.fetchRoute(startLatlng, endLatlng, 'DRIVING')
-                     .then(response => {
-                         console.log(this);
-                         response.renderer = this.viewRoute(response, mapInstance);
-                         console.log(response);
-                         routeList.push(response);
-                     })
-                     .catch(e => {
-                         alert("取得に失敗したよ");
-                         console.error(e);
-                     })
-                     .then(() => {
-                         console.log("ルート検索終了");
-                     });
-             }
-         }
- 
-     }
- 
-     init();
-     return {
-         createMapInstance: createMapInstance,
-         createMarker: createMarker,
-         deleteMarker: deleteMarker,
-         viewRoute: viewRoute,
-         fetchRoute: fetchRoute,
-         searchRoute: searchRoute,
-         deleteRenderer: deleteRenderer
-     }
- })();
- Object.freeze(mapTools.commons)
- 
- /**
-  * 渡されたインスタンス内のmapsプロパティにマップインスタンスを代入します。
-  * 苦肉の策です
-  * @param {Vue} self - マップを代入したいVueインスタンス
-  * @param {string} elementId - マップを表示したいelement_id
-  * @param {string} mapPropertyName -代入したいオブジェクトプロパティ名
-  * @return {"google.maps.Map"} - googleマップインスタンス
-  * @author mizuki
-  * 
-  */
- mapTools.createMapInstance = function (self, elementId, mapPropertyName = "maps") {
-     self[mapPropertyName] = this.commons.createMapInstance(self.$refs[elementId]);
-     return self[mapPropertyName];
- }
- 
- 
- /**
-  * Vueインスタンスと緯度経度インスタンス,タイトルを受け取り、マーカーを作成し表示、それを返す
-  * マーカーはクリックされるとVueインスタンスないのmarkerListに入る
-  * @param {Vue} self - マーカーを表示させたいMapインスタンスを持つVueインスタンス
-  * @param {google.maps.LatLng} latLngInstance - 表示させたい位置のLatLngインスタンス
-  * @param {string} markerTitle - 表示させるマーカーのタイトル
-  * @param {string=} mapPropertyName -使用するマップインスタンスのプロパティ名
-  * @param {string=} markerListPropertyName - 使用する配列のプロパティ名
-  * @param {string=} selectListPropertyName - 使用する配列のプロパティ名
-  * @return {google.maps.Marker} - 表示したMarkerインスタンス
-  * @author mizuki
-  * 
-  */
- mapTools.setUpMarker = function (self, latLngInstance, markerTitle = "無題のマーカー", mapPropertyName = "maps", markerListPropertyName = "markerList", selectListPropertyName = "selectList") {
-     const marker = this.commons.createMarker(
-         self[mapPropertyName],
-         latLngInstance,
-         markerTitle
-     );
- 
-     self[markerListPropertyName].push(marker);
-     marker.addListener("click", () => {
-         self[selectListPropertyName].push(marker);
-         alert(`${markerTitle}をリストにいれました`);
-     });
-     return marker
- }
- 
- 
- 
- /**
-  * 与えられたマーカー配列のマーカーをマップから消す。
-  * @param {Vue} self -Vueインスタンス
-  * @param {string=} markerListPropertyName - 使用する配列のプロパティ名
-  * @return {Array<google.maps.Marker>}
-  * @author mizuki
-  * 
-  */
- mapTools.deleteMarker = function (self, markerListPropertyName = "markerList") {
-     return this.commons.deleteMarker(self[markerListPropertyName]);
- }
- 
- 
- /**
-  * 与えられたマーカー配列のマーカーをマップから消す。
-  * @param {Vue} self -Vueインスタンス
-  * @param {string=} selectListPropertyName - 使用する配列のプロパティ名
-  * @return {Array<google.maps.Marker>}
-  * @author mizuki
-  * 
-  */
- mapTools.deleteSelect = function (self, selectListPropertyName = "selectList") {
-     self[selectListPropertyName] = [];
-     return self[selectListPropertyName];
- }
- 
- 
- 
- 
- /**
-  *渡されたインスタンスのマーカーリストからルート検索をして描画。
-  *ルートリストに入れる。
-  * @param {Vue} self -vueインスタンス
-  * @param {string=} mapPropertyName - 使用するマップインスタンスのプロパティ名
-  * @param {string=} selectListPropertyName - 使用する配列のプロパティ名
-  * @param {string=} routeListPropertyName - 使用する配列のプロパティ名
-  * @author mizuki
-  * 
-  **/
- mapTools.searchRoute = function (self, mapPropertyName = "maps", selectListPropertyName = "selectList", routeListPropertyName = "routeList") {
-     self[routeListPropertyName] = [];
-     this.commons.searchRoute(
-         self[mapPropertyName],
-         self[selectListPropertyName],
-         self[routeListPropertyName]
-     );
- }
- 
- 
- 
- let photoList = [];
- let nameList = [];
- let markers = [];
- var markerIndex = 0;
- 
- window.onload = memoInitial();
- 
- function isLocationFree(search) {
-     for (var i= 0; i < markers.length; i++) {
-         markerIndex = i;
-         if (markers[i].position.lat() === search[0] && markers[i].position.lng() === search[1]) {
-             //すでに存在しています！
-             return false;
-         }
-     }
-     return true;
- }
- 
- function togglePin(photo, name, x, y) {
-     if (isLocationFree([x, y])) {
-         //ピンを指す場所に移動
-         map.setCenter({ lat: x, lng: y });
- 
-         //ピンを指す
-         markers.push(new google.maps.Marker({
-             position: { lat: x, lng: y },
-             animation: google.maps.Animation.DROP,
-         }));
-         markers[markers.length-1].setMap(map);
- 
-         photoList.push(photo);
-         nameList.push(name);
- 
-         //getInfo(x, y);
-     } else {
-         //ピンをはずす
-         markers[markerIndex].setMap(null);
-         markers.splice(markerIndex, 1);
-         photoList.splice(markerIndex, 1);
-         nameList.splice(markerIndex, 1);
-     }
-     memoInitial();
- }
- 
- function removeSchedule(index) {
-     //✖ボタンが押された
-     markers[index].setMap(null);
-     markers.splice(index, 1);
-     photoList.splice(index, 1);
-     nameList.splice(index, 1);
- 
-     memoInitial();
- }
- 
-//メモ機能  
- var toggleMemo = false;
- 
- $(".openbtn4").click(function () {
-     $(this).toggleClass('active');
-     ToggleMemo();
- });
- 
- function ToggleMemo() {
-     toggleMemo = !toggleMemo;
- 
-     memoInitial();
- }
-   
- function memoInitial() {
-     var memoSpace = document.getElementsByClassName("memoSpace")[0];
- 
-     if (toggleMemo) {
-         memoSpace.style.display = "block";
-         memoSpace.innerHTML = "";
- 
-         for (var i = 0; i < 15; i++) {
-             if (markers[i]) {
-                 makeMemoTable(memoSpace, i);
-             } else {
-                 makeNullSpace(memoSpace, i);
-             }
-         }
-     } else {
-         memoSpace.style.display = "none";
-     }
- }
-   
- function makeMemoTable(memoSpace, index) {
-     var hour = (index + 9);
- 
-     memoSpace.insertAdjacentHTML(
-         "beforeend", 
-         '\
-         <table class="memoTable">\
-             <tr>\
-                 <td class="timeDisplay"><h2>' + ('00' + (hour % 24)).slice(-2) + ':00</h2></td>\
-                 <td>\
-                     <div class="placeTable">\
-                         <table>\
-                             <tr>\
-                                 <td rowspan="2">\
-                                     <div class="placePhoto">\
-                                         <img src='+ photoList[index] +'>\
-                                     </div>\
-                                 </td>\
-                                 <td><h3>' + nameList[index] + '</h3></td>\
-                                 <td rowspan="2">\
-                                     <button onclick="removeSchedule(' + index + ')">×</button>\
-                                 </td>\
-                             </tr>\
-                             <tr>\
-                                 <td>\
-                                     ' + ('00' + (hour % 24)).slice(-2) + ':00\
-                                     ～\
-                                     ' + ('00' + ((hour+1) % 24)).slice(-2) + ':00\
-                                     </td>\
-                             </tr>\
-                         </table>\
-                     </div>\
-                 </td>\
-             </tr>\
-         </table>'
-     );
- }
- function makeNullSpace(memoSpace, hour) {
-     hour += 9;
- 
-     memoSpace.insertAdjacentHTML(
-         "beforeend", 
-         '\
-         <table class="memoTable">\
-             <tr>\
-                 <td class="timeDisplay"><h2>' + ('00' + (hour % 24)).slice(-2) + ':00</h2></td>\
-             </tr>\
-         </table>'
-     );
- }
-</script>
-  
-  
-  
-  
-  
-  <!-- <script src="./js/key.js"></script> -->
-  <!-- <script src="js/jquery-1.12.4.min.js"></script> -->
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-  </script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
-  </script>
-  <script src="./assets/js/paginathing.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-  <script src="./assets/js/tools.js"></script>
-  <script src="./assets/js/sample.js"></script>
-  <script src="./assets/js/shiozaki.js"></script>
-  <!-- <script src="https://maps.googleapis.com/maps/api/js?language=ja&key=AIzaSyAIvDT6aSB8xK3ASJLRpicJ_SZV8KngMLM&libraries=places&callback=initMap"></script> -->
-  <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDeL7_U--qzVwi963J1elplZfLTCIsduZQ&libraries=places&callback=initMap">
-  </script>
   <script>
-    $(function () {
-      $('.pagination').paginathing({ //親要素のclassを記述
-        perPage: 20, //1ページあたりの表示件数
-        prevText: '前へ', //1つ前のページへ移動するボタンのテキスト
-        nextText: '次へ', //1つ次のページへ移動するボタンのテキスト
-        activeClass: 'navi-active', //現在のページ番号に任意のclassを付与できます
-      })
+    var map;
+
+    /**
+     * コード追加
+     * @author mizuki
+     */
+
+    /**
+     * 検索結果のマーカーを格納
+     */
+    let markerList = [];
+
+    /**
+     * 検索結果のルートを格納
+     */
+    let routeList = [];
+
+    /**
+     * 選択したマーカーを格納
+     */
+    let selectList = [];
+
+    /**
+     * ルートやマーカー指定の結果を描画するdom
+     */
+    const resultEl = document.getElementById('routeResult');
+
+    /**
+     * 選択したマーカーを描画する
+     */
+
+
+
+    function createSelectListView(el, selectedArray) {
+      console.log("createSelectList");
+      let dom = '';
+      selectedArray.forEach(e => {
+        const li = document.createElement('li');
+        dom += `<li><h3>${e.title}<select name="route">`;
+        dom += `<option value="DRIVING" selected>車</option>`;
+        dom += `<option value="WALKING">歩き</option></select></h3></li>`;
+      });
+      el.innerHTML = dom;
+    }
+
+    /**
+     * 選択したマーカーと検索したルートを描画する
+     */
+    function createRouteListView(el, selectedArray, resultArray) {
+      console.log("createSearchResult");
+      let dom = '';
+
+      for (let i = 0; i < selectedArray.length - 1; i++) {
+        console.log(selectedArray[i]);
+        dom += `<li><h3>${selectedArray[i].title}</h3>`
+        console.log(resultArray[i].request.travelMode);
+        console.log(resultArray[i].request.travelMode == 'DRIVING' ? '車' : '歩き');
+        dom += `<p>移動方法 : ${resultArray[i].request.travelMode == 'DRIVING' ? '車' : '歩き'}</p> `
+        dom += `<p> かかる時間: ${resultArray[i].routes[0].legs[0].duration.text}</p> <ul>`;
+        routeList[i].routes[0].legs[0].steps.forEach(e => {
+          dom += `<li>${e.instructions}</li>`
+        })
+        dom += `</ul></li> `;
+      }
+      dom += `<li> <h3>${selectedArray[selectedArray.length - 1].title}</h3>`
+      el.innerHTML = dom;
+    }
+
+    /**
+     * 選択したマーカーからルートを検索しマップ上に描画する
+     * 描画用domに描画する
+     */
+    function searchRoute(mapInstance, el, selectedArray, resultArray) {
+      console.log("searchRoute");
+      if (selectedArray.length >= 2) {
+        const data = document.getElementsByName('route');
+        for (let i = 0; i < selectedArray.length - 1; i++) {
+          const startLatlng = selectedArray[i].getPosition();
+          const endLatlng = selectedArray[i + 1].getPosition();
+          mapTools.commons.fetchRoute(startLatlng, endLatlng, 'DRIVING')
+            .then(response => {
+              response.renderer = mapTools.commons.viewRoute(response, mapInstance);
+              console.log(response);
+              resultArray.push(response);
+            })
+            .catch(e => {
+              alert("取得に失敗したよ");
+              console.error(e);
+            })
+            .then(() => {
+              createRouteListView(el, selectedArray, resultArray);
+            });
+        }
+      }
+    }
+
+    /**
+     * ルート検索ボタン
+     */
+    document.getElementById("routeSearch").addEventListener('click', () => {
+      searchRoute(map, resultEl, markers, routeList);
     });
+
+    /**
+     * マーカー削除ボタン
+     * 選択したマーカーを再設定する
+     */
+    // document.getElementById("deleteMarker").addEventListener('click', () => {
+    //   mapTools.commons.deleteMarker(markerList);
+    //   markerList = [];
+    //   selectList.forEach(e => {
+    //     e.setMap(map);
+    //     markerList.push(e);
+    //   });
+    // });
+
+    /**
+     * 選択削除ボタン
+     */
+    // document.getElementById("deleteSelected").addEventListener('click', () => {
+    //   selectList = [];
+    //   createSelectListView(resultEl, selectList);
+    // });
+
+    /**
+     * ルート削除ボタン
+     */
+    document.getElementById("deleteRoute").addEventListener('click', () => {
+      // console.log("deleteRoute");
+      mapTools.commons.deleteRenderer(routeList);
+      routeList = [];
+      createSelectListView(resultEl, selectList);
+    })
+
+    /**
+     * ここまで
+     */
+
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: {
+          lat: 35.6809591,
+          lng: 139.7673068
+        },
+        mapTypeControl: false, //マップタイプ コントロール
+        fullscreenControl: false, //全画面表示コントロール
+
+        zoom: 13
+      });
+    }
+
+    var placesList;
+
+    function getPlaces() {
+
+      //結果表示クリア
+      document.getElementById("results").innerHTML = "";
+      //placesList配列を初期化
+      placesList = new Array();
+
+      //入力した検索場所を取得
+      var addressInput = document.getElementById("addressInput").value;
+      if (addressInput == "") {
+        return;
+      }
+
+      //検索場所の位置情報を取得
+      var geocoder = new google.maps.Geocoder();
+      geocoder.geocode({
+          address: addressInput
+        },
+        function (results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            //取得した緯度・経度を使って周辺検索
+            startNearbySearch(results[0].geometry.location);
+          } else {
+            alert(addressInput + "：位置情報が取得できませんでした。");
+          }
+        });
+    }
+
+    /*
+     位置情報を使って周辺検索
+      latLng : 位置座標（google.maps.LatLng）
+    */
+    function startNearbySearch(latLng) {
+
+      //チェックボックス確認
+      let elememts = document.getElementsByName('hoge');
+      let len = elememts.length;
+      let checkValue = '';
+
+      for (let i = 0; i < len; i++) {
+        if (elememts.item(i).checked) {
+          checkValue = elememts.item(i).value;
+          console.log(checkValue);
+        }
+      }
+
+      //読み込み中表示
+      document.getElementById("cardDisplay").innerHTML =
+        "\
+      <div class='wrapper'>\
+        <div class='balls-guruguru'>\
+          <span class='ball ball-1'></span>\
+          <span class='ball ball-2'></span>\
+          <span class='ball ball-3'></span>\
+          <span class='ball ball-4'></span>\
+          <span class='ball ball-5'></span>\
+          <span class='ball ball-6'></span>\
+          <span class='ball ball-7'></span>\
+          <span class='ball ball-8'></span>\
+        </div>\
+      </div>\
+        ";
+
+
+      //PlacesServiceインスタンス生成
+      var service = new google.maps.places.PlacesService(map);
+
+      //入力したKeywordを取得
+      var addressInput = document.getElementById("addressInput").value;
+
+      //周辺検索
+      service.nearbySearch({
+          location: latLng,
+          radius: 800,
+          type: [checkValue],
+          keyword: addressInput,
+          language: 'ja'
+        },
+        displayCards
+      );
+    }
+
+    /*
+     周辺検索の結果表示（カード形式）
+     ※nearbySearchのコールバック関数
+      results : 検索結果
+      status ： 実行結果ステータス
+      pagination : ページネーション
+    */
+    function displayCards(results, status, pagination) {
+      var card = document.getElementById("cardDisplay");
+      if (status == google.maps.places.PlacesServiceStatus.OK) {
+        //検索結果をplacesList配列に連結
+        placesList = placesList.concat(results);
+
+        //pagination.hasNextPage==trueの場合、
+        //続きの検索結果あり
+        if (pagination.hasNextPage) {
+          //pagination.nextPageで次の検索結果を表示する
+          //※連続実行すると取得に失敗するので、
+          //1秒くらい間隔をおく
+          setTimeout(pagination.nextPage(), 1000);
+
+          //pagination.hasNextPage==falseになったら
+          //全ての情報が取得できているので、
+          //結果を表示する
+        } else {
+          card.innerHTML = "";
+
+          for (var i = 0; i < placesList.length; i++) {
+            placesList.sort(function (a, b) {
+              return b.rating - a.rating;
+            });
+
+            place = placesList[i];
+
+            //console.log(place);
+            var lat = place.geometry.location.lat();
+            var lng = place.geometry.location.lng();
+
+            //console.log(place.geometry.location);
+
+            // var rating = place.rating;
+            // if(rating == -1) rating = '---';
+
+            card.insertAdjacentHTML(
+              "beforeend",
+              '\
+                <div class="col-sm mt-3 p-0">\
+                  <div class="card" style="width: 22rem;">\
+                    <img src="' + place.photos[0].getUrl() + '" alt="" width="100%" height="250">\
+                    <div class="card-body">\
+                      <h5 class="card-title">' + place.name + '</h5>\
+                      <p class="card-text">' + place.rating + '</p>\
+                      <a href="#" class="btn btn-primary">詳しく見る</a>\
+                      <div class="btn btn-primary" onclick="togglePin(\'' +
+              place.photos[0].getUrl() + '\', \'' +
+              place.name + '\', ' +
+              lat + ', ' + lng +
+              ');">追加</div>\
+                    </div>\
+                  </div>\
+                </div>'
+            );
+          }
+        }
+      } else {
+        //エラー表示
+        var results = document.getElementById("results");
+        if (status == google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
+          alert("検索結果が0件です。");
+        } else if (status == google.maps.places.PlacesServiceStatus.ERROR) {
+          alert("サーバ接続に失敗しました。");
+        } else if (status == google.maps.places.PlacesServiceStatus.INVALID_REQUEST) {
+          alert("リクエストが無効でした。");
+        } else if (status == google.maps.places.PlacesServiceStatus.OVER_QUERY_LIMIT) {
+          alert("リクエストの利用制限回数を超えました。");
+        } else if (status == google.maps.places.PlacesServiceStatus.REQUEST_DENIED) {
+          alert("サービスが使えない状態でした。");
+        } else if (status == google.maps.places.PlacesServiceStatus.UNKNOWN_ERROR) {
+          alert("原因不明のエラーが発生しました。");
+        }
+      }
+    }
+    /**
+     * グーグルマップ
+     * @external "google.maps.Map"
+     * 
+     * グーグルマップ マーカー
+     * @external "google.maps.Marker"
+     * 
+     * グーグルマップ 緯度経度
+     * @external "google.maps.LatLng"
+     * 
+     */
+    /**
+     * https://www.ibm.com/docs/ja/mpf/7.1.0?topic=logger-javascript-module-example
+     */
+    // 読み込み順序遅延
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     const sc = document.createElement('script');
+    //     sc.src = `https://maps.googleapis.com/maps/api/js?key=${pageOption.GOOGLE_MAPS_API_KEY}&libraries=places&callback=initMap`;
+    //     document.body.appendChild(sc);
+    // });
+
+    /**
+     * 関数のラッピング用オブジェクト
+     * 
+     */
+    const mapTools = {};
+    /**
+     * Vueを使わない用のオブジェクト
+     * @module commons
+     */
+    mapTools.commons = (function () {
+      const MAP_INIT_LAT = 35.86219927057546;
+      const MAP_INIT_LNG = 139.9709143952686;
+      const MAP_INIT_ZOOM = 16;
+
+      /**
+       * google maps apiのmapを表示させるelement name
+       */
+      let mapElmentName;
+      /**
+       * google maps apiのmapを表示させるdom
+       */
+      let mapEl;
+
+      /**
+       * 
+       */
+      const init = function () {
+        mapElmentName = "map";
+      }
+
+
+      /**
+       * マップインスタンスを作成し返します
+       * @static
+       * @function createMapInstance - dom     
+       * @return {google.maps.Map} - googleマップインスタンス
+       * @author mizuki
+       * 
+       */
+      const createMapInstance = function (dom) {
+        const mapStyle = {
+          zoom: MAP_INIT_ZOOM,
+          center: new google.maps.LatLng(MAP_INIT_LAT, MAP_INIT_LNG),
+          clickableIcons: false,
+          disableDefaultUI: false,
+          keyboardShortcuts: false,
+          tilt: 0,
+        }
+        return new google.maps.Map(dom, mapStyle);
+
+      }
+
+
+
+      /**
+       * Mapインスタンスとマーカを入れる配列、緯度経度インスタンス、タイトルを受け取り、
+       * マーカーを作成し表示、それを返す
+       * @static
+       * @function createMarker
+       * @param {"google.maps.Map"} maps - 表示させたいmapインスタンス
+       * @param {"google.maps.LatLng"} latLngInstance - 表示させたい位置のLatLngインスタンス
+       * @param {String} markerTitle - マーカーを格納したい配列
+       * @param {Array<"google.maps.Marke">} markerList - マーカーを格納したい配列
+       * @author mizuki
+       * 
+       */
+      const createMarker = function (maps, latLngInstance, markerTitle) {
+        const markerOptions = {
+          position: latLngInstance,
+          map: maps,
+          title: markerTitle
+        }
+        const marker = new google.maps.Marker(markerOptions);
+        return marker
+      }
+
+
+      /**
+       * 与えられたマーカー配列のマーカーをマップから消す。
+       * **配列から削除するわけではない**
+       * @static
+       * @function deleteMarker
+       * @param {Array<"google.maps.Marker">} markerList -マーカーインスタンスリスト
+       * @return {Array<"google.maps.Marker">}
+       * @author mizuki
+       * 
+       */
+      const deleteMarker = function (markerList) {
+        console.log("deleteMaker");
+        return markerList.forEach(e => {
+          // e.setVisible(false);
+          e.setMap(null);
+        });
+      }
+
+
+
+      /**
+       * directionsServiceで検索したルートをマップ上に描画してPromiseを返します
+       * @static
+       * @function viewRoute
+       * @param {"DirectionsResult"} response - directionsServiceの結果
+       * @param {"google.maps.Map"} mapInstance - ルートを表示させたいMapインスタンス
+       * @return {Promise} - 
+       * @author mizuki
+       * 
+       */
+      const viewRoute = function (response, mapInstance) {
+        return new google.maps.DirectionsRenderer({
+          map: mapInstance,
+          directions: response,
+          suppressMarkers: true
+        });
+      }
+
+      const deleteRenderer = function (routeList) {
+        console.log("deleterenderer")
+        console.log(routeList);
+        return routeList.forEach(e => {
+          console.log(e);
+          // e.renderer.setVisible(false)
+          // e.renderer.setPanel(null);
+          e.renderer.setMap(null);
+          // e.renderer = null;
+        });
+      }
+
+      /** 
+       * directionsServiceで二点間のルートを検索しPromiseを返します
+       * @static
+       * @function fetchRoute
+       * @param {"google.maps.LatLng"} startLatLng - ルートの開始地点
+       * @param {"google.maps.LatLng"} endLatLng - ルートの終了地点
+       * @param {String} mode - TravelModeの値いずれか
+       * @return {Promise} - 
+       * @author mizuki
+       * 
+       **/
+      const fetchRoute = function (startLatLng, endLatLng, mode) {
+        const directionsService = new google.maps.DirectionsService();
+        let request = {
+          origin: startLatLng,
+          destination: endLatLng,
+          travelMode: google.maps.DirectionsTravelMode[mode], // 移動手段
+        };
+        return directionsService.route(request)
+      }
+
+
+      /**
+       *渡されたインスタンスのマーカーリストからルート検索をして描画。
+       *ルートリストに入れる。
+       * @param {"google.maps.Map"} mapInstance - ルートを表示させたいMapインスタンス
+       * @param {Array<"google.maps.Marker">} selectList -マーカーインスタンスリスト
+       * @param {Array<"google.maps.DirectionsResult">} routeList -DirectionsResultリスト
+       * @author mizuki
+       * 
+       **/
+      const searchRoute = function (mapInstance, selectList, routeList) {
+        if (selectList.length >= 2) {
+          console.log("action");
+          this.deleteRenderer(routeList);
+          for (let i = 0; i < selectList.length - 1; i++) {
+            const startLatlng = selectList[i].getPosition();
+            const endLatlng = selectList[i + 1].getPosition();
+            this.fetchRoute(startLatlng, endLatlng, 'DRIVING')
+              .then(response => {
+                console.log(this);
+                response.renderer = this.viewRoute(response, mapInstance);
+                console.log(response);
+                routeList.push(response);
+              })
+              .catch(e => {
+                alert("取得に失敗したよ");
+                console.error(e);
+              })
+              .then(() => {
+                console.log("ルート検索終了");
+              });
+          }
+        }
+
+      }
+
+      init();
+      return {
+        createMapInstance: createMapInstance,
+        createMarker: createMarker,
+        deleteMarker: deleteMarker,
+        viewRoute: viewRoute,
+        fetchRoute: fetchRoute,
+        searchRoute: searchRoute,
+        deleteRenderer: deleteRenderer
+      }
+    })();
+    Object.freeze(mapTools.commons)
+
+    /**
+     * 渡されたインスタンス内のmapsプロパティにマップインスタンスを代入します。
+     * 苦肉の策です
+     * @param {Vue} self - マップを代入したいVueインスタンス
+     * @param {string} elementId - マップを表示したいelement_id
+     * @param {string} mapPropertyName -代入したいオブジェクトプロパティ名
+     * @return {"google.maps.Map"} - googleマップインスタンス
+     * @author mizuki
+     * 
+     */
+    mapTools.createMapInstance = function (self, elementId, mapPropertyName = "maps") {
+      self[mapPropertyName] = this.commons.createMapInstance(self.$refs[elementId]);
+      return self[mapPropertyName];
+    }
+
+
+    /**
+     * Vueインスタンスと緯度経度インスタンス,タイトルを受け取り、マーカーを作成し表示、それを返す
+     * マーカーはクリックされるとVueインスタンスないのmarkerListに入る
+     * @param {Vue} self - マーカーを表示させたいMapインスタンスを持つVueインスタンス
+     * @param {google.maps.LatLng} latLngInstance - 表示させたい位置のLatLngインスタンス
+     * @param {string} markerTitle - 表示させるマーカーのタイトル
+     * @param {string=} mapPropertyName -使用するマップインスタンスのプロパティ名
+     * @param {string=} markerListPropertyName - 使用する配列のプロパティ名
+     * @param {string=} selectListPropertyName - 使用する配列のプロパティ名
+     * @return {google.maps.Marker} - 表示したMarkerインスタンス
+     * @author mizuki
+     * 
+     */
+    mapTools.setUpMarker = function (self, latLngInstance, markerTitle = "無題のマーカー", mapPropertyName = "maps",
+      markerListPropertyName = "markerList", selectListPropertyName = "selectList") {
+      const marker = this.commons.createMarker(
+        self[mapPropertyName],
+        latLngInstance,
+        markerTitle
+      );
+
+      self[markerListPropertyName].push(marker);
+      marker.addListener("click", () => {
+        self[selectListPropertyName].push(marker);
+        alert(`${markerTitle}をリストにいれました`);
+      });
+      return marker
+    }
+
+
+
+    /**
+     * 与えられたマーカー配列のマーカーをマップから消す。
+     * @param {Vue} self -Vueインスタンス
+     * @param {string=} markerListPropertyName - 使用する配列のプロパティ名
+     * @return {Array<google.maps.Marker>}
+     * @author mizuki
+     * 
+     */
+    mapTools.deleteMarker = function (self, markerListPropertyName = "markerList") {
+      return this.commons.deleteMarker(self[markerListPropertyName]);
+    }
+
+
+    /**
+     * 与えられたマーカー配列のマーカーをマップから消す。
+     * @param {Vue} self -Vueインスタンス
+     * @param {string=} selectListPropertyName - 使用する配列のプロパティ名
+     * @return {Array<google.maps.Marker>}
+     * @author mizuki
+     * 
+     */
+    mapTools.deleteSelect = function (self, selectListPropertyName = "selectList") {
+      self[selectListPropertyName] = [];
+      return self[selectListPropertyName];
+    }
+
+
+
+
+    /**
+     *渡されたインスタンスのマーカーリストからルート検索をして描画。
+     *ルートリストに入れる。
+     * @param {Vue} self -vueインスタンス
+     * @param {string=} mapPropertyName - 使用するマップインスタンスのプロパティ名
+     * @param {string=} selectListPropertyName - 使用する配列のプロパティ名
+     * @param {string=} routeListPropertyName - 使用する配列のプロパティ名
+     * @author mizuki
+     * 
+     **/
+    mapTools.searchRoute = function (self, mapPropertyName = "maps", selectListPropertyName = "selectList",
+      routeListPropertyName = "routeList") {
+      self[routeListPropertyName] = [];
+      this.commons.searchRoute(
+        self[mapPropertyName],
+        self[selectListPropertyName],
+        self[routeListPropertyName]
+      );
+    }
+
+
+
+    let photoList = [];
+    let nameList = [];
+    let markers = [];
+    var markerIndex = 0;
+
+    window.onload = memoInitial();
+
+    function isLocationFree(search) {
+      for (var i = 0; i < markers.length; i++) {
+        markerIndex = i;
+        if (markers[i].position.lat() === search[0] && markers[i].position.lng() === search[1]) {
+          //すでに存在しています！
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function togglePin(photo, name, x, y) {
+      if (isLocationFree([x, y])) {
+        //ピンを指す場所に移動
+        map.setCenter({
+          lat: x,
+          lng: y
+        });
+
+        //ピンを指す
+        markers.push(new google.maps.Marker({
+          position: {
+            lat: x,
+            lng: y
+          },
+          animation: google.maps.Animation.DROP,
+        }));
+        markers[markers.length - 1].setMap(map);
+
+        photoList.push(photo);
+        nameList.push(name);
+
+        //getInfo(x, y);
+      } else {
+        //ピンをはずす
+        markers[markerIndex].setMap(null);
+        markers.splice(markerIndex, 1);
+        photoList.splice(markerIndex, 1);
+        nameList.splice(markerIndex, 1);
+      }
+      memoInitial();
+    }
+
+    function removeSchedule(index) {
+      //✖ボタンが押された
+      markers[index].setMap(null);
+      markers.splice(index, 1);
+      photoList.splice(index, 1);
+      nameList.splice(index, 1);
+
+      memoInitial();
+    }
+
+    //メモ機能  
+    var toggleMemo = false;
+
+    $(".openbtn4").click(function () {
+      $(this).toggleClass('active');
+      ToggleMemo();
+    });
+
+    function ToggleMemo() {
+      toggleMemo = !toggleMemo;
+
+      memoInitial();
+    }
+
+    function memoInitial() {
+      var memoSpace = document.getElementsByClassName("memoSpace")[0];
+
+      if (toggleMemo) {
+        memoSpace.style.display = "block";
+        memoSpace.innerHTML = "";
+
+        for (var i = 0; i < 15; i++) {
+          if (markers[i]) {
+            makeMemoTable(memoSpace, i);
+          } else {
+            makeNullSpace(memoSpace, i);
+          }
+        }
+      } else {
+        memoSpace.style.display = "none";
+      }
+    }
+
+    function makeMemoTable(memoSpace, index) {
+      var hour = (index + 9);
+
+      memoSpace.insertAdjacentHTML(
+        "beforeend",
+        '\
+               <table class="memoTable">\
+                   <tr>\
+                       <td class="timeDisplay"><h2>' + ('00' + (hour % 24)).slice(-2) + ':00</h2></td>\
+                       <td>\
+                           <div class="placeTable">\
+                               <table>\
+                                   <tr>\
+                                       <td rowspan="2">\
+                                           <div class="placePhoto">\
+                                               <img src=' + photoList[index] + '>\
+                                           </div>\
+                                       </td>\
+                                       <td><h3>' + nameList[index] + '</h3></td>\
+                                       <td rowspan="2">\
+                                           <button onclick="removeSchedule(' + index + ')">×</button>\
+                                       </td>\
+                                   </tr>\
+                                   <tr>\
+                                       <td>\
+                                           ' + ('00' + (hour % 24)).slice(-2) + ':00\
+                                           ～\
+                                           ' + ('00' + ((hour + 1) % 24)).slice(-2) + ':00\
+                                           </td>\
+                                   </tr>\
+                               </table>\
+                           </div>\
+                       </td>\
+                   </tr>\
+               </table>'
+      );
+    }
+
+    function makeNullSpace(memoSpace, hour) {
+      hour += 9;
+
+      memoSpace.insertAdjacentHTML(
+        "beforeend",
+        '\
+               <table class="memoTable">\
+                   <tr>\
+                       <td class="timeDisplay"><h2>' + ('00' + (hour % 24)).slice(-2) + ':00</h2></td>\
+                   </tr>\
+               </table>'
+      );
+    }
+  </script>
+
+  <!-- <script src="https://maps.googleapis.com/maps/api/js?language=ja&key=AIzaSyAIvDT6aSB8xK3ASJLRpicJ_SZV8KngMLM&libraries=places&callback=initMap"></script> -->
+  <script
+    src="https://maps.googleapis.com/maps/api/js?language=ja&key=AIzaSyAIvDT6aSB8xK3ASJLRpicJ_SZV8KngMLM&libraries=places&callback=initMap">
   </script>
 </body>
 
