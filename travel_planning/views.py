@@ -7,3 +7,6 @@ class MapView(generic.TemplateView):
 
 class AutomapView(generic.TemplateView):
     template_name="auto.html"
+
+class TestView(generic.TemplateView):
+    template_name = "test.html"
