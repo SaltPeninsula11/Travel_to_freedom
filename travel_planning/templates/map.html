@@ -7,466 +7,93 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <title>Document</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
-  <style>
-    body {
-      margin: 0 auto;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-
-    #container {
-      display: flex;
-      flex: 1;
-
-    }
-
-    .main {
-      flex: 1;
-
-    }
-
-    .nav-l {
-      flex: 1.1;
-
-    }
-
-    .nav-r {
-      flex: 1;
-
-    }
-
-    #footer {
-      height: 100px;
-      color: #fff;
-      background-color: black;
-    }
-
-    @media screen and (max-width:900px) {
-
-      body,
-      nav-l,
-      nav-r {
-        width: 100%;
-      }
-
-      #container {
-        flex-direction: column;
-      }
-
-      .main {
-        order: -1;
-      }
-    }
-
-    .navbar {
-      height: 70px;
-      background: #fff;
-      padding-left: 16px;
-      padding-right: 16px;
-      /* border-bottom: 1px solid #dfe3e8; */
-      border-radius: 0;
-    }
-
-    .navbar .navbar-brand {
-      padding-left: 0;
-      font-size: 24px;
-      padding-right: 50px;
-    }
-
-    .navbar a {
-      color: rgb(0, 0, 0);
-      font-size: 16px;
-    }
-
-    .navbar .sign-up-btn {
-      min-width: 110px;
-      /* max-height: 36px; */
-    }
-
-    #map {
-      width: 100%;
-      height: 100%;
-      border-radius: 8px;
-    }
-
-    #results {
-      width: 98.5%;
-      height: 200px;
-      border: 1px dotted;
-      padding: 10px;
-      overflow-y: scroll;
-      background: white;
-    }
-
-    .p-0 {
-      padding-left: 0;
-    }
-
-    .scroll-box {
-      overflow-y: scroll;
-      height: 475px;
-    }
-
-    #memo {
-      position: absolute;
-      left: -5px;
-      top: 207px;
-    }
-
-    .memoSpace {
-      background-color: #DEDEDE;
-      width: 650px;
-      height: 400px;
-      overflow: auto;
-    }
-
-    .memoTable {
-      padding: 20em 20em;
-      width: 100%;
-      height: 100px;
-    }
-
-    .timeDisplay {
-      width: 100px;
-    }
-
-    .placeTable {
-      border: 2px solid #000000;
-      background-color: #888888;
-      border-radius: 5px;
-
-      width: 80%;
-      height: 95%;
-    }
-
-    .placeTable table {
-      width: 100%;
-      height: 100%;
-    }
-
-    .placePhoto {
-      width: 90px;
-      height: 90px;
-      border: 2px solid #000000;
-      background-color: #FFFFFF;
-      border-radius: 5px;
-    }
-
-    .placePhoto img {
-      width: auto;
-      height: auto;
-      max-width: 100%;
-      max-height: 100%;
-    }
-
-    /*==================================================
-        　5-2-4 MENUがCLOSEに
-        ===================================*/
-
-    /*ボタン外側※レイアウトによってpositionや形状は適宜変更してください*/
-    .openbtn4 {
-      position: relative;
-      /*ボタン内側の基点となるためrelativeを指定*/
-      background: #bdbdbd;
-      cursor: pointer;
-      width: 60px;
-      height: 60px;
-      border-radius: 5px;
-
-      transform: scale(0.6);
-    }
-
-    /*ボタン内側*/
-    .openbtn4 span {
-      display: inline-block;
-      transition: all .4s;
-      /*アニメーションの設定*/
-      position: absolute;
-      left: 19px;
-      height: 2px;
-      border-radius: 5px;
-      background: #fff;
-      width: 45%;
-    }
-
-
-    .openbtn4 span:nth-of-type(1) {
-      top: 19px;
-      transform: rotate(22.5deg);
-    }
-
-    .openbtn4 span:nth-of-type(2) {
-      top: 29px;
-      transform: rotate(-22.5deg);
-    }
-
-    .openbtn4 span:nth-of-type(2)::after {
-      content: "Schedule";
-      /*3つ目の要素のafterにMenu表示を指定*/
-      position: absolute;
-      top: 5px;
-      left: -20px;
-      color: #fff;
-      font-size: 1px;
-      text-transform: uppercase;
-      transform: rotate(22.5deg);
-    }
-
-    /*activeクラスが付与されると線が回転して×になり、Menu⇒Closeに変更*/
-
-    .openbtn4.active span:nth-of-type(1) {
-      top: 19px;
-      left: 23px;
-      transform: translateY(6px) rotate(-45deg);
-      width: 30%;
-    }
-
-    .openbtn4.active span:nth-of-type(2) {
-      top: 31px;
-      left: 23px;
-      transform: translateY(-6px) rotate(45deg);
-      width: 30%;
-    }
-
-    .openbtn4.active span:nth-of-type(2)::after {
-      content: "Close";
-      /*3つ目の要素のafterにClose表示を指定*/
-      transform: translateY(0) rotate(-45deg);
-      top: 5px;
-      left: 4px;
-    }
-
-    .memo {
-      position: absolute;
-    }
-
-    .wrapper {
-      position: relative;
-      top: 1px;
-      left: 380px;
-    }
-
-    .balls-guruguru {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 100px;
-      height: 100px;
-      background-color: #fff;
-    }
-
-    .ball {
-      width: 50%;
-      height: 20px;
-      position: absolute;
-      top: calc(50% - 10px);
-      transform-origin: 100% 50%;
-      left: 0;
-    }
-
-    .ball::before {
-      content: '';
-      display: block;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background-color: #333;
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-
-    .ball-1::before {
-      animation: ball-guruguru 1s linear 0s infinite;
-    }
-
-    .ball-2 {
-      transform: rotate(45deg);
-    }
-
-    .ball-2::before {
-      animation: ball-guruguru 1s linear -0.125s infinite;
-    }
-
-    .ball-3 {
-      transform: rotate(90deg);
-    }
-
-    .ball-3::before {
-      animation: ball-guruguru 1s linear -0.25s infinite;
-    }
-
-    .ball-4 {
-      transform: rotate(135deg);
-    }
-
-    .ball-4::before {
-      animation: ball-guruguru 1s linear -0.375s infinite;
-    }
-
-    .ball-5 {
-      transform: rotate(180deg);
-    }
-
-    .ball-5::before {
-      animation: ball-guruguru 1s linear -0.5s infinite;
-    }
-
-    .ball-6 {
-      transform: rotate(225deg);
-    }
-
-    .ball-6::before {
-      animation: ball-guruguru 1s linear -0.625s infinite;
-    }
-
-    .ball-7 {
-      transform: rotate(270deg);
-    }
-
-    .ball-7::before {
-      animation: ball-guruguru 1s linear -0.75s infinite;
-    }
-
-    .ball-8 {
-      transform: rotate(315deg);
-    }
-
-    .ball-8::before {
-      animation: ball-guruguru 1s linear -0.875s infinite;
-    }
-
-    @keyframes ball-guruguru {
-      0% {
-        width: 20px;
-        height: 20px;
-        opacity: 1;
-      }
-
-      100% {
-        width: 6px;
-        height: 6px;
-        opacity: .2;
-        margin-left: 7px;
-      }
-    }
-  </style>
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" integrity="sha512-wnea99uKIC3TJF7v4eKk4Y+lMz2Mklv18+r4na2Gn1abDRPPOeef95xTzdwGD9e6zXJBteMIhZ1+68QC5byJZw==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <title>Travel to Freedom</title>
+  <!-- <link rel="stylesheet" href="./style.css"> -->
+  <!-- <link rel="stylesheet" href="./tamaki/shiozakiStyle.css"> -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+  <!-- <script src="https://unpkg.com/http-vue-loader"></script> -->
 </head>
 
 <body>
-  <nav id="main_nav" class="navbar navbar-expand-lg navbar-light bg-white shadow">
-    <div class="container d-flex justify-content-between align-items-center">
-      <a class="navbar-brand h1" href="">
-        Travel to freedom
-      </a>
-      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
-        data-bs-target="#navbar-toggler-success" aria-controls="navbarSupportedContent" aria-expanded="false"
-        aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    <nav id="main_nav" class="navbar navbar-expand-lg navbar-light bg-white shadow">
+      <div class="container d-flex justify-content-between align-items-center">
+        <a class="navbar-brand h1" href="">
+          Travel to Freedom
+        </a>
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbar-toggler-success" aria-controls="navbarSupportedContent" aria-expanded="false"
+          aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-      <div class="align-self-center collapse navbar-collapse flex-fill bg-white d-lg-flex justify-content-lg-between"
-        id="navbar-toggler-success">
-        <div class="flex-fill mx-xl-5 mb-2">
-          <ul class="nav navbar-nav d-flex justify-content-between mx-xl-5 text-dark">
-            <li class="nav-item">
-              <a class="nav-link btn-outline-primary rounded-pill px-3" href="">旅行計画</a>
-            </li>
-        </div>
-        <div class="align-self-center d-flex">
-          <div class="hidden fixed nav-item top-0 right-0 px-6 sm:block">
-            <a href="" class="nav-link btn-outline-primary rounded-pill px-3 mb-2" style="float: left">ログイン</a>
-            <a href="" class="nav-link btn-outline-primary rounded-pill px-3 mb-2" style="float: left">会員登録</a>
+        <div class="align-self-center collapse navbar-collapse flex-fill bg-white d-lg-flex justify-content-lg-between"
+          id="navbar-toggler-success">
+          <div class="flex-fill mx-xl-5 mb-2">
+            <ul class="nav navbar-nav d-flex justify-content-between mx-xl-5 text-dark">
+              <li class="nav-item">
+                <a class="nav-link btn-outline-primary rounded-pill px-3" href="">旅行計画</a>
+              </li>
           </div>
-        </div>
-      </div>
-    </div>
-  </nav>
-  <section id="container">
-    <nav class="nav-l m-5">
-      <div class="change">
-        <button type="submit" value="自動" class="">オート</button>
-        <button type="submit" value="カスタム">カスタム</button>
-      </div>
-      <div class="radiobox">
-        <!-- <div class="btn-group">
-          <input id="radio1" class="btn btn-info" name="hoge" type="radio" value="restaurant" />
-          <label for="radio1">飲食店</label>
-          <input id="radio2" class="" name="hoge" type="radio" value="tourist_attraction" />
-          <label for="radio2">観光地</label>
-          <input id="radio3" class="" name="hoge" type="radio" value="lodging" />
-          <label for="radio3">ホテル</label>
-        </div> -->
-        <div class="btn-group mt-3 mb-2" data-toggle="buttons-radio">
-          <button type="radio" class="btn btn-info" value="restaurant">飲食店</button>
-          <button type="radio" class="btn btn-info" value="tourist_attraction">観光地</button>
-          <button type="radio" class="btn btn-info" value="lodging">ホテル</button>
-        </div>
-        <form>
-          <div class="form-group">
-            <input type="text" class="form-control mt-2" id="addressInput" placeholder="施設・地域">
-          </div>
-          <input type="button" class="btn btn-outline-primary mb-1" value="情報取得" onclick="getPlaces();">
-          <button class="btn btn-outline-primary ml-1 mb-1" id="routeSearch">ルート検索</button>
-          <button class="btn btn-outline-primary ml-1 mb-1" id="deleteRoute">ルート削除</button>
-        </form>
-      </div>
-
-      <div id="results" hidden></div>
-
-      <div class="container">
-        <div class="row scroll-box" id="cardDisplay"></div>
-        
-
-        <div class="results" hidden></div>
-
-        <div id="memo" class="memo">
-          <div class="openbtn4"><span></span><span></span></div>
-
-          <div class="memoSpace">
-            <table class="memoTable">
-              <tr>
-                <td class="timeDisplay">
-                  <h2>09:00</h2>
-                </td>
-                <td>
-                  <div class="placeTable">
-                    <table>
-                      <tr>
-                        <td rowspan="2">
-                          <div class="placePhoto">画像</div>
-                        </td>
-                        <td>
-                          <h3>名称</h3>
-                        </td>
-                        <td rowspan="2">
-                          <button>×</button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>HH:MM～HH:MM</td>
-                      </tr>
-                    </table>
-                  </div>
-                </td>
-              </tr>
-            </table>
+          <div class="align-self-center d-flex">
+            <div class="hidden fixed nav-item top-0 right-0 px-6 sm:block">
+              <a href="" class="nav-link btn-outline-primary rounded-pill px-3 mb-2" style="float: left">ログイン</a>
+              <a href="" class="nav-link btn-outline-primary rounded-pill px-3 mb-2" style="float: left">会員登録</a>
+            </div>
           </div>
         </div>
       </div>
     </nav>
+    <div id="container">
+      <nav class="nav-l">
+        <div class="container">
+          <div class="radiobox">
+              <table>
+                <!-- 以下<div id=app>内でのみVue適用 -->
+                <div id='app'>
+                  <!-- SPA オートページ遷移ボタン -->
+                  <router-link to="/" class="nav-link btn-outline-primary rounded-pill px-3 mb-2" style="float: left"><button class="btn btn-outline-primary ml-1 mb-1" >オート</button></router-link>
+                  <!-- SPA カスタムページ遷移ボタン -->
+                  <router-link to="/auto" class="nav-link btn-outline-primary rounded-pill px-3 mb-2" style="float: left"><button class="btn btn-outline-primary ml-1 mb-1">カスタム</button></router-link>
+                  <div class="form-group">
+                    <router-view/>
+                  </div>
+                </div>
+              </table>
+          </div>
+      
+      </nav>
     <aside class="nav-r">
       <div id="map"></div>
     </aside>
-  </section>
-
+    </div>
   <script>
+    // ___________________Vue.jsで使用_________________________________
+    // カスタムページテンプレート(``内に記述してください)
+    const CUSTOM_PAGE_COMPONENT = { template: `` }
+    // オートページテンプレート
+    const AUTO_PAGE_COMPONENT = { template: `` }
+
+    const router = new VueRouter({
+      mode: 'history',
+      routes: [
+        { path:'',component: CUSTOM_PAGE_COMPONENT },
+        { path:'/auto',component: AUTO_PAGE_COMPONENT },
+      ]
+    })
+    
+    var app = new Vue({
+      delimiters: ['[[', ']]'],
+      el: '#app',
+      data: {
+        title: "LOVE JULIA"
+      },
+      router,
+    })
+    // ___________________________________________________________
+
     var map;
 
     /**
@@ -608,13 +235,13 @@
     function initMap() {
       map = new google.maps.Map(document.getElementById('map'), {
         center: {
-          lat: 35.6809591,
-          lng: 139.7673068
+          lat: 34.7019399,
+          lng: 135.51002519999997
         },
         mapTypeControl: false, //マップタイプ コントロール
         fullscreenControl: false, //全画面表示コントロール
 
-        zoom: 13
+        zoom: 19
       });
     }
 
@@ -636,8 +263,8 @@
       //検索場所の位置情報を取得
       var geocoder = new google.maps.Geocoder();
       geocoder.geocode({
-          address: addressInput
-        },
+        address: addressInput
+      },
         function (results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
             //取得した緯度・経度を使って周辺検索
@@ -654,50 +281,43 @@
     */
     function startNearbySearch(latLng) {
 
-      //チェックボックス確認
-      let elememts = document.getElementsByName('hoge');
-      let len = elememts.length;
-      let checkValue = '';
-
-      for (let i = 0; i < len; i++) {
-        if (elememts.item(i).checked) {
-          checkValue = elememts.item(i).value;
-          console.log(checkValue);
-        }
-      }
-
       //読み込み中表示
-      document.getElementById("cardDisplay").innerHTML =
+      document.getElementById("cardDisplay").innerHTML
+        =
         "\
-      <div class='wrapper'>\
-        <div class='balls-guruguru'>\
-          <span class='ball ball-1'></span>\
-          <span class='ball ball-2'></span>\
-          <span class='ball ball-3'></span>\
-          <span class='ball ball-4'></span>\
-          <span class='ball ball-5'></span>\
-          <span class='ball ball-6'></span>\
-          <span class='ball ball-7'></span>\
-          <span class='ball ball-8'></span>\
-        </div>\
-      </div>\
-        ";
+<div class='wrapper'>\
+  <div class='balls-guruguru'>\
+    <span class='ball ball-1'></span>\
+    <span class='ball ball-2'></span>\
+    <span class='ball ball-3'></span>\
+    <span class='ball ball-4'></span>\
+    <span class='ball ball-5'></span>\
+    <span class='ball ball-6'></span>\
+    <span class='ball ball-7'></span>\
+    <span class='ball ball-8'></span>\
+  </div>\
+</div>\
+  ";
 
+      //Mapインスタンス生成
+      var map = new google.maps.Map(
+        document.createElement("div")
+      );
 
       //PlacesServiceインスタンス生成
       var service = new google.maps.places.PlacesService(map);
 
       //入力したKeywordを取得
-      var addressInput = document.getElementById("addressInput").value;
+      var keywordInput = document.getElementById("addressInput").value;
 
       //周辺検索
       service.nearbySearch({
-          location: latLng,
-          radius: 800,
-          type: [checkValue],
-          keyword: addressInput,
-          language: 'ja'
-        },
+        location: latLng,
+        radius: 800,
+        type: ['tourist_attraction', 'restaurant'],
+        keyword: keywordInput,
+        language: 'ja'
+      },
         displayCards
       );
     }
@@ -748,21 +368,21 @@
             card.insertAdjacentHTML(
               "beforeend",
               '\
-                <div class="col-sm mt-3 p-0">\
-                  <div class="card" style="width: 22rem;">\
-                    <img src="' + place.photos[0].getUrl() + '" alt="" width="100%" height="250">\
-                    <div class="card-body">\
-                      <h5 class="card-title">' + place.name + '</h5>\
-                      <p class="card-text">' + place.rating + '</p>\
-                      <a href="#" class="btn btn-primary">詳しく見る</a>\
-                      <div class="btn btn-primary" onclick="togglePin(\'' +
+          <div class="col-sm mt-3 p-0">\
+            <div class="card" style="width: 22rem;">\
+              <img src="' + place.photos[0].getUrl() + '" alt="" width="100%" height="250">\
+              <div class="card-body">\
+                <h5 class="card-title">' + place.name + '</h5>\
+                <p class="card-text">' + place.rating + '</p>\
+                <a href="#" class="btn btn-primary">詳しく見る</a>\
+                <div class="btn btn-primary" onclick="togglePin(\'' +
               place.photos[0].getUrl() + '\', \'' +
               place.name + '\', ' +
               lat + ', ' + lng +
               ');">追加</div>\
-                    </div>\
-                  </div>\
-                </div>'
+              </div>\
+            </div>\
+          </div>'
             );
           }
         }
@@ -1031,8 +651,7 @@
      * @author mizuki
      * 
      */
-    mapTools.setUpMarker = function (self, latLngInstance, markerTitle = "無題のマーカー", mapPropertyName = "maps",
-      markerListPropertyName = "markerList", selectListPropertyName = "selectList") {
+    mapTools.setUpMarker = function (self, latLngInstance, markerTitle = "無題のマーカー", mapPropertyName = "maps", markerListPropertyName = "markerList", selectListPropertyName = "selectList") {
       const marker = this.commons.createMarker(
         self[mapPropertyName],
         latLngInstance,
@@ -1088,8 +707,7 @@
      * @author mizuki
      * 
      **/
-    mapTools.searchRoute = function (self, mapPropertyName = "maps", selectListPropertyName = "selectList",
-      routeListPropertyName = "routeList") {
+    mapTools.searchRoute = function (self, mapPropertyName = "maps", selectListPropertyName = "selectList", routeListPropertyName = "routeList") {
       self[routeListPropertyName] = [];
       this.commons.searchRoute(
         self[mapPropertyName],
@@ -1121,17 +739,11 @@
     function togglePin(photo, name, x, y) {
       if (isLocationFree([x, y])) {
         //ピンを指す場所に移動
-        map.setCenter({
-          lat: x,
-          lng: y
-        });
+        map.setCenter({ lat: x, lng: y });
 
         //ピンを指す
         markers.push(new google.maps.Marker({
-          position: {
-            lat: x,
-            lng: y
-          },
+          position: { lat: x, lng: y },
           animation: google.maps.Animation.DROP,
         }));
         markers[markers.length - 1].setMap(map);
@@ -1163,7 +775,8 @@
     //メモ機能  
     var toggleMemo = false;
 
-    $(".openbtn4").click(function () {
+    $('.openbtn4').click(function() {
+      // console.log("クリックされました");
       $(this).toggleClass('active');
       ToggleMemo();
     });
@@ -1199,57 +812,436 @@
       memoSpace.insertAdjacentHTML(
         "beforeend",
         '\
-               <table class="memoTable">\
-                   <tr>\
-                       <td class="timeDisplay"><h2>' + ('00' + (hour % 24)).slice(-2) + ':00</h2></td>\
-                       <td>\
-                           <div class="placeTable">\
-                               <table>\
-                                   <tr>\
-                                       <td rowspan="2">\
-                                           <div class="placePhoto">\
-                                               <img src=' + photoList[index] + '>\
-                                           </div>\
-                                       </td>\
-                                       <td><h3>' + nameList[index] + '</h3></td>\
-                                       <td rowspan="2">\
-                                           <button onclick="removeSchedule(' + index + ')">×</button>\
-                                       </td>\
-                                   </tr>\
-                                   <tr>\
-                                       <td>\
-                                           ' + ('00' + (hour % 24)).slice(-2) + ':00\
-                                           ～\
-                                           ' + ('00' + ((hour + 1) % 24)).slice(-2) + ':00\
-                                           </td>\
-                                   </tr>\
-                               </table>\
-                           </div>\
-                       </td>\
-                   </tr>\
-               </table>'
+         <table class="memoTable">\
+             <tr>\
+                 <td class="timeDisplay"><h2>' + ('00' + (hour % 24)).slice(-2) + ':00</h2></td>\
+                 <td>\
+                     <div class="placeTable">\
+                         <table>\
+                             <tr>\
+                                 <td rowspan="2">\
+                                     <div class="placePhoto">\
+                                         <img src='+ photoList[index] + '>\
+                                     </div>\
+                                 </td>\
+                                 <td><h3>' + nameList[index] + '</h3></td>\
+                                 <td rowspan="2">\
+                                     <button onclick="removeSchedule(' + index + ')">×</button>\
+                                 </td>\
+                             </tr>\
+                             <tr>\
+                                 <td>\
+                                     ' + ('00' + (hour % 24)).slice(-2) + ':00\
+                                     ～\
+                                     ' + ('00' + ((hour + 1) % 24)).slice(-2) + ':00\
+                                     </td>\
+                             </tr>\
+                         </table>\
+                     </div>\
+                 </td>\
+             </tr>\
+         </table>'
       );
     }
-
     function makeNullSpace(memoSpace, hour) {
       hour += 9;
 
       memoSpace.insertAdjacentHTML(
         "beforeend",
         '\
-               <table class="memoTable">\
-                   <tr>\
-                       <td class="timeDisplay"><h2>' + ('00' + (hour % 24)).slice(-2) + ':00</h2></td>\
-                   </tr>\
-               </table>'
+         <table class="memoTable">\
+             <tr>\
+                 <td class="timeDisplay"><h2>' + ('00' + (hour % 24)).slice(-2) + ':00</h2></td>\
+             </tr>\
+         </table>'
       );
     }
+
   </script>
 
+
+
+
+
+  <!-- <script src="./js/key.js"></script> -->
+  <!-- <script src="js/jquery-1.12.4.min.js"></script> -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+    </script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+    </script>
+  <!-- <script src="./assets/js/paginathing.min.js"></script> -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <!-- <script src="./assets/js/tools.js"></script> -->
+  <!-- <script src="./assets/js/sample.js"></script> -->
+  <!-- <script src="./assets/js/shiozaki.js"></script> -->
   <!-- <script src="https://maps.googleapis.com/maps/api/js?language=ja&key=AIzaSyAIvDT6aSB8xK3ASJLRpicJ_SZV8KngMLM&libraries=places&callback=initMap"></script> -->
-  <script
-    src="https://maps.googleapis.com/maps/api/js?language=ja&key=AIzaSyAIvDT6aSB8xK3ASJLRpicJ_SZV8KngMLM&libraries=places&callback=initMap">
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDeL7_U--qzVwi963J1elplZfLTCIsduZQ&libraries=places&callback=initMap">
+    </script>
+  <script>
+    $(function () {
+      $('.pagination').paginathing({ //親要素のclassを記述
+        perPage: 20, //1ページあたりの表示件数
+        prevText: '前へ', //1つ前のページへ移動するボタンのテキスト
+        nextText: '次へ', //1つ次のページへ移動するボタンのテキスト
+        activeClass: 'navi-active', //現在のページ番号に任意のclassを付与できます
+      })
+    });
   </script>
+  <style>
+    body {
+      margin: 0 auto;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+
+    #container {
+      display: flex;
+      flex: 1;
+
+    }
+
+    .main {
+      flex: 1;
+
+    }
+
+    .nav-l {
+      flex: 1.1;
+
+    }
+
+    .nav-r {
+      flex: 1;
+
+    }
+
+    #footer {
+      height: 100px;
+      color: #fff;
+      background-color: black;
+    }
+
+    @media screen and (max-width:900px) {
+
+      body,
+      nav-l,
+      nav-r {
+        width: 100%;
+      }
+
+      #container {
+        flex-direction: column;
+      }
+
+      .main {
+        order: -1;
+      }
+    }
+
+    .navbar {
+      height: 70px;
+      background: #fff;
+      padding-left: 16px;
+      padding-right: 16px;
+      /* border-bottom: 1px solid #dfe3e8; */
+      border-radius: 0;
+    }
+
+    .navbar .navbar-brand {
+      padding-left: 0;
+      font-size: 24px;
+      padding-right: 50px;
+    }
+
+    .navbar a {
+      color: rgb(0, 0, 0);
+      font-size: 16px;
+    }
+
+    .navbar .sign-up-btn {
+      min-width: 110px;
+      /* max-height: 36px; */
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+    }
+
+    #results {
+      width: 98.5%;
+      height: 200px;
+      border: 1px dotted;
+      padding: 10px;
+      overflow-y: scroll;
+      background: white;
+    }
+
+    .p-0 {
+      padding-left: 0;
+    }
+
+    .scroll-box {
+      overflow-y: scroll;
+      height: 475px;
+    }
+
+    #memo {
+      position: absolute;
+      left: -5px;
+      top: 207px;
+    }
+
+    .memoSpace {
+      background-color: #DEDEDE;
+      width: 650px;
+      height: 400px;
+      overflow: auto;
+    }
+
+    .memoTable {
+      padding: 20em 20em;
+      width: 100%;
+      height: 100px;
+    }
+
+    .timeDisplay {
+      width: 100px;
+    }
+
+    .placeTable {
+      border: 2px solid #000000;
+      background-color: #888888;
+      border-radius: 5px;
+
+      width: 80%;
+      height: 95%;
+    }
+
+    .placeTable table {
+      width: 100%;
+      height: 100%;
+    }
+
+    .placePhoto {
+      width: 90px;
+      height: 90px;
+      border: 2px solid #000000;
+      background-color: #FFFFFF;
+      border-radius: 5px;
+    }
+
+    .placePhoto img {
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    /*==================================================
+    　5-2-4 MENUがCLOSEに
+    ===================================*/
+
+    /*ボタン外側※レイアウトによってpositionや形状は適宜変更してください*/
+    .openbtn4 {
+      position: relative;
+      /*ボタン内側の基点となるためrelativeを指定*/
+      background: #bdbdbd;
+      cursor: pointer;
+      width: 60px;
+      height: 60px;
+      border-radius: 5px;
+
+      transform: scale(0.6);
+    }
+
+    /*ボタン内側*/
+    .openbtn4 span {
+      display: inline-block;
+      transition: all .4s;
+      /*アニメーションの設定*/
+      position: absolute;
+      left: 19px;
+      height: 2px;
+      border-radius: 5px;
+      background: #fff;
+      width: 45%;
+    }
+
+
+    .openbtn4 span:nth-of-type(1) {
+      top: 19px;
+      transform: rotate(22.5deg);
+    }
+
+    .openbtn4 span:nth-of-type(2) {
+      top: 29px;
+      transform: rotate(-22.5deg);
+    }
+
+    .openbtn4 span:nth-of-type(2)::after {
+      content: "Schedule";
+      /*3つ目の要素のafterにMenu表示を指定*/
+      position: absolute;
+      top: 5px;
+      left: -20px;
+      color: #fff;
+      font-size: 1px;
+      text-transform: uppercase;
+      transform: rotate(22.5deg);
+    }
+
+    /*activeクラスが付与されると線が回転して×になり、Menu⇒Closeに変更*/
+
+    .openbtn4.active span:nth-of-type(1) {
+      top: 19px;
+      left: 23px;
+      transform: translateY(6px) rotate(-45deg);
+      width: 30%;
+    }
+
+    .openbtn4.active span:nth-of-type(2) {
+      top: 31px;
+      left: 23px;
+      transform: translateY(-6px) rotate(45deg);
+      width: 30%;
+    }
+
+    .openbtn4.active span:nth-of-type(2)::after {
+      content: "Close";
+      /*3つ目の要素のafterにClose表示を指定*/
+      transform: translateY(0) rotate(-45deg);
+      top: 5px;
+      left: 4px;
+    }
+
+    .memo {
+      position: absolute;
+    }
+
+    .wrapper {
+      position: relative;
+      top: 1px;
+      left: 380px;
+    }
+
+    .balls-guruguru {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px;
+      height: 100px;
+      background-color: #fff;
+    }
+
+    .ball {
+      width: 50%;
+      height: 20px;
+      position: absolute;
+      top: calc(50% - 10px);
+      transform-origin: 100% 50%;
+      left: 0;
+    }
+
+    .ball::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #333;
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .ball-1::before {
+      animation: ball-guruguru 1s linear 0s infinite;
+    }
+
+    .ball-2 {
+      transform: rotate(45deg);
+    }
+
+    .ball-2::before {
+      animation: ball-guruguru 1s linear -0.125s infinite;
+    }
+
+    .ball-3 {
+      transform: rotate(90deg);
+    }
+
+    .ball-3::before {
+      animation: ball-guruguru 1s linear -0.25s infinite;
+    }
+
+    .ball-4 {
+      transform: rotate(135deg);
+    }
+
+    .ball-4::before {
+      animation: ball-guruguru 1s linear -0.375s infinite;
+    }
+
+    .ball-5 {
+      transform: rotate(180deg);
+    }
+
+    .ball-5::before {
+      animation: ball-guruguru 1s linear -0.5s infinite;
+    }
+
+    .ball-6 {
+      transform: rotate(225deg);
+    }
+
+    .ball-6::before {
+      animation: ball-guruguru 1s linear -0.625s infinite;
+    }
+
+    .ball-7 {
+      transform: rotate(270deg);
+    }
+
+    .ball-7::before {
+      animation: ball-guruguru 1s linear -0.75s infinite;
+    }
+
+    .ball-8 {
+      transform: rotate(315deg);
+    }
+
+    .ball-8::before {
+      animation: ball-guruguru 1s linear -0.875s infinite;
+    }
+
+    @keyframes ball-guruguru {
+      0% {
+        width: 20px;
+        height: 20px;
+        opacity: 1;
+      }
+
+      100% {
+        width: 6px;
+        height: 6px;
+        opacity: .2;
+        margin-left: 7px;
+      }
+    }
+  </style>
 </body>
 
 </html>
