@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Document</title>
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer">
+    </script>
+    <style>
+        body {
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        .search-page {
+            display: flex;
+            flex: 1;
+
+        }
+
+        .main {
+            flex: 1;
+
+        }
+
+        .nav-l {
+            flex: 1.1;
+
+        }
+
+        .nav-r {
+            flex: 1;
+
+        }
+
+        #footer {
+            height: 100px;
+            color: #fff;
+            background-color: black;
+        }
+
+        @media screen and (max-width:900px) {
+
+            body,
+            nav-l,
+            nav-r {
+                width: 100%;
+            }
+
+            #container {
+                flex-direction: column;
+            }
+
+            .main {
+                order: -1;
+            }
+        }
+
+        .navbar {
+            height: 70px;
+            background: #fff;
+            padding-left: 16px;
+            padding-right: 16px;
+            /* border-bottom: 1px solid #dfe3e8; */
+            border-radius: 0;
+        }
+
+        .navbar .navbar-brand {
+            padding-left: 0;
+            font-size: 24px;
+            padding-right: 50px;
+        }
+
+        .navbar a {
+            color: rgb(0, 0, 0);
+            font-size: 16px;
+        }
+
+        .navbar .sign-up-btn {
+            min-width: 110px;
+            /* max-height: 36px; */
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+        }
+
+        #results {
+            width: 98.5%;
+            height: 200px;
+            border: 1px dotted;
+            padding: 10px;
+            overflow-y: scroll;
+            background: white;
+        }
+
+        .p-0 {
+            padding-left: 0;
+        }
+
+        .scroll-box {
+            overflow-y: scroll;
+            height: 279px;
+        }
+
+        #memo {
+            position: relative;
+            left: -5px;
+            top: 295px;
+        }
+
+        .memoSpace {
+            background-color: #DEDEDE;
+            width: 650px;
+            height: 400px;
+            overflow: auto;
+
+        }
+
+        .memoTable {
+            padding: 20em 20em;
+            width: 100%;
+            height: 100px;
+            margin-left: 3px;
+        }
+
+        .timeDisplay {
+            width: 100px;
+        }
+
+        .placeTable {
+            border: 2px solid #000000;
+            background-color: #888888;
+            border-radius: 5px;
+
+            width: 80%;
+            height: 95%;
+        }
+
+        .placeTable table {
+            width: 100%;
+            height: 100%;
+        }
+
+        .placePhoto {
+            width: 90px;
+            height: 90px;
+            border: 2px solid #000000;
+            background-color: #FFFFFF;
+            border-radius: 5px;
+        }
+
+        .placePhoto img {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .radiobox {
+            position: relative;
+            top: 5px;
+
+        }
+
+        .a {
+            position: relative;
+            left: -2px;
+            margin-top: 9px;
+            margin-bottom: 5px;
+        }
+
+        .form-group {
+            position: relative;
+            left: -1px;
+        }
+
+        .btn:checked+label {
+            background-color: skyblue;
+        }
+
+        /*==================================================
+        　5-2-4 MENUがCLOSEに
+        ===================================*/
+
+        /*ボタン外側※レイアウトによってpositionや形状は適宜変更してください*/
+        .openbtn4 {
+            position: relative;
+            /*ボタン内側の基点となるためrelativeを指定*/
+            background: #707070;
+            cursor: pointer;
+            width: 60px;
+            height: 60px;
+            border-radius: 5px;
+
+            transform: scale(0.6);
+        }
+
+        /*ボタン内側*/
+        .openbtn4 span {
+            display: inline-block;
+            transition: all .4s;
+            /*アニメーションの設定*/
+            position: absolute;
+            left: 19px;
+            height: 2px;
+            border-radius: 5px;
+            background: #fff;
+            width: 45%;
+        }
+
+
+        .openbtn4 span:nth-of-type(1) {
+            top: 19px;
+            transform: rotate(22.5deg);
+        }
+
+        .openbtn4 span:nth-of-type(2) {
+            top: 29px;
+            transform: rotate(-22.5deg);
+        }
+
+        .openbtn4 span:nth-of-type(2)::after {
+            content: "Schedule";
+            /*3つ目の要素のafterにMenu表示を指定*/
+            position: absolute;
+            top: 5px;
+            left: -20px;
+            color: #fff;
+            font-size: 1px;
+            text-transform: uppercase;
+            transform: rotate(22.5deg);
+        }
+
+        /*activeクラスが付与されると線が回転して×になり、Menu⇒Closeに変更*/
+
+        .openbtn4.active span:nth-of-type(1) {
+            top: 19px;
+            left: 23px;
+            transform: translateY(6px) rotate(-45deg);
+            width: 30%;
+        }
+
+        .openbtn4.active span:nth-of-type(2) {
+            top: 31px;
+            left: 23px;
+            transform: translateY(-6px) rotate(45deg);
+            width: 30%;
+        }
+
+        .openbtn4.active span:nth-of-type(2)::after {
+            content: "Close";
+            /*3つ目の要素のafterにClose表示を指定*/
+            transform: translateY(0) rotate(-45deg);
+            top: 5px;
+            left: 4px;
+        }
+
+        /* memoStyle.css */
+        #memo {
+            position: absolute;
+            left: -5px;
+            top: 400px;
+        }
+
+        /* fiveMinPerPx = 16 */
+
+        /* p {
+            position: absolute;
+            left: calc(50% + 5px);
+        } */
+
+        #memoSpace {
+            width: 650px;
+            height: 600px;
+            overflow: auto;
+            /* margin-left: 45px; */
+            padding-left: 45px;
+        }
+
+        .schedule_table {
+            width: calc(100% - 55px);
+            position: relative;
+            left: 55px;
+            height: 4608px;
+            /* fiveMinPerPx * 12ブロック * 24時間 */
+
+            background-color: #EEE;
+        }
+
+        .thirty-box {
+            width: 90%;
+            height: 96px;
+            /* fiveMinPerPx * 6ブロック */
+            position: absolute;
+            right: 0;
+            margin: 0 5%;
+            border-bottom: 1px solid #000;
+        }
+
+        .hour-box {
+            width: 100%;
+            height: 96px;
+            /* fiveMinPerPx * 6ブロック */
+            position: absolute;
+            right: 0;
+            border-bottom: 1px solid #000;
+        }
+
+        .timestamp {
+            width: 45px;
+            position: relative;
+            left: -45px;
+            height: 192px;
+            /* fiveMinPerPx * 12ブロック */
+            background-color: #EEE;
+        }
+
+        .schedule_card {
+            position: absolute;
+            width: 84%;
+            right: 0;
+            background-color: #FFF;
+            border-radius: 2%;
+            box-shadow: 0px 4px 10px #000;
+
+            margin: 0 8%;
+
+            user-select: none;
+        }
+
+        .schedule_card .cardPhoto {
+            width: 56px;
+            height: 56px;
+
+            border-radius: 5%;
+
+            border: 1px solid #000;
+        }
+
+        .schedule_card .cardPhoto img {
+            width: 100%;
+            height: 100%;
+
+            vertical-align: bottom;
+        }
+
+        .schedule_card .nameAndTime {
+            width: 80%;
+        }
+
+        .schedule_card button {
+            width: 32px;
+            height: 32px;
+            background-color: #555;
+            border: none;
+            border-radius: 25%;
+
+            color: #FFF;
+            font-size: 30px;
+        }
+
+        .schedule_card button:hover {
+            background-color: #CCC;
+        }
+
+        /* memoStyle.css */
+
+        .memo {
+            position: absolute;
+            top: 500px;
+        }
+
+        .wrapper {
+            position: relative;
+            top: 1px;
+            left: 330px;
+        }
+
+        .balls-guruguru {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            background-color: #fff;
+        }
+
+        .ball {
+            width: 50%;
+            height: 20px;
+            position: absolute;
+            top: calc(50% - 10px);
+            transform-origin: 100% 50%;
+            left: 0;
+        }
+
+        .ball::before {
+            content: '';
+            display: block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #333;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .ball-1::before {
+            animation: ball-guruguru 1s linear 0s infinite;
+        }
+
+        .ball-2 {
+            transform: rotate(45deg);
+        }
+
+        .ball-2::before {
+            animation: ball-guruguru 1s linear -0.125s infinite;
+        }
+
+        .ball-3 {
+            transform: rotate(90deg);
+        }
+
+        .ball-3::before {
+            animation: ball-guruguru 1s linear -0.25s infinite;
+        }
+
+        .ball-4 {
+            transform: rotate(135deg);
+        }
+
+        .ball-4::before {
+            animation: ball-guruguru 1s linear -0.375s infinite;
+        }
+
+        .ball-5 {
+            transform: rotate(180deg);
+        }
+
+        .ball-5::before {
+            animation: ball-guruguru 1s linear -0.5s infinite;
+        }
+
+        .ball-6 {
+            transform: rotate(225deg);
+        }
+
+        .ball-6::before {
+            animation: ball-guruguru 1s linear -0.625s infinite;
+        }
+
+        .ball-7 {
+            transform: rotate(270deg);
+        }
+
+        .ball-7::before {
+            animation: ball-guruguru 1s linear -0.75s infinite;
+        }
+
+        .ball-8 {
+            transform: rotate(315deg);
+        }
+
+        .ball-8::before {
+            animation: ball-guruguru 1s linear -0.875s infinite;
+        }
+
+        @keyframes ball-guruguru {
+            0% {
+                width: 20px;
+                height: 20px;
+                opacity: 1;
+            }
+
+            100% {
+                width: 6px;
+                height: 6px;
+                opacity: .2;
+                margin-left: 7px;
+            }
+        }
+
+        .addTime {
+            display: flex !important;
+        }
+
+        .eof {
+            position: relative;
+            top: 5px;
+            line-height: 0;
+        }
+    </style>
+    <style>
+        .lp-img {
+            position: relative;
+
+        }
+
+        .title {
+            position: absolute;
+            /*絶対配置*/
+            color: white;
+            /*文字は白に*/
+            top: -120%;
+            left: 22%;
+            font-weight: bold;
+            font-size: 5rem;
+            z-index: 99;
+        }
+
+        /* カルーセルの下の3列の中のテキストを整列 */
+        .marketing .col-lg-4 {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .marketing h2 {
+            font-weight: 400;
+        }
+
+        .marketing .col-lg-4 p {
+            margin-right: .75rem;
+            margin-left: .75rem;
+        }
+
+        .slider-logo {
+            z-index: 10;
+            position: absolute;
+            color: #FFF;
+            left: 22%;
+            top: 30%;
+            width: 100%;
+            height: 100%;
+            font-weight: bold;
+            font-size: 5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <nav id="main_nav" class="navbar navbar-expand-lg navbar-light bg-white shadow">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand h1" href="">
+                Travel to Freedom
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbar-toggler-success" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="align-self-center collapse navbar-collapse flex-fill bg-white d-lg-flex justify-content-lg-between"
+                id="navbar-toggler-success">
+                <div class="flex-fill mx-xl-5 mb-2">
+                    <ul class="nav navbar-nav d-flex justify-content-between mx-xl-5 text-dark">
+                        <li class="nav-item">
+                            <a class="nav-link   rounded-pill px-3" href="">旅行計画</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link   rounded-pill px-3" href="">旅行検索</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link   rounded-pill px-3" href="">散策モード</a>
+                        </li>
+                </div>
+                <div class="align-self-center d-flex">
+                    <div class="hidden fixed nav-item top-0 right-0 px-6 sm:block">
+                        <a href="" class="nav-link   rounded-pill px-3 mb-2" style="float: left">ログイン</a>
+                        <a href="" class="nav-link   rounded-pill px-3 mb-2" style="float: left">会員登録</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <main class="main">
+        <div class="container">
+            <div class="row">
+                <div class="carousel slide" id="carouselExampleIndicators sample" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#sample" data-slide-to="0" class="active"></li>
+                        <li data-target="#sample" data-slide-to="1"></li>
+                        <li data-target="#sample" data-slide-to="2"></li>
+                        <li data-target="#sample" data-slide-to="3"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active"><img src="/images/spring.jpg" class="d-block w-100"></div>
+                        <div class="carousel-item"><img src="/images/summer.jpg" class="d-block w-100"></div>
+                        <div class="carousel-item"><img src="/images/fall.jpg" class="d-block w-100"></div>
+                        <div class="carousel-item"><img src="/images/winter.jpg" class="d-block w-100"></div>
+                    </div>
+                    <div class="slider-logo">
+                        <p>Travel to Freedom</p>
+                    </div>
+                    <a href="#sample" class="carousel-control-prev" data-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                        <span class="sr-only">前の画像へ</span>
+                    </a>
+                    <a href="#sample" class="carousel-control-next" data-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                        <span class="sr-only">次の画像へ</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+    <section class="mt-4">
+        <div class="container marketing">
+            <!-- カルーセルの下にある3列のテキスト -->
+            <h1 class="text-center mb-2">サービス内容</h1>
+            <div class="row">
+                <div class="col-lg-4">
+                    <svg class="bd-placeholder-img rounded-circle mb-2" width="140" height="140"
+                        xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+                        <title>一般的なプレースホルダ画像</title>
+                        <rect fill="#777" width="100%" height="100%" />
+                    </svg>
+                    <h2>旅行計画作成</h2>
+                    <p>この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。</p>
+                    <p><a class="btn btn-secondary" href="#">詳細を見る &raquo;</a></p>
+                </div><!-- /.col-lg-4 -->
+                <div class="col-lg-4">
+                    <svg class="bd-placeholder-img rounded-circle mb-2" width="140" height="140"
+                        xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+                        <title>一般的なプレースホルダ画像</title>
+                        <rect fill="#777" width="100%" height="100%" />
+                    </svg>
+                    <h2>旅行計画検索</h2>
+                    <p>この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。</p>
+                    <p><a class="btn btn-secondary" href="#">詳細を見る &raquo;</a></p>
+                </div><!-- /.col-lg-4 -->
+                <div class="col-lg-4">
+                    <svg class="bd-placeholder-img rounded-circle mb-2" width="140" height="140"
+                        xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+                        <title>一般的なプレースホルダ画像</title>
+                        <rect fill="#777" width="100%" height="100%" />
+                    </svg>
+                    <h2>散策機能</h2>
+                    <p>この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。</p>
+                    <p><a class="btn btn-secondary" href="#">詳細を見る &raquo;</a></p>
+                </div><!-- /.col-lg-4 -->
+            </div><!-- /.row -->
+    </section>
+    <footer class="text-center text-white" style="background-color: #f1f1f1;">
+        <!-- Grid container -->
+        <div class="container pt-4">
+          <!-- Section: Social media -->
+          <section class="mb-4">
+            <!-- Facebook -->
+            <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button" data-mdb-ripple-color="dark">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+      
+            <!-- Twitter -->
+            <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button" data-mdb-ripple-color="dark">
+                <i class="fab fa-twitter"></i>
+            </a>
+      
+            <!-- Google -->
+            <a  class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button" data-mdb-ripple-color="dark">
+                <i class="fab fa-google"></i>
+            </a>
+      
+            <!-- Instagram -->
+            <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button" data-mdb-ripple-color="dark">
+                <i class="fab fa-instagram"></i>
+            </a>
+      
+            <!-- Linkedin -->
+            <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button" data-mdb-ripple-color="dark">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <!-- Github -->
+            <a class="btn btn-link btn-floating btn-lg text-dark m-1"href="#!" role="button" data-mdb-ripple-color="dark">
+                <i class="fab fa-github"></i>
+            </a>
+          </section>
+          <!-- Section: Social media -->
+        </div>
+        <!-- Grid container -->
+      
+        <!-- Copyright -->
+        <div class="text-center text-dark p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+          © 2022
+          <a class="text-dark" href="https://school.o-hara.ac.jp/kashiwa/">TravelToFreedom.com</a>
+        </div>
+        <!-- Copyright -->
+      </footer>
+
+    <script>
+        $(".openbtn4").click(function () {
+            $(this).toggleClass('active');
+            ToggleMemo();
+        });
+    </script>
+    <!-- bootstrap js -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+    </script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?language=ja&key=AIzaSyDeL7_U--qzVwi963J1elplZfLTCIsduZQ&libraries=places&callback=initMap">
+    </script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?language=ja&key=AIzaSyAIvDT6aSB8xK3ASJLRpicJ_SZV8KngMLM&libraries=places&callback=initMap"></script> -->
+</body>
+
+</html>
