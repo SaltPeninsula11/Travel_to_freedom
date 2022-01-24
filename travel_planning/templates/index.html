@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -579,8 +581,12 @@
                 </div>
                 <div class="align-self-center d-flex">
                     <div class="hidden fixed nav-item top-0 right-0 px-6 sm:block">
+                        {% if 1 == 1 %}
+                        <a href="" class="nav-link   rounded-pill px-3 mb-2" style="float: left">ログアウト</a>
+                        {% else %}
                         <a href="" class="nav-link   rounded-pill px-3 mb-2" style="float: left">ログイン</a>
                         <a href="" class="nav-link   rounded-pill px-3 mb-2" style="float: left">会員登録</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -597,10 +603,10 @@
                         <li data-target="#sample" data-slide-to="3"></li>
                     </ol>
                     <div class="carousel-inner">
-                        <div class="carousel-item active"><img src="/images/spring.jpg" class="d-block w-100"></div>
-                        <div class="carousel-item"><img src="/images/summer.jpg" class="d-block w-100"></div>
-                        <div class="carousel-item"><img src="/images/fall.jpg" class="d-block w-100"></div>
-                        <div class="carousel-item"><img src="/images/winter.jpg" class="d-block w-100"></div>
+                        <div class="carousel-item active"><img src="{% static 'spring.jpg' %}" class="d-block w-100"></div>
+                        <div class="carousel-item"><img src="{% static 'summer.jpg' %}" class="d-block w-100"></div>
+                        <div class="carousel-item"><img src="{% static 'fall.jpg' %}" class="d-block w-100"></div>
+                        <div class="carousel-item"><img src="{% static 'winter.jpg' %}" class="d-block w-100"></div>
                     </div>
                     <div class="slider-logo">
                         <p>Travel to Freedom</p>
