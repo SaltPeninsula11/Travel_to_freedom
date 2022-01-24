@@ -4,28 +4,39 @@
     margin: 0 10%;
 }
 
+#contents h1,
+#contents .buttons {
+    margin: 24px 0;
+    text-align: center;
+}
+
+#contents h3 {
+    margin: 16px 0;
+}
+
 .space_1x1 {
     width: 50%;
+    height: auto;
     float: left;
 
-    background-color: #FAA;
+    /* background-color: #FAA; */
 }
 
 .space_1x2 {
     width: 100%;
     clear: left;
 
-    background-color: #AAF;
+    /* background-color: #AAF; */
 }
 
 textarea#mainDescription {
     resize: none;
-    width: 80%;
+    width: 90%;
     height: 150px;
 }
 
 #imageSpace {
-    width: 80%;
+    width: 90%;
     height: 180px;
 }
 #mainPhotoDisplay {
@@ -37,14 +48,63 @@ textarea#mainDescription {
     .space_1x1 {
         width: 100%;
         clear: left;
-    
-        background-color: #FAA;
     }
     
     .space_1x2 {
         width: 100%;
         clear: left;
-    
-        background-color: #AAF;
     }
+}
+
+/* タイムライン */
+.space_1x2 table {
+    width: 100%;
+}
+
+#schedulePhotoSpace {
+    width: 100%;
+    height: 100%;
+}
+
+textarea {
+    resize: none;
+    width: 95%;
+    height: 60px;
+}
+
+td #Timeline_Span {
+    width: 48px;
+}
+
+.dot {
+    background-color: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 22px;
+    border: 4px solid #000;
+}
+
+td#Timeline_TimePlace {
+    width: 50%;
+}
+.timeDisplay {
+    font-size: 48px;
+}
+.timeDisplay span {
+    font-size: 16px;
+}
+
+td#Timeline_Photo {
+    width: 50%;
+}
+
+.numberLine {
+    position: relative;
+    top: -160px;
+
+    margin-left: 14px;
+
+    width: 4px;
+    height: 160px;
+    background: #000;
 }
