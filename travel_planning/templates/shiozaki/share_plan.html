@@ -13,109 +13,112 @@
 
     <h1>旅行計画投稿</h1>
 
-    <div class="space_1x1">
-        <section>
-            <h2>〇〇代〇性</h2>
-            <h3>メイン画像</h3>
-            <input type="file" onchange="OnFileSelect(this);" name="メイン画像" id="mainPhoto"><br>
-            <div id="imageSpace">
-                <img src="" alt="" id="mainPhotoDisplay">
-            </div>
-        </section>
-        <section>
-            <h3>詳細</h3>
-            <textarea name="詳細" id="mainDescription"></textarea>
-        </section>
-    </div>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="space_1x1">
+            <section>
+                <h2>〇〇代〇性</h2>
+                <h3>メイン画像</h3>
+                <input type="file" onchange="OnFileSelect(this);" name="メイン画像" id="mainPhoto"><br>
+                <div id="imageSpace">
+                    <img src="" alt="" id="mainPhotoDisplay">
+                </div>
+            </section>
+            <section>
+                <h3>詳細</h3>
+                <textarea name="詳細" id="mainDescription"></textarea>
+            </section>
+        </div>
 
-    <div class="space_1x1">
-        <h3>スケジュール</h3>
-    </div>
+        <div class="space_1x1">
+            <h3>スケジュール</h3>
+        </div>
 
-    <div class="space_1x2">
-        <table>
-            <tr>
-                <td id="Timeline_Span">
-                    <div class="dot"></div>
-                </td>
-                <td id="Timeline_TimePlace" class="timeDisplay">
-                    09:00
-                </td>
-                <td rowspan="3" id="Timeline_Photo">
-                    <div id="schedulePhotoSpace">
-                        <img src="" alt="">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td rowspan="2" id="Timeline_Span">
-                    
-                </td>
-                <td id="Timeline_TimePlace">
-                    PLACE
-                </td>
-            </tr>
-            <tr>
-                <td id="Timeline_TimePlace">
-                    詳細<br>
-                    <textarea name="description" id="" cols="30" rows="10"></textarea>
-                </td>
-            </tr>
-        </table>
+        <div class="space_1x2">
+            <table>
+                <tr>
+                    <td id="Timeline_Span">
+                        <div class="dot"></div>
+                    </td>
+                    <td id="Timeline_TimePlace" class="timeDisplay">
+                        09:00
+                    </td>
+                    <td rowspan="3" id="Timeline_Photo">
+                        <div id="schedulePhotoSpace">
+                            <img src="" alt="">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2" id="Timeline_Span">
+                        
+                    </td>
+                    <td id="Timeline_TimePlace">
+                        PLACE
+                    </td>
+                </tr>
+                <tr>
+                    <td id="Timeline_TimePlace">
+                        詳細<br>
+                        <textarea name="サブ詳細0" id="" cols="30" rows="10"></textarea>
+                    </td>
+                </tr>
+            </table>
 
-        <table>
-            <tr>
-                <td id="Timeline_Span">
-                    <div class="dot">
-                        <div class="numberLine"></div>
-                    </div>
-                </td>
-                <td id="Timeline_TimePlace" class="timeDisplay">
-                    10:00
-                </td>
-                <td rowspan="3" id="Timeline_Photo">
-                    <div id="schedulePhotoSpace">
-                        <img src="" alt="">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td rowspan="2" id="Timeline_Span">
-                    
-                </td>
-                <td id="Timeline_TimePlace">
-                    PLACE
-                </td>
-            </tr>
-            <tr>
-                <td id="Timeline_TimePlace">
-                    詳細<br>
-                    <textarea name="description" id="" cols="30" rows="10"></textarea>
-                </td>
-            </tr>
-        </table>
-        
-        <table>
-            <tr>
-                <td id="Timeline_Span">
-                    <div class="dot">
-                        <div class="numberLine"></div>
-                    </div>
-                </td>
-                <td id="Timeline_TimePlace" class="timeDisplay">
-                    11:00
-                </td>
-                <td id="Timeline_Photo">
+            <table>
+                <tr>
+                    <td id="Timeline_Span">
+                        <div class="dot">
+                            <div class="numberLine"></div>
+                        </div>
+                    </td>
+                    <td id="Timeline_TimePlace" class="timeDisplay">
+                        10:00
+                    </td>
+                    <td rowspan="3" id="Timeline_Photo">
+                        <div id="schedulePhotoSpace">
+                            <img src="" alt="">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2" id="Timeline_Span">
+                        
+                    </td>
+                    <td id="Timeline_TimePlace">
+                        PLACE
+                    </td>
+                </tr>
+                <tr>
+                    <td id="Timeline_TimePlace">
+                        詳細<br>
+                        <textarea name="サブ詳細1" id="" cols="30" rows="10"></textarea>
+                    </td>
+                </tr>
+            </table>
+            
+            <table>
+                <tr>
+                    <td id="Timeline_Span">
+                        <div class="dot">
+                            <div class="numberLine"></div>
+                        </div>
+                    </td>
+                    <td id="Timeline_TimePlace" class="timeDisplay">
+                        11:00
+                    </td>
+                    <td id="Timeline_Photo">
 
-                </td>
-            </tr>
-        </table>
-    </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
 
-    <div class="buttons">
-        <button class="btn btn-outline-primary" type="submit">登録</button>
-        <a class="btn btn-outline-primary" href="{% url 'travel_planning:index' %}">戻る</a>
-    </div>
+        <div class="buttons">
+            <button class="btn btn-outline-primary" type="submit">登録</button>
+            <a class="btn btn-outline-primary" href="{% url 'travel_planning:index' %}">戻る</a>
+        </div>
+    </form>
 </div>
 
 <script src="{% static 'js/sharePlan.js' %}"></script>
