@@ -13,3 +13,5 @@ class AutomapView(generic.TemplateView):
 class TestView(generic.TemplateView):
     template_name = "test.html"
 
+class SharePlanView(generic.TemplateView):
+    template_name = "shiozaki/share_plan.html"
