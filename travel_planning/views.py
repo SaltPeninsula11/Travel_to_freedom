@@ -15,3 +15,6 @@ class TestView(generic.TemplateView):
 
 class SharePlanView(generic.TemplateView):
     template_name = "shiozaki/share_plan.html"
+
+class PlanListView(generic.TemplateView):
+    template_name = "plan_list.html"
