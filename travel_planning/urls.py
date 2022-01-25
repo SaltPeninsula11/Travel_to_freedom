@@ -8,5 +8,6 @@ urlpatterns = [
     path('automap/',views.AutomapView.as_view(), name='automap'),
     # path('test/', views.TestView.as_view(), name='test')
     path('share/', views.SharePlanView.as_view(), name='share'),
-    path('share/plan-list', views.PlanListView.as_view(), name='list')
+    path('share/plan-list', views.PlanListView.as_view(), name='list'),
+    path('share/result', views.ShareResultView.as_view(), name='result')
 ]

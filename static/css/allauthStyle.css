@@ -1,0 +1,41 @@
+ul {
+    list-style: none;
+}
+
+span.helptext {
+    font-size: 12px;
+    color: #444444;
+
+    display: none;
+}
+
+#contents:not(table) {
+    text-align: center;
+}
+form table {
+    margin: 0 auto;
+}
+form table th {
+    padding: 10px 12px 10px 0;
+}
+form table td {
+    padding: 10px 0 10px 12px;
+}
+
+#contents th {
+    text-align: left;
+}
+
+ul.errorlist li {
+    color: #F00;
+}
+
+#id_gender li {
+    display: inline;
+}
+
+@media screen and (min-width: 767px) {
+    .sp_break {
+        display: none;
+    }
+}
