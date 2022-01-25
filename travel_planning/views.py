@@ -11,6 +11,10 @@ class IndexView(generic.TemplateView):
     
 class AutomapView(generic.TemplateView):
     template_name="auto.html"
+    
+    def pythonMethod(self, test):
+        print("Here\'s variable :", test)
+        #return "Hi!"
 
 class TestView(generic.TemplateView):
     template_name = "test.html"
