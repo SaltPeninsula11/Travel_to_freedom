@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.views import generic
 
+from .models import *
+
 # Create your views here.
 # class MapView(generic.TemplateView):
 #     template_name="map.html"
@@ -16,8 +18,13 @@ class TestView(generic.TemplateView):
 class SharePlanView(generic.TemplateView):
     template_name = "shiozaki/share_plan.html"
 
-class PlanListView(generic.TemplateView):
+class PlanListView(generic.ListView):
+    model = Plan
     template_name = "plan_list.html"
+
+    def get_queryset(self):
+        plans = Plan.objects.filter().order_by('-created_at')
+        return plans
 
 class ShareResultView(generic.TemplateView):
     def post(self, request, *args, **kwargs):
