@@ -722,71 +722,25 @@
                             <small class="text-muted">Last updated 3 mins ago</small>
                         </div>
                     </div>
-
+                    
+                    {% for plan in plan_list %}
+                    <a href="{% url 'travel_planning:share' plan.pk %}">A</a>
                     <div class="card mr-auto al-auto mb-4">
                         <div class="card-horizontal">
                             <div class="img-square-wrapper">
                                 <img class="" src="http://via.placeholder.com/300x180" alt="Card image cap">
                             </div>
                             <div class="card-body">
-                                <h4 class="card-title">20代 女性</h4>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">Last updated 3 mins ago</small>
-                            <div class="btn-group ml-5">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">見る</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card mr-auto al-auto mb-4">
-                        <div class="card-horizontal">
-                            <div class="img-square-wrapper">
-                                <img class="" src="http://via.placeholder.com/300x180" alt="Card image cap">
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title">20代 女性</h4>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <h4 class="card-title">{{ plan }}</h4>
+                                <p class="card-text">{{ plan.detail }}</p>
                             </div>
                         </div>
                         <div class="card-footer">
                             <small class="text-muted">Last updated 3 mins ago</small>
                         </div>
                     </div>
-
-                    <div class="card mr-auto al-auto mb-4">
-                        <div class="card-horizontal">
-                            <div class="img-square-wrapper">
-                                <img class="" src="http://via.placeholder.com/300x180" alt="Card image cap">
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title">20代 女性</h4>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">Last updated 3 mins ago</small>
-                        </div>
-                    </div>
-
-                    <div class="card mr-auto al-auto mb-4">
-                        <div class="card-horizontal">
-                            <div class="img-square-wrapper">
-                                <img class="" src="http://via.placeholder.com/300x180" alt="Card image cap">
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title">20代 女性</h4>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">Last updated 3 mins ago</small>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
-
 
             </div>
     </main>

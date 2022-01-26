@@ -16,7 +16,7 @@ class AutomapView(generic.TemplateView):
     def post(self, request, *args, **kwargs):
         messages.success(request, '計画を保存しました。')
 
-        plan = Plan(user=request.user, prefectural_names="千葉県", detail="テスト", plan=request.POST["計画欄"])
+        plan = Plan(user=request.user, prefectural_names=request.POST["県名"], detail="テスト", plan=request.POST["計画欄"])
         plan.save()
 
         return render(request, 'auto.html')
@@ -25,7 +25,8 @@ class AutomapView(generic.TemplateView):
 class TestView(generic.TemplateView):
     template_name = "test.html"
 
-class SharePlanView(generic.TemplateView):
+class SharePlanView(generic.DetailView):
+    model = Plan
     template_name = "shiozaki/share_plan.html"
 
 class PlanListView(generic.ListView):

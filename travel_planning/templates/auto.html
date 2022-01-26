@@ -2162,18 +2162,30 @@
             ToggleMemo();
         });
 
+        var prefecturesSpace = document.getElementById("prefecturesSpace");
         var planSpace = document.getElementById("planSpace");
 
         setInterval(() => {
+            // var preArray = [];
+            // for (var prefecture in array) {
+
+            //     preArray.push(prefecture);
+            // }
+
+            var prefectures_details = "東京都";
+
+            prefecturesSpace.value = prefectures_details;
+
+
             var plan_details = "";
 
-            for (let marker of markers){
-                plan_details += marker.place.name + ",";
+            for (var i = 0; i < markers.length; i++){
+                plan_details += markers[i].place.name + ",";
                 //plan_details += marker.place.photos[0].getUrl() + ","; //null=True
-                plan_details += marker.position.lat() + ","; //null=True
-                plan_details += marker.position.lng() + ",";
-                //開始時間
-                //滞在時間
+                plan_details += markers[i].position.lat() + ","; //null=True
+                plan_details += markers[i].position.lng() + ",";
+                plan_details += timeStamps[i].getBegin() + ",";
+                plan_details += timeStamps[i].getStaying() + ",";
                 plan_details += ";,";
             }
 
