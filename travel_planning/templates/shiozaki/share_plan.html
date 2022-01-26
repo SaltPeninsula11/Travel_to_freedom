@@ -50,8 +50,8 @@
                         </div>
                     </td>
                     <td id="Timeline_TimePlace" class="timeDisplay">
-                        {% if plan.3 != "NaN" %}
-                        {{ plan.3|div:60|sub:0.5|floatformat:0 }}:{% if plan.3|mod:60 < 10 %}0{% endif %}{{ plan.3|mod:60 }}
+                        {% if plan.2 != "NaN" %}
+                        {{ plan.2|div:60|sub:0.5|floatformat:0 }}:{% if plan.2|mod:60 < 10 %}0{% endif %}{{ plan.2|mod:60 }}
                         {% else %}
                         --:--
                         {% endif %}
