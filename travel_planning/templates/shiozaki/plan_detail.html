@@ -15,27 +15,6 @@
 
     <form action="{% url 'travel_planning:result' %}" method="post">
         {% csrf_token %}
-        <div class="space_1x1">
-            <section>
-                <h2>{{ object }}</h2>
-                <div id="imageSpace">
-                    {% if object.photo %}
-                    <img src="{{ object.photo.url }}" id="mainPhotoDisplay">
-                    {% else %}
-                    <img src="{% static 'images.png' %}" id="mainPhotoDisplay">
-                    {% endif %}
-                </div>
-            </section>
-            <section>
-                <div id="mainDescription">
-                    {{ object.detail }}
-                </div>
-            </section>
-        </div>
-
-        <div class="space_1x1">
-            <h3>スケジュール</h3>
-        </div>
 
         <div class="space_1x2">
             {% for plan in planList %}

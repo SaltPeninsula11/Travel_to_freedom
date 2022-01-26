@@ -22,9 +22,11 @@
                 {% for plan in plan_list %}
                 <div class="card mr-auto al-auto mb-4">
                     <div class="card-horizontal">
+                        {% if plan.photo %}
                         <div class="img-square-wrapper">
                             <img class="" src="http://via.placeholder.com/300x180" alt="Card image cap">
                         </div>
+                        {% endif %}
                         <div class="card-body">
                             <h4 class="card-title">{{ plan }}</h4>
                             <p class="card-text">{{ plan.detail }}</p>
@@ -34,11 +36,10 @@
                         <small class="text-muted">Last updated 3 mins ago</small>
                         
                         <div class="btn-group ml-5">
-                            {% if plan.is_action %}
                             <a href="{% url 'travel_planning:mydetail' plan.pk %}">
                                 <button type="button" class="btn btn-sm btn-outline-secondary">見る</button>
                             </a>
-                            {% else %}
+                            {% if not plan.is_action %}
                             <a href="{% url 'travel_planning:share' plan.pk %}">
                                 <button type="button" class="btn btn-sm btn-outline-secondary">投稿</button>
                             </a>

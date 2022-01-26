@@ -19,7 +19,8 @@ class Plan(models.Model):
         verbose_name_plural = 'Plan'
     
     def __str__(self):
-        return str((self.user.age // 10) * 10) + "代 " + self.user.gender #例：20代男性
+        string = self.plan.split(",")
+        return string[0] #例：20代男性
 
 #いいねモデル
 class Like(models.Model):

@@ -62,7 +62,7 @@
                             <input type="button" class="btn btn-outline-primary mb-1" value="情報取得" onclick="getPlaces();">
                             <button class="btn btn-outline-primary ml-1 mb-1" id="routeSearch">ルート検索</button>
                             <button class="btn btn-outline-primary ml-1 mb-1" id="deleteRoute">ルート削除</button>
-                            <form method="post" action="{% url 'travel_planning:automap' %}">
+                            <form method="post" action="{% url 'travel_planning:mylist' %}">
                                 {% csrf_token %}
                                 <input type="hidden" name="県名" id="prefecturesSpace">
                                 <input type="hidden" name="計画欄" id="planSpace">

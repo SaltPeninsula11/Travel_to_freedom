@@ -12,14 +12,6 @@ class IndexView(generic.TemplateView):
     
 class AutomapView(generic.TemplateView):
     template_name="auto.html"
-    
-    def post(self, request, *args, **kwargs):
-        messages.success(request, '計画を保存しました。')
-
-        plan = Plan(user=request.user, prefectural_names=request.POST["県名"], detail="テスト", plan=request.POST["計画欄"])
-        plan.save()
-
-        return render(request, 'auto.html')
 
 
 class TestView(generic.TemplateView):
@@ -67,6 +59,14 @@ class MyPlanListView(generic.ListView):
     def get_queryset(self):
         plans = Plan.objects.filter(user=self.request.user).order_by('-created_at')
         return plans
+    
+    def post(self, request, *args, **kwargs):
+        messages.success(request, '計画を保存しました。')
+
+        plan = Plan(user=request.user, prefectural_names=request.POST["県名"], detail="テスト", plan=request.POST["計画欄"])
+        plan.save()
+
+        return render(request, 'my_plan_list.html')
 
 class MyPlanDetailView(generic.DetailView):
     model = Plan
