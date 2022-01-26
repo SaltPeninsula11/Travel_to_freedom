@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views import generic
+from django.contrib import messages
 
 from .models import *
 
@@ -12,9 +13,14 @@ class IndexView(generic.TemplateView):
 class AutomapView(generic.TemplateView):
     template_name="auto.html"
     
-    def pythonMethod(self, test):
-        print("Here\'s variable :", test)
-        #return "Hi!"
+    def post(self, request, *args, **kwargs):
+        messages.success(request, '計画を保存しました。')
+
+        plan = Plan(user=request.user, prefectural_names="千葉県", detail="テスト", plan=request.POST["計画欄"])
+        plan.save()
+
+        return render(request, 'auto.html')
+
 
 class TestView(generic.TemplateView):
     template_name = "test.html"
@@ -32,8 +38,6 @@ class PlanListView(generic.ListView):
 
 class ShareResultView(generic.TemplateView):
     def post(self, request, *args, **kwargs):
-        print(request.POST['メイン画像'])
-
         context = {
             'mainPhoto': request.POST['メイン画像'],
             'mainDescription': request.POST['詳細'],

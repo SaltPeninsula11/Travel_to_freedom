@@ -62,7 +62,13 @@
                             <input type="button" class="btn btn-outline-primary mb-1" value="情報取得" onclick="getPlaces();">
                             <button class="btn btn-outline-primary ml-1 mb-1" id="routeSearch">ルート検索</button>
                             <button class="btn btn-outline-primary ml-1 mb-1" id="deleteRoute">ルート削除</button>
-                            <button class="btn btn-primary ml-auto mb-1" id="" onclick="savePlan()">保存</button>
+                            <form method="post" action="{% url 'travel_planning:automap' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="県名" id="prefecturesSpace">
+                                <input type="hidden" name="計画欄" id="planSpace">
+                                <input class="btn btn-primary ml-auto mb-1" type="submit" value="保存">
+                            </form>
+                            <!-- <button class="btn btn-primary ml-auto mb-1" id="" onclick="savePlan()">保存</button> -->
                         </div>
                     </table>
                 </div>
@@ -2156,25 +2162,41 @@
             ToggleMemo();
         });
 
-        window.onload = console.log("{{ view.pythonMethod:2 }}");
+        var planSpace = document.getElementById("planSpace");
 
-        function savePlan() {
+        setInterval(() => {
             var plan_details = "";
 
             for (let marker of markers){
                 plan_details += marker.place.name + ",";
-                plan_details += marker.place.photos[0].getUrl() + ","; //null=True
+                //plan_details += marker.place.photos[0].getUrl() + ","; //null=True
                 plan_details += marker.position.lat() + ","; //null=True
                 plan_details += marker.position.lng() + ",";
+                //開始時間
+                //滞在時間
                 plan_details += ";,";
             }
 
-            console.log(plan_details);
-        }
-        function loadPlan() {
-            const loadedData = "";
-            var data = loadedData.split(",");
-        }
+            planSpace.value = plan_details;
+        }, 1);
+
+        // function savePlan() {
+        //     var plan_details = "";
+
+        //     for (let marker of markers){
+        //         plan_details += marker.place.name + ",";
+        //         plan_details += marker.place.photos[0].getUrl() + ","; //null=True
+        //         plan_details += marker.position.lat() + ","; //null=True
+        //         plan_details += marker.position.lng() + ",";
+        //         plan_details += ";,";
+        //     }
+
+        //     console.log(plan_details);
+        // }
+        // function loadPlan() {
+        //     const loadedData = "";
+        //     var data = loadedData.split(",");
+        // }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?language=ja&key=AIzaSyDeL7_U--qzVwi963J1elplZfLTCIsduZQ&libraries=places&callback=initMap"></script>
     <!-- <script src="https://maps.googleapis.com/maps/api/js?language=ja&key=AIzaSyAIvDT6aSB8xK3ASJLRpicJ_SZV8KngMLM&libraries=places&callback=initMap"></script> -->
