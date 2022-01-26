@@ -25,10 +25,6 @@ class AutomapView(generic.TemplateView):
 class TestView(generic.TemplateView):
     template_name = "test.html"
 
-class SharePlanView(generic.DetailView):
-    model = Plan
-    template_name = "shiozaki/share_plan.html"
-
 class PlanListView(generic.ListView):
     model = Plan
     template_name = "plan_list.html"
@@ -36,6 +32,22 @@ class PlanListView(generic.ListView):
     def get_queryset(self):
         plans = Plan.objects.filter().order_by('-created_at')
         return plans
+
+class SharePlanView(generic.DetailView):
+    model = Plan
+    template_name = "shiozaki/share_plan.html"
+
+    def get_context_data(self, **kwargs):
+        plan = Plan.objects.get(id=self.kwargs['pk']).plan
+
+        perPlace = plan.split(';')
+        planList = []
+
+        for place in perPlace:
+            planList.append(place.split(","))
+        
+        context = { 'planList' : planList }
+        return context
 
 class ShareResultView(generic.TemplateView):
     def post(self, request, *args, **kwargs):
@@ -46,3 +58,28 @@ class ShareResultView(generic.TemplateView):
             'subDescription1': request.POST['サブ詳細1'],
         }
         return render(request, 'shiozaki/share_results.html', context)
+
+
+class MyPlanListView(generic.ListView):
+    model = Plan
+    template_name = "my_plan_list.html"
+
+    def get_queryset(self):
+        plans = Plan.objects.filter(user=self.request.user).order_by('-created_at')
+        return plans
+
+class MyPlanDetailView(generic.DetailView):
+    model = Plan
+    template_name = "shiozaki/plan_detail.html"
+
+    def get_context_data(self, **kwargs):
+        plan = Plan.objects.get(id=self.kwargs['pk']).plan
+
+        perPlace = plan.split(';')
+        planList = []
+
+        for place in perPlace:
+            planList.append(place.split(","))
+        
+        context = { 'planList' : planList }
+        return context

@@ -2186,29 +2186,12 @@
                 plan_details += markers[i].position.lng() + ",";
                 plan_details += timeStamps[i].getBegin() + ",";
                 plan_details += timeStamps[i].getStaying() + ",";
-                plan_details += ";,";
+                plan_details += "0"; //place_id
+                if (i != (markers.length-1)) plan_details += ";";
             }
 
             planSpace.value = plan_details;
         }, 1);
-
-        // function savePlan() {
-        //     var plan_details = "";
-
-        //     for (let marker of markers){
-        //         plan_details += marker.place.name + ",";
-        //         plan_details += marker.place.photos[0].getUrl() + ","; //null=True
-        //         plan_details += marker.position.lat() + ","; //null=True
-        //         plan_details += marker.position.lng() + ",";
-        //         plan_details += ";,";
-        //     }
-
-        //     console.log(plan_details);
-        // }
-        // function loadPlan() {
-        //     const loadedData = "";
-        //     var data = loadedData.split(",");
-        // }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?language=ja&key=AIzaSyDeL7_U--qzVwi963J1elplZfLTCIsduZQ&libraries=places&callback=initMap"></script>
     <!-- <script src="https://maps.googleapis.com/maps/api/js?language=ja&key=AIzaSyAIvDT6aSB8xK3ASJLRpicJ_SZV8KngMLM&libraries=places&callback=initMap"></script> -->

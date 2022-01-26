@@ -71,6 +71,11 @@ textarea {
     width: 95%;
     height: 60px;
 }
+#mainDescription:not(textarea) {
+    width: 95%;
+    height: 135px;
+    border: 1px solid #000;
+}
 
 td #Timeline_Span {
     width: 48px;
@@ -100,11 +105,9 @@ td#Timeline_Photo {
 
 .numberLine {
     position: relative;
-    top: -160px;
 
     margin-left: 14px;
 
     width: 4px;
-    height: 160px;
     background: #000;
 }

@@ -2,7 +2,7 @@
 
 {% load i18n %}
 
-{% block head_title %}共有機能{% endblock %}
+{% block head_title %}旅行計画{% endblock %}
 
 {% block content %}
 
@@ -11,25 +11,26 @@
 
 <div id="contents">
 
-    <h1>旅行計画投稿</h1>
+    <h1>旅行計画</h1>
 
     <form action="{% url 'travel_planning:result' %}" method="post">
         {% csrf_token %}
-
-        <input type="hidden" name="ID" value="{{ object.pk }}">
-
         <div class="space_1x1">
             <section>
                 <h2>{{ object }}</h2>
-                <h3>メイン画像</h3>
-                <input type="file" onchange="OnFileSelect(this);" name="メイン画像" id="mainPhoto"><br>
                 <div id="imageSpace">
-                    <img src="" alt="" id="mainPhotoDisplay">
+                    {% if object.photo %}
+                    <img src="{{ object.photo.url }}" id="mainPhotoDisplay">
+                    {% else %}
+                    <img src="{% static 'images.png' %}" id="mainPhotoDisplay">
+                    {% endif %}
                 </div>
             </section>
             <section>
                 <h3>詳細</h3>
-                <textarea name="詳細" id="mainDescription">{{ object.detail }}</textarea>
+                <div id="mainDescription">
+                    {{ object.detail }}
+                </div>
             </section>
         </div>
 
@@ -45,7 +46,7 @@
                     <td id="Timeline_Span">
                         <div class="dot">
                             {% if forloop.counter > 1 %}
-                            <div class="numberLine"></div>
+                            <div class="numberLine" style="top: -160px; height: 160px;"></div>
                             {% endif %}
                         </div>
                     </td>
@@ -81,12 +82,9 @@
         </div>
 
         <div class="buttons">
-            <button class="btn btn-outline-primary" type="submit">登録</button>
             <a class="btn btn-outline-primary" href="{% url 'travel_planning:list' %}">戻る</a>
         </div>
     </form>
 </div>
-
-<script src="{% static 'js/sharePlan.js' %}"></script>
 
 {% endblock %}
