@@ -1,3 +1,4 @@
+from re import template
 from django.shortcuts import render
 from django.views import generic
 from django.contrib import messages
@@ -108,3 +109,17 @@ class MyPlanDetailView(generic.DetailView):
             'planList' : planList
         }
         return context
+
+# class MyPlanUpdateView(LoginRequiredMixin, generic.UpdateView):
+#     model = Plan
+#     template_name = 'auto.html'
+    # form_class = DiaryCreateForm
+
+    # def get_success_url(self):
+    #     return reverse_lazy('diary:diary_detail', kwargs={'pk': self.kwargs['pk']})
+    # def form_valid(self, form):
+    #     messages.success(self.request, '日記を更新しました。')
+    #     return super().form_valid(form)
+    # def form_invalid(self, form):
+    #     messages.error(self.request, "日記の更新に失敗しました。")
+    #     return super().form_invalid(form)

@@ -6,2190 +6,2502 @@
 
 
 {% block content %}
-    <div class="search-page">
-        <nav class="nav-l bg-light">
-            <div class="nav-l_item bg-white m-5">
-                <div class="nav-l_item_box m-4">
-                    <h1 class="text-center pt-2">Planning</h1>
-                    <div class="change">
-                        <input type="button" class="btn btn-outline-primary" id="autoSearch" value="オート">
-                        <!-- <input type="button" value="カスタム"> -->
-                    </div>
-                    <div class="a">
-                        <div class="formg-group">
+<div class="search-page">
+    <nav class="nav-l bg-light">
+        <div class="nav-l_item bg-white m-5">
+            <div class="nav-l_item_box m-4">
+                <h1 class="text-center pt-2">Planning</h1>
+                <div class="change">
+                    <input type="button" class="btn btn-outline-primary" id="autoSearch" value="オート">
+                    <!-- <input type="button" value="カスタム"> -->
+                </div>
+                <div class="a">
+                    <div class="formg-group">
                         <table>
-                                <tr>
-                                    <td>
-                                        <div class="addTime">
-                                            スタート時間：<input type="time" id="insertTime">&nbsp;
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <!-- <div class="addTime">
-                                            <input type="number" id="insertMinutes" style="width: 50px;">分&nbsp;
-                                        </div> -->
-                                    </td>
-                                    <td>
-                                        <div class="addTime">
-                                            <!--
+                            <tr>
+                                <td>
+                                    <div class="addTime">
+                                        <input type="time" id="insertTime">&nbsp;
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="addTime">
+                                        <input type="number" id="insertMinutes" style="width: 50px;">分&nbsp;
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="addTime">
+                                        <!--
                                             メソッドaddSchedule()の定義
                                             引数：
                                                 photoAddress ・・・ place.getUrl()で取得したURLを格納
                                                 name         ・・・ place.name取得した名称を格納
                                         -->
-                                            <!-- <button>追加</button> -->
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
+                                        <!-- <button>追加</button> -->
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
-                    <div class="radiobox rounded-lg btn-group" data-toggle="buttons">
-                        <!--style="display: none;"-->
-                        <input id="radio1" class="btn" name="hoge" type="radio" value="restaurant" style="display: none;"/>
-                        <label for="radio1" class="btn btn-outline-primary">飲食店</label>
-                        <input id="radio2" class="btn" name="hoge" type="radio" value="tourist_attraction" style="display: none;"/>
-                        <label for="radio2" class="btn btn-outline-primary">観光地</label>
-                        <input id="radio3" class="btn" name="hoge" type="radio" value="lodging" style="display: none;"/>
-                        <label for="radio3" class="btn btn-outline-primary">ホテル</label>
-                    </div>
-                    <table>
-                        <div class="form-group">
-                            <input type="text" class="form-control mt-2" id="addressInput" name="hoge"
-                                placeholder="施設・地域">
-                        </div>
-                        <div class="d-flex">
-                            <input type="button" class="btn btn-outline-primary mb-1" value="情報取得" onclick="getPlaces();">
-                            <button class="btn btn-outline-primary ml-1 mb-1" id="routeSearch">ルート検索</button>
-                            <button class="btn btn-outline-primary ml-1 mb-1" id="deleteRoute">ルート削除</button>
-                            <form method="post" action="{% url 'travel_planning:mylist' %}">
-                                {% csrf_token %}
-                                <input type="hidden" name="県名" id="prefecturesSpace">
-                                <input type="hidden" name="計画欄" id="planSpace">
-                                <input class="btn btn-primary ml-auto mb-1" type="submit" value="保存">
-                            </form>
-                            <!-- <button class="btn btn-primary ml-auto mb-1" id="" onclick="savePlan()">保存</button> -->
-                        </div>
-                    </table>
                 </div>
-
+                <div class="radiobox rounded-lg btn-group" data-toggle="buttons">
+                    <!--style="display: none;"-->
+                    <input id="radio1" class="btn" name="hoge" type="radio" value="restaurant" style="display: none;" />
+                    <label for="radio1" class="btn btn-outline-primary">飲食店</label>
+                    <input id="radio2" class="btn" name="hoge" type="radio" value="tourist_attraction"
+                        style="display: none;" />
+                    <label for="radio2" class="btn btn-outline-primary">観光地</label>
+                    <input id="radio3" class="btn" name="hoge" type="radio" value="lodging" style="display: none;" />
+                    <label for="radio3" class="btn btn-outline-primary">ホテル</label>
+                </div>
+                <table>
+                    <div class="form-group">
+                        <input type="text" class="form-control mt-2" id="addressInput" name="hoge" placeholder="施設・地域">
+                    </div>
+                    <input type="button" class="btn btn-outline-primary mb-1" value="情報取得" onclick="getPlaces();">
+                    <button class="btn btn-outline-primary ml-1 mb-1" id="routeSearch">ルート検索</button>
+                    <button class="btn btn-outline-primary ml-1 mb-1" id="deleteRoute">ルート削除</button>
+                    <form id="planForm" method="post" action="{% url 'travel_planning:mylist' %}"
+                        onsubmit="return false;">
+                        {% csrf_token %}
+                        <input type="hidden" name="県名" id="prefecturesSpace">
+                        <input type="hidden" name="計画欄" id="planSpace">
+                        <input id="submitBtn" class="btn btn-primary ml-auto mb-1" type="submit" value="保存">
+                    </form>
+                </table>
             </div>
 
-            <div id="results" hidden></div>
-            <div class="container m-2">
-                <div class="row scroll-box m-auto" style="width: 675px;" id="cardDisplay">
+        </div>
 
-                </div>
-                <br>
-                <div class="results" hidden></div>
+        <div id="results" hidden></div>
+        <div class="container m-2">
+            <div class="row scroll-box m-auto" style="width: 675px;" id="cardDisplay">
 
-                <div id="memo" class="memo">
-                    <div class="openbtn4"><span></span><span></span></div>
+            </div>
+            <br>
+            <div class="results" hidden></div>
 
-                    
-                    <div id="memoSpace">
-                        <div class="schedule_table">
-                            ここはスケジュールカードが入る欄
-                        </div>
+            <div id="memo" class="memo">
+                <div class="openbtn4"><span></span><span></span></div>
+
+
+                <div id="memoSpace">
+                    <div class="schedule_table">
+                        ここはスケジュールカードが入る欄
                     </div>
                 </div>
             </div>
+        </div>
 
 
-        </nav>
-        <aside class="nav-r">
-            <div id="map"></div>
-        </aside>
-    </div>
-    
+    </nav>
+    <aside class="nav-r">
+        <div id="map"></div>
+    </aside>
+</div>
 
-    <script>
-        //始端時刻
-        beginHour = 0;
-        //終端時刻
-        endHour = 23;
-        //5分あたりのピクセル（例：16px）
-        fiveMinPerPx = 16;
-
-        //タイムスタンプのクラス
-        class TimeStamp {
-            constructor(id, position, photoAddress, name, beginTime, stayingTime) {
-                this.id = id; //ID
-                this.position = position;
-                this.photoAddress = photoAddress; //写真
-                this.name = name; //名称
-                this.beginTime = beginTime; //開始時間（分単位）
-                this.stayingTime = stayingTime; //滞在時間（分単位）
-            }
-
-            //セッター
-            setId(id) {
-                this.id = id;
-            }
-            setPhoto(photoAddress) {
-                this.photoAddress = photoAddress;
-            }
-            setName(name) {
-                this.name = name;
-            }
-            setBegin(beginTime) {
-                this.beginTime = beginTime;
-            }
-            setStaying(stayingTime) {
-                this.stayingTime = stayingTime;
-            }
-            //ゲッター
-            getId() {
-                return this.id;
-            }
-            getLat() {
-                return this.position.lat();
-            }
-            getLng() {
-                return this.position.lng();
-            }
-            getPhoto() {
-                return this.photoAddress;
-            }
-            getName() {
-                return this.name;
-            }
-            getBegin() {
-                return this.beginTime;
-            }
-            getStaying() {
-                return this.stayingTime;
-            }
+<script>
+    const pageOption = {
+        GOOGLE_MAPS_API_KEY: 'AIzaSyCBVWDqsxdSXEk015GQxHCqmjN4kOnep0E',
+        DATA: null
+        // DATA: '麺処 三虎（みとら）,ChIJ9xa_aXWFGGARGOZiaa0z8hU,572,60;初代 GONZO,ChIJO8GUOtKFGGARsXamtsDXFsM,650,60;麺処となみ,ChIJbQqlX16FGGAR20_7Mwqy9xs,733,60'
+    }
+</script>
+<script>
+    //追加コード(赤松)
+    function automatic(startPoint, results) {
+        /** 
+         * 追加
+         * @author mizuki
+         * 
+         */
+        const WAIT_TIME = 60;
+        const TOTAL_TIME = 380;
+        for (const place of results) {
+            place.item = place.name;
+            place.ranweight = 1;
+            place.ratweight = 1;
+            place.range = 0;
+            // place.rating = place.rating;
+            place.lat = place.geometry.location.lat();
+            place.lng = place.geometry.location.lng();
+            place.select = "False";
         }
-        //カードのクラス
-        class ScheduleCard {
-            #beginTime = 0;
-            #endTime = 0;
-            #timeBetween = 0;
-
-            constructor(id, photoAddress, name, cardInfo, cardY, dragged, pixel, fiveMinPerPx, beginHour, endHour) {
-                this.id = id; //ID
-                this.photoAddress = photoAddress;
-                this.name = name;
-                this.cardInfo = cardInfo; //カードクラスのinnerHTML
-                this.cardY = cardY;
-                this.dragged = dragged;
-                this.pixel = pixel;
-
-                this.fiveMinPerPx = fiveMinPerPx;
-                this.beginHour = beginHour;
-                this.endHour = endHour;
-
-                this.cardInfo.style.top = this.cardY + "px";
-                this.cardInfo.id = this.id;
-
-                this.#timeBetween = this.endHour - this.beginHour + 1;
-            }
-
-            //セッター
-            setId(id) {
-                this.id = id;
-                this.cardInfo.id = this.id;
-            }
-            setCardY(cardY) {
-                this.cardY = cardY;
-            }
-            setDragged(dragged) {
-                //0＝なし
-                //1＝移動
-                //2＝伸縮
-                this.dragged = dragged;
-            }
-            //ゲッター
-            getId() {
-                return this.id;
-            }
-            getCardY() {
-                return this.cardY;
-            }
-            getDragged() {
-                return this.dragged;
-            }
-            getBeginTime() {
-                return this.#beginTime;
-            }
-            getEndTime() {
-                return this.#endTime;
-            }
-
-            move(yPos) {
-                var max = (this.fiveMinPerPx * 12 * this.#timeBetween) - (this.fiveMinPerPx * 2);
-
-                if (yPos < 10) yPos = 10;
-                if (yPos > max) yPos = max;
-
-                this.cardY = yPos - 10;
-                this.cardInfo.style.top = this.cardY + "px";
-
-                this.timeFormat();
-            }
-            extend(yPos) {
-                //1時間ごと：1/12マスごと（5分単位）
-                var max = this.fiveMinPerPx * 12 * this.#timeBetween;
-                if (yPos > max) yPos = max;
-
-                this.pixel = Math.max(4, Math.floor((yPos - this.cardY) / this.fiveMinPerPx));
-                var calcHeight = this.pixel * this.fiveMinPerPx;
-
-                this.cardInfo.style.height = calcHeight + "px";
-
-                this.timeFormat();
-            }
-            timeFormat() {
-                //開始時間
-                this.#beginTime = Math.round((this.cardY / (this.fiveMinPerPx * 12)) * 60);
-                //終了時間
-                this.#endTime = this.#beginTime + (this.pixel * 5);
-                //<img src='" + this.photoAddress + "' alt='" + this.name + "'>\
-
-                this.cardInfo.innerHTML =
-                "\
-            <table>\
-                <tr>\
-                    <td rowspan='2' class='cardPhoto'>\
-                    </td>\
-                    <td class='nameAndTime'>" + this.name + "</td>\
-                    <td rowspan='2' style='width: 32px;'>\
-                        <button class='eof' onclick='deleteSchedule(" + this.id + ")'>×</button>\
-                    </td>\
-                </tr>\
-                <tr>\
-                    <td class='nameAndTime'>" +
-                    this.getHour(this.#beginTime) + ":" + this.getMinutes(this.#beginTime) + "～" +
-                    this.getHour(this.#endTime) + ":" + this.getMinutes(this.#endTime) + "\
-                    </td>\
-                </tr>\
-            </table>";
-            }
-            getHour(time) {
-                return ('00' + (Math.floor((time + this.beginHour * 60) / 60) % 24)).slice(-2);
-            }
-            getMinutes(time) {
-                return ('00' + ((time + this.beginHour * 60) % 60)).slice(-2);
-            }
-        }
-
-        //開始時間、滞在時間をまとめたクラス
-        var timeStamps = [];
-        //カードの全innerHTML（追加・削除される度に初期化）
-        var cards;
-        //カードクラスの配列
-        var card_classes = [];
-        //ドラッグされたカードのインデックス（-1＝なし）
-        var draggedIndex = -1;
-        //トグル
-        var toggleMemo = false;
-
-        window.onload = resetClasses();
-
-        function resetClasses() {
-            //カードクラス配列を一旦初期化
-            card_classes = [];
-            var between = (endHour - beginHour + 1);
-
-            var table = document.getElementsByClassName("schedule_table")[0];
-            table.innerHTML = "";
-            table.style.height = fiveMinPerPx * 12 * between + "px";
-
-            if (toggleMemo) {
-                table.style.display = "block";
-                //左にHH:MMを１時間ごとに表示
-                for (var i = 0; i < (between * 2); i++) {
-                    var writeHTML;
-                    if (i % 2 == 0) {
-                        //30分
-                        writeHTML = '\
-                <div class="thirty-box" style="top: ' + (96 * i) + 'px;">\
-                </div>\
-                ';
-                    } else {
-                        //1時間
-                        writeHTML = '\
-                <div class="hour-box" style="top: ' + (96 * i) + 'px;">\
-                </div>\
-                ';
-                    }
-                    table.insertAdjacentHTML(
-                        "beforeend", writeHTML
-                    );
-                }
-                //カードの作成
-                for (var i = 0; i < timeStamps.length; i++) {
-                    table.insertAdjacentHTML(
-                        "beforeend",
-                        '\
-                <div class="schedule_card">\
-                </div>\
-                '
-                    );
-                }
-                //呼び出す
-                cards = document.getElementsByClassName("schedule_card");
-
-                for (var i = 0; i < cards.length; i++) {
-                    var cardY = Math.floor((timeStamps[i].getBegin() / 5) * fiveMinPerPx);
-                    card_classes[i] = new ScheduleCard(i, timeStamps[i].getPhoto(), timeStamps[i].getName(), cards[i],
-                        cardY, 0, 0, fiveMinPerPx, beginHour, endHour);
-
-                    const getStaying = card_classes[i].getCardY() + Math.floor(timeStamps[i].getStaying() / 5) *
-                        fiveMinPerPx;
-                    card_classes[i].extend(getStaying);
-                }
-                //左にHH:MMを１時間ごとに表示
-                for (var i = beginHour; i <= endHour; i++) {
-                    table.insertAdjacentHTML(
-                        "beforeend",
-                        '\
-                <div class="timestamp">\
-                    ' + ("00" + i).slice(-2) + ':00\
-                </div>\
-                '
-                    );
-                }
-            } else {
-                //非表示
-                table.style.display = "none";
-            }
-
-            //追加
-            for (const dis of document.getElementsByClassName("addTime")) {
-                dis.style.display = table.style.display;
-            }
-
-            document.getElementById("memoSpace").style.height = toggleMemo ? "400px" : "0px";
-        }
-
-        //#memoSpaceのスクロールトップ
-        var scrollTop;
-        var bodyTop;
-        //#memoSpaceのpositionのtop
-        var posTop;
-        //マウスオーバーされたカードクラスのインデックス
-        var hoverIndex = -1;
-
-        document.body.addEventListener("mousemove", function (e) {
-            /*
-            ＜マーカーの処理＞
-            並び替える前に、一旦マーカーを全て外し、
-            並び替えが終わったら、マーカーを全て付け直す。
-            */
-            sortArray();
-
-            scrollTop = document.getElementById("memoSpace").scrollTop
-            bodyTop = document.documentElement.scrollTop;
-
-            posTop = document.getElementById("memoSpace").getBoundingClientRect().top;
-
-            for (var i = 0; i < card_classes.length; i++) {
-                var stayingTime = timeStamps[i].getStaying();
-
-                if (draggedIndex <= -1) {
-                    var card = card_classes[i];
-
-                    card.cardInfo.addEventListener("mouseover", function (e) {
-                        hoverIndex = this.id;
-                    });
-                    card.cardInfo.addEventListener("mouseout", function (e) {
-                        if (hoverIndex == this.id) {
-                            hoverIndex = -1;
-                        }
-                    });
-                    if (hoverIndex == card.cardInfo.id) {
-                        //マウスオーバー（背景：灰色）
-                        card.cardInfo.style.backgroundColor = "#AAA";
-                    } else {
-                        //マウスアウト（背景：白色）
-                        card.cardInfo.style.backgroundColor = "#FFF";
-                    }
-
-                    card.cardInfo.addEventListener("mousedown", function (e) {
-                        var thisClass = card_classes[this.id];
-
-                        if (thisClass.getDragged() == 0) {
-                            this.classList.add("drag");
-                            if (isStretch(e, thisClass)) {
-                                //伸縮（下をドラッグ）
-                                thisClass.setDragged(2);
-                            } else {
-                                //移動（上をドラッグ）
-                                this.style.cursor = "grabbing";
-                                thisClass.setDragged(1);
-                            }
-                            draggedIndex = this.id;
-                        }
-                    });
-
-                    if (hoverIndex >= 0 && i == hoverIndex) {
-                        if (isStretch(e, card)) {
-                            //伸縮
-                            card.cardInfo.style.cursor = "ns-resize";
-                        } else {
-                            //移動
-                            card.cardInfo.style.cursor = "grab";
-                        }
-                    }
-
-                    card_classes[i] = card;
-                }
-
-                function isStretch(e, thisClass) {
-                    return (scrollTop + e.pageY - bodyTop) > thisClass.getCardY() + ((stayingTime / 10) *
-                        fiveMinPerPx) + posTop;
-                }
-            }
-
-            if (draggedIndex > -1) {
-                var card = card_classes[draggedIndex];
-                var drag = document.getElementsByClassName("drag")[0];
-
-                if (drag != undefined) {
-                    drag.addEventListener("mousemove", function (e) {
-                        switch (card.getDragged()) {
-                            case 1:
-                                //移動
-                                card.move(scrollTop + e.pageY - bodyTop - posTop - fiveMinPerPx);
-                                break;
-
-                            case 2:
-                                //伸縮
-                                card.extend(scrollTop + e.pageY - bodyTop - posTop + (fiveMinPerPx *
-                                    1.5));
-                                break;
-                        }
-                        //ドラッグされている間は最前面に移動
-                        this.style.zIndex = 999;
-                    });
-                    drag.addEventListener("mouseup", function (e) {
-                        disableDrag(this);
-                    });
-                    drag.addEventListener("mouseleave", function (e) {
-                        disableDrag(this);
-                    });
-
-                    function disableDrag(drag) {
-                        drag.style.zIndex = 0;
-                        drag.classList.remove("drag");
-
-                        card.setDragged(0);
-                        draggedIndex = -1;
-                    }
-                } else {
-                    draggedIndex = -1;
-                }
-            }
+        let spotLists = results;
+        let spotFirst = startPoint;
+        const newArray = [];
+        /**
+         * ここまで
+         */
+        /**
+        var spotLists = [
+            { item: 'ラジオ会館', ranweight: 1, ratweight: 1, range: 0, rating: 4.2, lat: 35.69814141618217, lng: 139.77196782634817, select: "False" },
+            { item: '東京ディズニーランド', ranweight: 1, ratweight: 1, range: 0, rating: 4.6, lat: 35.6330795006868, lng: 139.88049085703273, select: "False" },
+            { item: '雷門', ranweight: 1, ratweight: 1, range: 0, rating: 4.4, lat: 35.71156133908027, lng: 139.79626958142327, select: "False" },
+            { item: '中山競馬場', ranweight: 1, ratweight: 1, range: 0, rating: 4.2, lat: 35.72550562846392, lng: 139.96309975518474, select: "False" },
+            { item: '明治神宮', ranweight: 1, ratweight: 1, range: 0, rating: 4.6, lat: 35.67760662824203, lng: 139.69910918969424, select: "False" },
+            { item: '皇居', ranweight: 1, ratweight: 1, range: 0, rating: 4.4, lat: 35.685864397639406, lng: 139.75273667946706, select: "False" },
+        ];
+        var spotFirst = { item: '東京駅', rating: 4.3, lat: 35.6814279046073, lng: 139.7670926110049 }
+        */
+        //ユーザーが選択した地点
+        var spotSelect = spotFirst
+        var time = 0
+        //評価による昇順ソート
+        spotLists.sort(function (a, b) {
+            if (a.rating > b.rating) return -1;
+            else if (a.rating < b.rating) return 1;
+            else return 0;
         });
-
-        function sortArray() {
-            if (toggleMemo && draggedIndex <= -1) {
-                //開始時間の昇順に並び替える
-                for (var i = 0; i < card_classes.length; i++) {
-                    //timeStamps配列の開始時間を統一する
-                    timeStamps[i].setBegin(card_classes[i].getBeginTime());
-                    timeStamps[i].setStaying(card_classes[i].getEndTime() - card_classes[i].getBeginTime());
-
-                    card_classes[i].timeFormat();
-                }
-                card_classes.sort(function (a, b) {
-                    return a.getBeginTime() - b.getBeginTime(); //昇順
-                });
-                timeStamps.sort(function (a, b) {
-                    return a.getBegin() - b.getBegin(); //昇順
-                });
-                //IDの昇順に並び替える
-                for (var i = 0; i < timeStamps.length; i++) {
-                    //IDを設定
-                    card_classes[i].setId(i);
-                    timeStamps[i].setId(i);
-                }
-                card_classes.sort(function (a, b) {
-                    return a.getId() - b.getId(); //昇順
-                });
-                timeStamps.sort(function (a, b) {
-                    return a.getId() - b.getId(); //昇順
-                });
-
-                sortMarkers();
-            }
+        var a = 0
+        var b = spotLists.length
+        //評価による乱数の重みづけ
+        for (key in spotLists) {
+            spotLists[key].ratweight = spotLists.length * 2 - a * 2;
+            b += spotLists.length * 2 - a * 2;
+            a++;
         }
-
-        function sortMarkers() {
-            function array_equal(a, b) {
-                for (var i = 0; i < a.length; i++) {
-                    if (!(
-                            (a[i].position.lat() === b[i].position.lat()) &&
-                            (a[i].position.lng() === b[i].position.lng())
-                        )) {
-                        return false;
-                    }
-                }
-
-                return true;
-            }
-
-            if (!array_equal(dummyMarkers, markers)) {
-                //一旦マーカーを全て外す
-                for (const marker of markers) {
-                    marker.setMap(null);
-                }
-                markers = [];
-
-                //マーカーを全て付け直す。
-                for (const t of timeStamps) {
-                    markers.push(new google.maps.Marker({
-                        position: {
-                            lat: t.getLat(),
-                            lng: t.getLng()
-                        }
-                    }));
-                    markers[markers.length - 1].setMap(map);
-                }
-
-                setDummyMarkers();
-            }
-        }
-
-        function addSchedule(photoAddress, name, position) {
-            var beginTime = 0;
-            var insertTime = document.getElementById("insertTime").value.split(":");
-            beginTime = (Number(insertTime[0]) * 60) + Number(insertTime[1]) - (beginHour * 60);
-
-            if (beginTime + (beginHour * 60) < beginHour * 60) {
-                beginTime = 0;
-            }
-
-            var stayingMinutes = 60;
-
-            if (stayingMinutes < 20) {
-                stayingMinutes = 20;
-            }
-
-            /*
-            id          ・・・timeStamps.lengthを格納
-            photoAddress・・・place.getUrl()で取得したURLを格納
-            name        ・・・place.name取得した名称を格納
-            beginTime   ・・・先ほど算出したbeginTime変数を格納
-            stayingTime ・・・30分（仮）
-            */
-            timeStamps.push(new TimeStamp(timeStamps.length, position, photoAddress, name, beginTime, stayingMinutes));
-            resetClasses();
-        }
-
-        function deleteSchedule(index) {
-            //timeStamps配列から削除
-            card_classes.splice(index, 1);
-            timeStamps.splice(index, 1);
-            hoverIndex = -1;
-
-            //マーカーもはずす
-            removeSchedule(index);
-
-            resetClasses();
-        }
-
-        function ToggleMemo() {
-            toggleMemo = !toggleMemo;
-            resetClasses();
-        }
-    </script>
-    <script>
-        //追加コード(赤松)
-
-
-        function automatic(startPoint, results) {
-            /** 
-             * 追加
-             * @author mizuki
-             * 
-             */
-            const WAIT_TIME = 60;
-            const TOTAL_TIME = 380;
-            for (const place of results) {
-                place.item = place.name;
-                place.ranweight = 1;
-                place.ratweight = 1;
-                place.range = 0;
-                // place.rating = place.rating;
-                place.lat = place.geometry.location.lat();
-                place.lng = place.geometry.location.lng();
-                place.select = "False";
-            }
-            let spotLists = results;
-            let spotFirst = startPoint;
-            const newArray = [];
-            /**
-             * ここまで
-             */
-            /**
-            var spotLists = [
-                { item: 'ラジオ会館', ranweight: 1, ratweight: 1, range: 0, rating: 4.2, lat: 35.69814141618217, lng: 139.77196782634817, select: "False" },
-                { item: '東京ディズニーランド', ranweight: 1, ratweight: 1, range: 0, rating: 4.6, lat: 35.6330795006868, lng: 139.88049085703273, select: "False" },
-                { item: '雷門', ranweight: 1, ratweight: 1, range: 0, rating: 4.4, lat: 35.71156133908027, lng: 139.79626958142327, select: "False" },
-                { item: '中山競馬場', ranweight: 1, ratweight: 1, range: 0, rating: 4.2, lat: 35.72550562846392, lng: 139.96309975518474, select: "False" },
-                { item: '明治神宮', ranweight: 1, ratweight: 1, range: 0, rating: 4.6, lat: 35.67760662824203, lng: 139.69910918969424, select: "False" },
-                { item: '皇居', ranweight: 1, ratweight: 1, range: 0, rating: 4.4, lat: 35.685864397639406, lng: 139.75273667946706, select: "False" },
-            ];
-            var spotFirst = { item: '東京駅', rating: 4.3, lat: 35.6814279046073, lng: 139.7670926110049 }
-            */
-            //ユーザーが選択した地点
-            var spotSelect = spotFirst
-            var time = 0
-            //評価による昇順ソート
+        //約8時間分のプラン作成（ループ処理）
+        while (time < TOTAL_TIME) {
+            hubeny();
+            //直線距離の降順ソート
             spotLists.sort(function (a, b) {
-                if (a.rating > b.rating) return -1;
+                if (a.range < b.range) return -1;
+                else if (a.range > b.range) return 1;
+                else if (a.rating > b.rating) return -1;
                 else if (a.rating < b.rating) return 1;
                 else return 0;
             });
             var a = 0
-            var b = spotLists.length
-            //評価による乱数の重みづけ
+            //距離に基づいた乱数の重みづけ
             for (key in spotLists) {
-                spotLists[key].ratweight = spotLists.length * 2 - a * 2;
-                b += spotLists.length * 2 - a * 2;
+                spotLists[key].ranweight = spotLists.length - a;
+                b += spotLists.length - a;
                 a++;
             }
-            //約8時間分のプラン作成（ループ処理）
-            while (time < TOTAL_TIME) {
-                hubeny();
-                //直線距離の降順ソート
-                spotLists.sort(function (a, b) {
-                    if (a.range < b.range) return -1;
-                    else if (a.range > b.range) return 1;
-                    else if (a.rating > b.rating) return -1;
-                    else if (a.rating < b.rating) return 1;
-                    else return 0;
-                });
-                var a = 0
-                //距離に基づいた乱数の重みづけ
-                for (key in spotLists) {
-                    spotLists[key].ranweight = spotLists.length - a;
-                    b += spotLists.length - a;
-                    a++;
-                }
-                var r = Math.random() * b;
-                var s = 0;
-                //重みのある乱数による施設の選択
-                for (key in spotLists) {
-                    s += spotLists[key].ranweight + spotLists[key].ratweight;
-                    if (r < s) {
-                        //重複判定
-                        if (spotLists[key].select == "False") {
-                            // console.log(spotLists[key].item);
-                            newArray.push(spotLists[key]);
-                            //観光時間の加算
-                            time += WAIT_TIME + (spotLists[key].range * 1.3 / 500)
-                            spotSelect = spotLists[key]
-                            spotLists[key].select = "True"
-                            break;
-                        } else {
-                            r = Math.random() * b;
-                            s = 0;
-                        }
+            var r = Math.random() * b;
+            var s = 0;
+            //重みのある乱数による施設の選択
+            for (key in spotLists) {
+                s += spotLists[key].ranweight + spotLists[key].ratweight;
+                if (r < s) {
+                    //重複判定
+                    if (spotLists[key].select == "False") {
+                        // console.log(spotLists[key].item);
+                        newArray.push(spotLists[key]);
+                        //観光時間の加算
+                        time += WAIT_TIME + (spotLists[key].range * 1.3 / 500)
+                        spotSelect = spotLists[key]
+                        spotLists[key].select = "True"
+                        break;
+                    } else {
+                        r = Math.random() * b;
+                        s = 0;
                     }
                 }
             }
-            //ヒュベニの公式を使った直線距離の計算
-            function hubeny() {
-                function rad(deg) {
-                    return deg * Math.PI / 180;
+        }
+        //ヒュベニの公式を使った直線距離の計算
+        function hubeny() {
+            function rad(deg) {
+                return deg * Math.PI / 180;
+            }
+            //degree to radian
+            lat1 = rad(spotSelect.lat);
+            lng1 = rad(spotSelect.lng);
+            for (key in spotLists) {
+                lat2 = rad(spotLists[key].lat);
+                lng2 = rad(spotLists[key].lng);
+
+                // 緯度差
+                var latDiff = lat1 - lat2;
+                // 経度差算
+                var lngDiff = lng1 - lng2;
+                // 平均緯度
+                var latAvg = (lat1 + lat2) / 2.0;
+                // 赤道半径
+                var a = 6378137.0;
+                // 極半径
+                var b = 6356752.314140356;
+                // 第一離心率^2
+                var e2 = 0.00669438002301188;
+                // 赤道上の子午線曲率半径
+                var a1e2 = 6335439.32708317;
+
+                var sinLat = Math.sin(latAvg);
+                var W2 = 1.0 - e2 * (sinLat * sinLat);
+
+                // 子午線曲率半径M
+                var M = a1e2 / (Math.sqrt(W2) * W2);
+                // 卯酉線曲率半径
+                var N = a / Math.sqrt(W2);
+                t1 = M * latDiff;
+                t2 = N * Math.cos(latAvg) * lngDiff;
+                spotLists[key].range = Math.sqrt((t1 * t1) + (t2 * t2));
+            }
+        }
+        return newArray;
+    }
+</script>
+<script>
+    //追加コード(小泉)
+
+    /**
+    * グーグルマップ
+    * @external "google.maps.Map"
+    * 
+    * グーグルマップ マーカー
+    * @external "google.maps.Marker"
+    * 
+    * グーグルマップ 緯度経度
+    * @external "google.maps.LatLng"
+    * 
+    */
+    /**
+     * https://www.ibm.com/docs/ja/mpf/7.1.0?topic=logger-javascript-module-example
+     */
+    // 読み込み順序遅延
+
+
+    /**
+     * 関数のラッピング用オブジェクト
+     * 
+     */
+    const mapTools = {};
+    mapTools.console = (function () {
+        let mode;
+        const _init = function () {
+            mode = false;
+        }
+        const setMode = function (b) {
+            mode = b;
+        }
+        const log = function (...o) {
+            if (mode)
+                console.log(...o);
+        }
+        const error = function (o) {
+            if (mode)
+                console.error(...o);
+        }
+
+        _init();
+        return {
+            setMode: setMode,
+            log: log,
+            error: error,
+        }
+    })();
+    mapTools.travel = {};
+    // mapTools.travel.PlaceArray = function PlaceArray(array = [], dispacher) {
+    //     this.array = array;
+    //     this.dispacher = dispacher || null;
+    // }
+    // mapTools.PA = mapTools.travel.PlaceArray.prototype;
+    // mapTools.PA.send = function (json) {
+    //     if (this.dispacher)
+    //         this.dispacher.catch(json);
+    // }
+    // mapTools.PA.push = function (n) {
+    //     this.array.push(n);
+    //     this.send({ 'method': 'push', });
+    // }
+
+    mapTools.travel.Plan = function Plan(dateTime) {
+        this.startedTime = dateTime || new Date();
+        this.places = [];
+        this.routes = [];
+        this.plans = [];
+    }
+    mapTools.Pl = mapTools.travel.Plan.prototype;
+    mapTools.Pl.typeOfPlan = function (obj) {
+        let str;
+        if (obj.hasOwnProperty("routes")) {
+            str = 'DirectionsResult';
+        }
+        if (obj.hasOwnProperty("place_id")) {
+            str = 'PlaceResult';
+        }
+        if (obj.hasOwnProperty("anchorPoint")) {
+            str = 'Marker';
+        }
+        return str;
+    }
+    mapTools.Pl.setSchedule = function (obj, setTime = false) {
+        let str = this.typeOfPlan(obj)
+        if (str === 'DirectionsResult') {
+            const leg = obj.routes[0].legs[0];
+            let duration = leg.duration_in_traffic ? leg.duration_in_traffic.value : leg.duration.value;
+            obj.time = setTime === 0 || setTime > 0 ? setTime : duration;
+        }
+        if (str === 'PlaceResult') {
+            obj.time = setTime || 0;
+        }
+        if (str === 'Marker') {
+            obj.time = setTime || 0;
+        }
+        return this;
+    }
+    mapTools.Pl.getSchedule = function (obj) {
+        let str = this.typeOfPlan(obj)
+        let time = 0;
+        if (str === 'DirectionsResult') {
+            time += obj.time || obj.routes[0].legs[0].duration_in_traffic.value || obj.routes[0].legs[0].duration.value;
+        }
+        if (str === 'PlaceResult') {
+            time += obj.time || 0;
+        }
+        if (str === 'Marker') {
+            time += obj.time || 0;
+        }
+        return time;
+    }
+    mapTools.Pl.setRoute = function (obj) {
+        this.routes.push(obj);
+        return this;
+    }
+    mapTools.Pl.setPlace = function (obj) {
+        this.places.push(obj);
+        return this;
+    }
+    mapTools.Pl.setPlan = function (obj, setTime = false) {
+        if (setTime !== false || obj.time === undefined) {
+            this.setSchedule(obj, setTime);
+        }
+        let str = this.typeOfPlan(obj)
+        if (str === 'DirectionsResult') {
+            this.setRoute(obj);
+        }
+        if (str === 'PlaceResult') {
+            this.setPlace(obj);
+        }
+        if (str === 'Marker') {
+            this.setPlace(obj);
+        }
+        this.plans.push(obj);
+        return this;
+    }
+    mapTools.Pl.getPlanSchedule = function (n) {
+        let addTime = 0;
+        for (let i = 0; i < n; i++) {
+            addTime += this.plans[i].time
+        }
+        const time = new Date(this.startedTime.valueOf())
+        time.setSeconds(addTime);
+        return time;
+    }
+    mapTools.Pl.getPlaceSchedule = function (n) {
+        let addTime = 0;
+        for (let i = 0; i < n * 2; i++) {
+            addTime += this.plans[i].time
+        }
+        const time = new Date(this.startedTime.valueOf())
+        time.setSeconds(addTime);
+        console.log('addTime : ', addTime);
+        console.log('new time : ', time);
+        return time;
+    }
+    mapTools.timeFormat = (function () {
+        const formatTime = function (dateTime) {
+            return `${dateTime.getHours()}:${dateTime.getMinutes()}`
+        }
+        const timeToString = function (seconds) {
+            let n = seconds;
+            let list = [
+                { text: '秒', value: 0, division: 60 },
+                { text: '分', value: 0, division: 60 },
+                { text: '時間', value: 0, division: 60 },
+            ]
+            let str = '';
+            for (const item of list) {
+                let ans = n % item.division;
+                n -= ans;
+                n /= item.division;
+                if (ans != 0) {
+                    item.value = ans;
                 }
-                //degree to radian
-                lat1 = rad(spotSelect.lat);
-                lng1 = rad(spotSelect.lng);
-                for (key in spotLists) {
-                    lat2 = rad(spotLists[key].lat);
-                    lng2 = rad(spotLists[key].lng);
-
-                    // 緯度差
-                    var latDiff = lat1 - lat2;
-                    // 経度差算
-                    var lngDiff = lng1 - lng2;
-                    // 平均緯度
-                    var latAvg = (lat1 + lat2) / 2.0;
-                    // 赤道半径
-                    var a = 6378137.0;
-                    // 極半径
-                    var b = 6356752.314140356;
-                    // 第一離心率^2
-                    var e2 = 0.00669438002301188;
-                    // 赤道上の子午線曲率半径
-                    var a1e2 = 6335439.32708317;
-
-                    var sinLat = Math.sin(latAvg);
-                    var W2 = 1.0 - e2 * (sinLat * sinLat);
-
-                    // 子午線曲率半径M
-                    var M = a1e2 / (Math.sqrt(W2) * W2);
-                    // 卯酉線曲率半径
-                    var N = a / Math.sqrt(W2);
-                    t1 = M * latDiff;
-                    t2 = N * Math.cos(latAvg) * lngDiff;
-                    spotLists[key].range = Math.sqrt((t1 * t1) + (t2 * t2));
+            }
+            list = list.reverse()
+            for (const item of list) {
+                if (item.value != 0) {
+                    str += `${item.value} ${item.text}`;
                 }
-            }
-            return newArray;
-        }
-
-
-        //追加コード(赤松)
-
-        //追加コード(塩崎)
-
-        let markers = [];
-        let dummyMarkers = [];
-        var markerIndex = 0;
-
-        function isLocationFree(search) {
-            for (var i = 0; i < markers.length; i++) {
-                markerIndex = i;
-                if (markers[i].position.lat() === search[0] && markers[i].position.lng() === search[1]) {
-                    //すでに存在しています！
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        function togglePin(photo, name, x, y) {
-            if (isLocationFree([x, y])) {
-                //ピンを指す場所に移動
-                map.setCenter({
-                    lat: x,
-                    lng: y
-                });
-
-                //ピンを指す
-                markers.push(new google.maps.Marker({
-                    position: {
-                        lat: x,
-                        lng: y
-                    },
-                    animation: google.maps.Animation.DROP,
-                }));
-                markers[markers.length - 1].setMap(map);
-                setDummyMarkers();
-
-                addSchedule(photo, name, markers[markers.length - 1].position);
-            } else {
-                //ピンをはずす
-                markers[markerIndex].setMap(null);
-                markers.splice(markerIndex, 1);
-
-                deleteSchedule(markerIndex);
-            }
-        }
-
-        function removeSchedule(index) {
-            //✖ボタンが押された
-            markers[index].setMap(null);
-            markers.splice(index, 1);
-        }
-
-        function setDummyMarkers() {
-            dummyMarkers = [];
-            for (const m of markers) {
-                dummyMarkers.push(new google.maps.Marker({
-                    position: {
-                        lat: m.position.lat(),
-                        lng: m.position.lng()
-                    }
-                }));
-            }
-        }
-
-        //メモ
-
-
-        //メモ
-
-        //追加コード(塩崎)
-
-       //追加コード(小泉)
-
-        /**
-       * グーグルマップ
-       * @external "google.maps.Map"
-       * 
-       * グーグルマップ マーカー
-       * @external "google.maps.Marker"
-       * 
-       * グーグルマップ 緯度経度
-       * @external "google.maps.LatLng"
-       * 
-       */
-        /**
-         * https://www.ibm.com/docs/ja/mpf/7.1.0?topic=logger-javascript-module-example
-         */
-        // 読み込み順序遅延
-        
-
-        /**
-         * 関数のラッピング用オブジェクト
-         * 
-         */
-        const mapTools = {};
-        mapTools.console = (function () {
-            let mode;
-            const _init = function () {
-                mode = false;
-            }
-            const setMode = function (b) {
-                mode = b;
-            }
-            const log = function (...o) {
-                if (mode)
-                    console.log(...o);
-            }
-            const error = function (o) {
-                if (mode)
-                    console.error(...o);
-            }
-
-            _init();
-            return {
-                setMode: setMode,
-                log: log,
-                error: error,
-            }
-        })();
-        mapTools.travel = {};
-        // mapTools.travel.PlaceArray = function PlaceArray(array = [], dispacher) {
-        //     this.array = array;
-        //     this.dispacher = dispacher || null;
-        // }
-        // mapTools.PA = mapTools.travel.PlaceArray.prototype;
-        // mapTools.PA.send = function (json) {
-        //     if (this.dispacher)
-        //         this.dispacher.catch(json);
-        // }
-        // mapTools.PA.push = function (n) {
-        //     this.array.push(n);
-        //     this.send({ 'method': 'push', });
-        // }
-
-        mapTools.travel.Plan = function Plan(dateTime) {
-            this.startedTime = dateTime || new Date();
-            this.places = [];
-            this.routes = [];
-            this.plans = [];
-        }
-        mapTools.Pl = mapTools.travel.Plan.prototype;
-        mapTools.Pl.typeOfPlan = function (obj) {
-            let str;
-            if (obj.hasOwnProperty("routes")) {
-                str = 'DirectionsResult';
-            }
-            if (obj.hasOwnProperty("place_id")) {
-                str = 'PlaceResult';
-            }
-            if (obj.hasOwnProperty("anchorPoint")) {
-                str = 'Marker';
             }
             return str;
         }
-        mapTools.Pl.setSchedule = function (obj, setTime = false) {
-            let str = this.typeOfPlan(obj)
-            if (str === 'DirectionsResult') {
-                const leg = obj.routes[0].legs[0];
-                let duration = leg.duration_in_traffic ? leg.duration_in_traffic.value : leg.duration.value;
-                obj.time = setTime === 0 || setTime > 0 ? setTime : duration;
-            }
-            if (str === 'PlaceResult') {
-                obj.time = setTime || 0;
-            }
-            if (str === 'Marker') {
-                obj.time = setTime || 0;
-            }
-            return this;
+        return {
+            formatTime: formatTime,
+            timeToString: timeToString
         }
-        mapTools.Pl.getSchedule = function (obj) {
-            let str = this.typeOfPlan(obj)
-            let time = 0;
-            if (str === 'DirectionsResult') {
-                time += obj.time || obj.routes[0].legs[0].duration_in_traffic.value || obj.routes[0].legs[0].duration.value;
-            }
-            if (str === 'PlaceResult') {
-                time += obj.time || 0;
-            }
-            if (str === 'Marker') {
-                time += obj.time || 0;
-            }
-            return time;
-        }
-        mapTools.Pl.setRoute = function (obj) {
-            this.routes.push(obj);
-            return this;
-        }
-        mapTools.Pl.setPlace = function (obj) {
-            this.places.push(obj);
-            return this;
-        }
-        mapTools.Pl.setPlan = function (obj, setTime = false) {
-            if (setTime !== false || obj.time === undefined) {
-                this.setSchedule(obj, setTime);
-            }
-            let str = this.typeOfPlan(obj)
-            if (str === 'DirectionsResult') {
-                this.setRoute(obj);
-            }
-            if (str === 'PlaceResult') {
-                this.setPlace(obj);
-            }
-            if (str === 'Marker') {
-                this.setPlace(obj);
-            }
-            this.plans.push(obj);
-            return this;
-        }
-        mapTools.Pl.getPlanSchedule = function (n) {
-            let addTime = 0;
-            for (let i = 0; i < n; i++) {
-                addTime += this.plans[i].time
-            }
-            const time = new Date(this.startedTime.valueOf())
-            time.setSeconds(addTime);
-            return time;
-        }
-        mapTools.Pl.getPlaceSchedule = function (n) {
-            let addTime = 0;
-            for (let i = 0; i < n * 2; i++) {
-                addTime += this.plans[i].time
-            }
-            const time = new Date(this.startedTime.valueOf())
-            time.setSeconds(addTime);
-            console.log('addTime : ', addTime);
-            console.log('new time : ', time);
-            return time;
-        }
-        mapTools.timeFormat = (function () {
-            const formatTime = function (dateTime) {
-                return `${dateTime.getHours()}:${dateTime.getMinutes()}`
-            }
-            const timeToString = function (seconds) {
-                let n = seconds;
-                let list = [
-                    { text: '秒', value: 0, division: 60 },
-                    { text: '分', value: 0, division: 60 },
-                    { text: '時間', value: 0, division: 60 },
-                ]
-                let str = '';
-                for (const item of list) {
-                    let ans = n % item.division;
-                    n -= ans;
-                    n /= item.division;
-                    if (ans != 0) {
-                        item.value = ans;
-                    }
-                }
-                list = list.reverse()
-                for (const item of list) {
-                    if (item.value != 0) {
-                        str += `${item.value} ${item.text}`;
-                    }
-                }
-                return str;
-            }
-            return {
-                formatTime: formatTime,
-                timeToString: timeToString
-            }
-        })();
+    })();
 
+
+    /**
+     * Vueを使わない用のオブジェクト
+     * @module commons
+     */
+    mapTools.commons = (function () {
+        const console = mapTools.console;
+        const MAP_INIT_LAT = 35.86219927057546;
+        const MAP_INIT_LNG = 139.9709143952686;
+        const MAP_INIT_ZOOM = 16;
 
         /**
-         * Vueを使わない用のオブジェクト
-         * @module commons
+         * 
          */
-        mapTools.commons = (function () {
-            const console = mapTools.console;
-            const MAP_INIT_LAT = 35.86219927057546;
-            const MAP_INIT_LNG = 139.9709143952686;
-            const MAP_INIT_ZOOM = 16;
+        const init = function () {
+            console.log("mapTools commons init");
+        }
 
-            /**
-             * 
-             */
-            const init = function () {
-                console.log("mapTools commons init");
-            }
-
-
-            /**
-             * マップインスタンスを作成し返します
-             * @static
-             * @function createMapInstance - dom     
-             * @return {google.maps.Map} - googleマップインスタンス
-             * @author mizuki
-             * 
-             */
-            const createMapInstance = function (dom) {
-                console.log("createMapInstance");
-                const mapStyle = {
-                    zoom: MAP_INIT_ZOOM,
-                    center: new google.maps.LatLng(MAP_INIT_LAT, MAP_INIT_LNG),
-                    clickableIcons: false,
-                    disableDefaultUI: false,
-                    keyboardShortcuts: false,
-                    tilt: 0,
-                }
-                return new google.maps.Map(dom, mapStyle);
-
-            }
-
-
-
-            /**
-             * Mapインスタンスとマーカを入れる配列、緯度経度インスタンス、タイトルを受け取り、
-             * マーカーを作成し表示、それを返す
-             * @static
-             * @function createMarker
-             * @param {"google.maps.Map"} maps - 表示させたいmapインスタンス
-             * @param {"google.maps.LatLng"} latLngInstance - 表示させたい位置のLatLngインスタンス
-             * @param {String} markerTitle - マーカーを格納したい配列
-             * @param {Array<"google.maps.Marke">} markerList - マーカーを格納したい配列
-             * @author mizuki
-             * 
-             */
-            const createMarker = function (maps, latLngInstance, markerTitle) {
-                console.log("createMarker")
-                const markerOptions = {
-                    position: latLngInstance,
-                    map: maps,
-                    title: markerTitle
-                }
-                const marker = new google.maps.Marker(markerOptions);
-                return marker
-            }
-
-
-            /**
-             * 与えられたマーカー配列のマーカーをマップから消す。
-             * **配列から削除するわけではない**
-             * @static
-             * @function deleteMarker
-             * @param {Array<"google.maps.Marker">} markerList -マーカーインスタンスリスト
-             * @return {Array<"google.maps.Marker">}
-             * @author mizuki
-             * 
-             */
-            const deleteMarker = function (markerList) {
-                console.log("deleteMaker");
-                return markerList.forEach(e => {
-                    e.setMap(null);
-                });
-            }
-
-
-
-            /**
-             * directionsServiceで検索したルートをマップ上に描画してPromiseを返します
-             * @static
-             * @function viewRoute
-             * @param {"DirectionsResult"} response - directionsServiceの結果
-             * @param {"google.maps.Map"} mapInstance - ルートを表示させたいMapインスタンス
-             * @return {Promise} - 
-             * @author mizuki
-             * 
-             */
-            const viewRoute = function (response, mapInstance) {
-                console.log("viewRoute");
-                const directionsRenderer = new google.maps.DirectionsRenderer({
-                    map: mapInstance,
-                    directions: response,
-                    draggable: false,
-                    suppressMarkers: true,
-                    preserveViewport: true,
-                    polylineOptions: {
-                        strokeColor: '#87CEEB',
-                        strokeOpacity: 0.8,
-                        strokeWeight: 5
-                    }
-                });
-                return directionsRenderer
-            }
-
-            const deleteRenderer = function (routeList) {
-                console.log("deleterenderer")
-                return routeList.forEach(e => {
-                    e.renderer.setMap(null);
-                });
-            }
-
-            /** 
-             * directionsServiceで二点間のルートを検索しPromiseを返します
-             * @static
-             * @function fetchRoute
-             * @param {"google.maps.LatLng"} startLatLng - ルートの開始地点
-             * @param {"google.maps.LatLng"} endLatLng - ルートの終了地点
-             * @param {String} mode - TravelModeの値いずれか
-             * @return {Promise} - 
-             * @author mizuki
-             * 
-             **/
-            const fetchRoute = function (startLatLng, endLatLng, mode, time) {
-                console.log("fetchRoute");
-                const directionsService = new google.maps.DirectionsService();
-                const opt = {
-                    origin: startLatLng,
-                    destination: endLatLng,
-                    travelMode: google.maps.DirectionsTravelMode[mode], // 移動手段
-                };
-                if (mode == 'DRIVING') {
-                    opt.drivingOptions = { departureTime: time };
-                }
-                return directionsService.route(opt);
-            }
-
-
-            /**
-             *渡されたインスタンスのマーカーリストからルート検索をして描画。
-             *ルートリストに入れる。
-             * @param {"google.maps.Map"} mapInstance - ルートを表示させたいMapインスタンス
-             * @param {Array<"google.maps.Marker">} selectList -マーカーインスタンスリスト
-             * @param {Array<"google.maps.DirectionsResult">} routeList -DirectionsResultリスト
-             * @author mizuki
-             * 
-             **/
-            const searchRoute = function (mapInstance, selectList, routeList) {
-                console.log("searchRoute");
-                if (selectList.length >= 2) {
-                    this.deleteRenderer(routeList);
-                    let prom = Promise.resolve();
-                    for (let i = 0; i < selectList.length - 1; i++) {
-                        const startLatlng = selectList[i].getPosition();
-                        const endLatlng = selectList[i + 1].getPosition();
-                        const mode = 'DRIVING';
-                        prom = prom
-                            .then(() => this.fetchRoute(startLatlng, endLatlng, mode))
-                            .then(response => {
-                                response.renderer = this.viewRoute(response, mapInstance);
-                                routeList.push(response);
-                            })
-                            .catch(e => console.error(e))
-                            .then(() => {
-                                console.log(`searchRoute Route ${i} end`);
-                                return new Promise(resolve => setTimeout(() => resolve(), 500))
-                            });
-                    }
-                    prom = prom.then(() => console.log("searchRoute all end"));
-                }
-
-            }
-
-            /**
-             * 
-             * 
-             */
-            const fetchNearByPlace = function (mapInstance, latLng, radius, checkValue, keyword) {
-                const service = new google.maps.places.PlacesService(mapInstance);
-                const response = [];
-                return new Promise((resolve, reject) => {
-                    service.nearbySearch(
-                        {
-                            location: latLng,
-                            radius: radius,
-                            type: [checkValue],
-                            keyword: keyword,
-                            language: 'ja'
-                        },
-                        (results, status, pagination) => {
-                            response.push({ results, status, pagination });
-                            if (pagination.hasNextPage) {
-                                setTimeout(() => pagination.nextPage(), 1000)
-                            } else {
-                                resolve(response)
-                            }
-                        }
-                    );
-                });
-            }
-
-            /**
-             * 
-             */
-            const fetchAllNearByPlace = function (mapInstance, latLng, radius, checkValue = 'tourist_attraction', keywordList) {
-                const prom = []
-                for (const keyword of keywordList) {
-                    prom.push(this.fetchNearByPlace(mapInstance, latLng, radius, checkValue, keyword))
-                }
-                return Promise.all(prom)
-            }
-
-            const resultsToAutomaticObj = function (results) {
-                for (const place of data) {
-                    place.item = place.name;
-                    place.ranweight = 1;
-                    place.ratweight = 1;
-                    place.range = 0;
-                    // place.rating = place.rating;
-                    place.lat = place.location.lat;
-                    place.lng = place.location.lng;
-                    place.select = "False";
-                }
-            }
-
-            const createMarkerLatLngBounds = function (markerList) {
-                const latlngbounds = new google.maps.LatLngBounds();
-                markerList.forEach(e => {
-                    latlngbounds.extend(e.getPosition());
-                });
-                return latlngbounds;
-            };
-            const createRouteTotalTimeMarker = function (maps, result) {
-                let index = Number(Math.floor(result.routes[0].overview_path.length / 2)) - 1;
-                for (let i = 0, len = result.routes[0].overview_path.length; i < len; i++) {
-                    if (i == index) {
-                        const middleLatLng = new google.maps.LatLng(
-                            result.routes[0].overview_path[index].lat(),
-                            result.routes[0].overview_path[index].lng()
-                        );
-                        result.middleMarker = new google.maps.Marker({
-                            position: middleLatLng,
-                            'map': maps,
-                            icon: {
-                                url: '',
-                                size: new google.maps.Size(1, 1)
-                            },
-                            label: {
-                                text: result.routes[0].legs[0].duration_in_traffic.text, //時間
-                                color: '#000000',
-                                fontFamily: 'sans-serif',
-                                fontWeight: 'bold',
-                                fontSize: '20px'
-                            }
-                        });
-                    }
-                }
-            };
-            const createRouteTotalTimeMarkerOfList = function (maps, reslutList) {
-                reslutList.forEach(e => {
-                    createRouteTotalTimeMarker(maps, e);
-                })
-            }
-            let _currentPop;
-            const addMarkerPopEvent = function (maps, marker) {
-                let name, url, attributions, address;
-
-                if (marker.place) {
-                    const place = marker.place;
-                    name = place.name;
-                    url = place.photos && place.photos.length > 0 ? place.photos[0].getUrl() : '';
-                    attributions = place.html_attributions || '';
-                    address = place.vicinity || '';
-                }
-                const contentStr =
-                    `<div id="pop">`
-                    + `<h4 style="font-size: large;">${name}</h4>`
-                    + `<p><img src="${url}" alt="" style="width: 100px; height: 100px;"></p>`
-                    + `</div>`;
-                const infowindow = new google.maps.InfoWindow({
-                    content: contentStr,
-                });
-
-                marker.addListener("click", () => {
-                    if (_currentPop) {
-                        _currentPop.close()
-                    }
-                    _currentPop = infowindow;
-                    infowindow.open({
-                        anchor: marker,
-                        maps,
-                        shouldFocus: false,
-                    });
-                    maps.addListener('click', () => {
-                        if (_currentPop) {
-                            _currentPop.close()
-                        }
-                    })
-                });
-            }
-
-            let _hover;
-            const addHoverEvent = function (maps, marker, result, routeList) {
-                marker.addListener("mouseover", () => {
-                    if (!_hover) {
-                        createRouteTotalTimeMarker(maps, result);
-                        routeList.forEach(e => {
-                            e.renderer.setOptions({
-                                polylineOptions: {
-                                    strokeColor: '#87CEEB',
-                                    strokeOpacity: 0.3,
-                                    strokeWeight: 5
-                                }
-                            })
-                        })
-                        result.renderer.setOptions({
-                            polylineOptions: {
-                                strokeColor: '#FF6347',
-                                strokeOpacity: 1.0,
-                                strokeWeight: 7
-                            }
-                        });
-                        routeList.forEach(e => {
-                            e.renderer.setMap(null);
-                            e.renderer.setMap(maps);
-                        })
-                        _hover = result.renderer;
-                    }
-                });
-                marker.addListener("mouseout", () => {
-                    if (_hover) {
-                        result.middleMarker.setMap(null)
-                        routeList.forEach(e => {
-                            e.renderer.setOptions({
-                                polylineOptions: {
-                                    strokeColor: '#87CEEB',
-                                    strokeOpacity: 0.8,
-                                    strokeWeight: 5
-                                }
-                            });
-                            e.renderer.setMap(null);
-                            e.renderer.setMap(maps);
-                        })
-                        _hover = null;
-                    }
-                });
-            }
-            const setMarkerLavelArray = function (markerList) {
-                for (let i = 0; i < markerList.length; i++) {
-                    markerList[i].setLabel({
-                        text: `${i + 1}`,
-                        color: '#ffffff',
-                        fontFamily: 'sans-serif',
-                        fontWeight: 'bold',
-                        fontSize: '14px'
-                    })
-                }
-
-            }
-            const createLoadUI = function () {
-                const div = document.createElement('div');
-                div.innerHTML =
-                    '<div class="spinner-border" role="status">'
-                    + '</div>'
-                return div;
-            }
-            let loading;
-            const showLoadUI = function (maps) {
-                const div = createLoadUI();
-                loading = maps.controls[google.maps.ControlPosition.TOP_RIGHT]
-                loading.push(div);
-            }
-            const clearLoadUI = function () {
-                if (loading) {
-                    loading.clear();
-                    loading = null;
-                }
-            }
-            init();
-            return {
-                createMapInstance: createMapInstance,
-                createMarker: createMarker,
-                deleteMarker: deleteMarker,
-                viewRoute: viewRoute,
-                fetchRoute: fetchRoute,
-                searchRoute: searchRoute,
-                deleteRenderer: deleteRenderer,
-                fetchNearByPlace: fetchNearByPlace,
-                fetchAllNearByPlace: fetchAllNearByPlace,
-                resultsToAutomaticObj: resultsToAutomaticObj,
-                addMarkerPopEvent: addMarkerPopEvent,
-                createRouteTotalTimeMarkerOfList: createRouteTotalTimeMarkerOfList,
-                createMarkerLatLngBounds: createMarkerLatLngBounds,
-                addHoverEvent: addHoverEvent,
-                setMarkerLavelArray: setMarkerLavelArray,
-                showLoadUI: showLoadUI,
-                clearLoadUI: clearLoadUI
-            }
-        })();
-        // Object.freeze(mapTools.commons)
 
         /**
-         * 渡されたインスタンス内のmapsプロパティにマップインスタンスを代入します。
-         * 苦肉の策です
-         * @param {Vue} self - マップを代入したいVueインスタンス
-         * @param {string} elementId - マップを表示したいelement_id
-         * @param {string} mapPropertyName -代入したいオブジェクトプロパティ名
-         * @return {"google.maps.Map"} - googleマップインスタンス
+         * マップインスタンスを作成し返します
+         * @static
+         * @function createMapInstance - dom     
+         * @return {google.maps.Map} - googleマップインスタンス
          * @author mizuki
          * 
          */
-        mapTools.createMapInstance = function (self, elementId, mapPropertyName = "maps") {
-            self[mapPropertyName] = this.commons.createMapInstance(self.$refs[elementId]);
-            return self[mapPropertyName];
+        const createMapInstance = function (dom) {
+            console.log("createMapInstance");
+            const mapStyle = {
+                zoom: MAP_INIT_ZOOM,
+                center: new google.maps.LatLng(MAP_INIT_LAT, MAP_INIT_LNG),
+                clickableIcons: false,
+                disableDefaultUI: false,
+                keyboardShortcuts: false,
+                tilt: 0,
+            }
+            return new google.maps.Map(dom, mapStyle);
+
         }
 
 
+
         /**
-         * Vueインスタンスと緯度経度インスタンス,タイトルを受け取り、マーカーを作成し表示、それを返す
-         * マーカーはクリックされるとVueインスタンスないのmarkerListに入る
-         * @param {Vue} self - マーカーを表示させたいMapインスタンスを持つVueインスタンス
-         * @param {google.maps.LatLng} latLngInstance - 表示させたい位置のLatLngインスタンス
-         * @param {string} markerTitle - 表示させるマーカーのタイトル
-         * @param {string=} mapPropertyName -使用するマップインスタンスのプロパティ名
-         * @param {string=} markerListPropertyName - 使用する配列のプロパティ名
-         * @param {string=} selectListPropertyName - 使用する配列のプロパティ名
-         * @return {google.maps.Marker} - 表示したMarkerインスタンス
+         * Mapインスタンスとマーカを入れる配列、緯度経度インスタンス、タイトルを受け取り、
+         * マーカーを作成し表示、それを返す
+         * @static
+         * @function createMarker
+         * @param {"google.maps.Map"} maps - 表示させたいmapインスタンス
+         * @param {"google.maps.LatLng"} latLngInstance - 表示させたい位置のLatLngインスタンス
+         * @param {String} markerTitle - マーカーを格納したい配列
+         * @param {Array<"google.maps.Marke">} markerList - マーカーを格納したい配列
          * @author mizuki
          * 
          */
-        mapTools.setUpMarker = function (self, latLngInstance, markerTitle = "無題のマーカー", mapPropertyName = "maps", markerListPropertyName = "markerList", selectListPropertyName = "selectList") {
-            const marker = this.commons.createMarker(
-                self[mapPropertyName],
-                latLngInstance,
-                markerTitle
-            );
-
-            self[markerListPropertyName].push(marker);
-            marker.addListener("click", () => {
-                self[selectListPropertyName].push(marker);
-                alert(`${markerTitle} をリストにいれました`);
-            });
+        const createMarker = function (maps, latLngInstance, markerTitle) {
+            console.log("createMarker")
+            const markerOptions = {
+                position: latLngInstance,
+                map: maps,
+                title: markerTitle
+            }
+            const marker = new google.maps.Marker(markerOptions);
             return marker
         }
 
 
-
         /**
          * 与えられたマーカー配列のマーカーをマップから消す。
-         * @param {Vue} self -Vueインスタンス
-         * @param {string=} markerListPropertyName - 使用する配列のプロパティ名
-         * @return {Array<google.maps.Marker>}
+         * **配列から削除するわけではない**
+         * @static
+         * @function deleteMarker
+         * @param {Array<"google.maps.Marker">} markerList -マーカーインスタンスリスト
+         * @return {Array<"google.maps.Marker">}
          * @author mizuki
          * 
          */
-        mapTools.deleteMarker = function (self, markerListPropertyName = "markerList") {
-            return this.commons.deleteMarker(self[markerListPropertyName]);
+        const deleteMarker = function (markerList) {
+            console.log("deleteMaker");
+            return markerList.forEach(e => {
+                e.setMap(null);
+            });
         }
+
 
 
         /**
-         * 与えられたマーカー配列のマーカーをマップから消す。
-         * @param {Vue} self -Vueインスタンス
-         * @param {string=} selectListPropertyName - 使用する配列のプロパティ名
-         * @return {Array<google.maps.Marker>}
+         * directionsServiceで検索したルートをマップ上に描画してPromiseを返します
+         * @static
+         * @function viewRoute
+         * @param {"DirectionsResult"} response - directionsServiceの結果
+         * @param {"google.maps.Map"} mapInstance - ルートを表示させたいMapインスタンス
+         * @return {google.maps.DirectionsRenderer} - 
          * @author mizuki
          * 
          */
-        mapTools.deleteSelect = function (self, selectListPropertyName = "selectList") {
-            self[selectListPropertyName] = [];
-            return self[selectListPropertyName];
+        const viewRoute = function (response, mapInstance) {
+            console.log("viewRoute");
+            return new google.maps.DirectionsRenderer({
+                map: mapInstance,
+                directions: response,
+                draggable: false,
+                suppressMarkers: true,
+                preserveViewport: true,
+                polylineOptions: {
+                    strokeColor: '#87CEEB',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 5
+                }
+            });
         }
 
+        const deleteRenderer = function (routeList) {
+            console.log("deleterenderer")
+            return routeList.forEach(e => {
+                e.renderer.setMap(null);
+            });
+        }
 
+        /** 
+         * directionsServiceで二点間のルートを検索しPromiseを返します
+         * @static
+         * @function fetchRoute
+         * @param {"google.maps.LatLng"} startLatLng - ルートの開始地点
+         * @param {"google.maps.LatLng"} endLatLng - ルートの終了地点
+         * @param {String} mode - TravelModeの値いずれか
+         * @return {Promise} - 
+         * @author mizuki
+         * 
+         **/
+        const fetchRoute = function (startLatLng, endLatLng, mode, time) {
+            console.log("fetchRoute");
+            const directionsService = new google.maps.DirectionsService();
+            const opt = {
+                origin: startLatLng,
+                destination: endLatLng,
+                travelMode: google.maps.DirectionsTravelMode[mode], // 移動手段
+            };
+            if (mode == 'DRIVING') {
+                opt.drivingOptions = { departureTime: time };
+            }
+            return directionsService.route(opt);
+        }
 
 
         /**
          *渡されたインスタンスのマーカーリストからルート検索をして描画。
          *ルートリストに入れる。
-         * @param {Vue} self -vueインスタンス
-         * @param {string=} mapPropertyName - 使用するマップインスタンスのプロパティ名
-         * @param {string=} selectListPropertyName - 使用する配列のプロパティ名
-         * @param {string=} routeListPropertyName - 使用する配列のプロパティ名
+         * @param {"google.maps.Map"} mapInstance - ルートを表示させたいMapインスタンス
+         * @param {Array<"google.maps.Marker">} selectList -マーカーインスタンスリスト
+         * @param {Array<"google.maps.DirectionsResult">} routeList -DirectionsResultリスト
          * @author mizuki
          * 
          **/
-        mapTools.searchRoute = function (self, mapPropertyName = "maps", selectListPropertyName = "selectList", routeListPropertyName = "routeList") {
-            self[routeListPropertyName] = [];
-            this.commons.searchRoute(
-                self[mapPropertyName],
-                self[selectListPropertyName],
-                self[routeListPropertyName]
-            );
-        }
-
-
-
-
-
-
-
-
-        //追加コード(小泉)
-
-        var map;
-
-        /**
-         * コード追加
-         * @author mizuki
-         */
-
-        /**
-         * 検索結果のルートを格納
-         */
-        let routeList = [];
-
-        /**
-         * ルートやマーカー指定の結果を描画するdom
-         */
-        const resultEl = document.getElementById('routeResult');
-
-        /**
-         * 検索する時間
-         */
-        let searchTime = new Date();
-
-        /**
-         * 旅行計画時間
-         */
-        let travelPlans;
-
-        /**
-         * 選択したマーカーを描画する
-         * 未使用
-         */
-        function createSelectListView(el, selectedArray) {
-            console.log("createSelectList");
-            let dom = '';
-            selectedArray.forEach(e => {
-                const li = document.createElement('li');
-                dom += `<li><h3>${e.title}</h3>`;
-                dom += `滞在時間<input type="number" value="0" name="placeTime">秒 `;
-                dom += `次の移動<select name="route">`;
-                dom += `<option value="DRIVING" selected>車</option>`;
-                dom += `<option value="WALKING">歩き</option></select></li>`;
-            });
-            el.innerHTML = dom;
-        }
-
-        /**
-         * 選択したマーカーと検索したルートを描画する
-         * 未使用
-         */
-        function createRouteListView(el, plans) {
-            console.log("createSearchResult");
-            let dom = '';
-            for (let i = 0, j = 0; i < plans.places.length; i++, j += 2) {
-                if (i < plans.routes.length) {
-                    dom += `<li><h3>${plans.places[i].title}</h3>`
-                    dom += `<p>移動方法 : ${plans.routes[i].request.travelMode == 'DRIVING' ? '車' : '歩き'}</p> `
-                    dom += `<p>出発時間 : ${mapTools.timeFormat.formatTime(plans.getPlanSchedule(j + 1))}</p>`
-                    dom += `<p> 移動時間: ${mapTools.timeFormat.timeToString(plans.routes[i].time)}</p><ul>`;
-                    plans.routes[i].routes[0].legs[0].steps.forEach(e => {
-                        dom += `<li>${e.instructions}</li>`
-                    })
-                    dom += `</ul>`;
-                    dom += `<p> 到着時間 : ${mapTools.timeFormat.formatTime(plans.getPlanSchedule(j + 2))}</p></li>`
-                } else {
-                    dom += `<li> <h3>${plans.places[i].title}</h3></li> `
+        const searchRoute = function (mapInstance, selectList, routeList) {
+            console.log("searchRoute");
+            if (selectList.length >= 2) {
+                this.deleteRenderer(routeList);
+                let prom = Promise.resolve();
+                for (let i = 0; i < selectList.length - 1; i++) {
+                    const startLatlng = selectList[i].getPosition();
+                    const endLatlng = selectList[i + 1].getPosition();
+                    const mode = 'DRIVING';
+                    prom = prom
+                        .then(() => this.fetchRoute(startLatlng, endLatlng, mode))
+                        .then(response => {
+                            response.renderer = this.viewRoute(response, mapInstance);
+                            routeList.push(response);
+                        })
+                        .catch(e => console.error(e))
+                        .then(() => {
+                            console.log(`searchRoute Route ${i} end`);
+                            return new Promise(resolve => setTimeout(() => resolve(), 500))
+                        });
                 }
+                prom = prom.then(() => console.log("searchRoute all end"));
             }
-            el.innerHTML = dom;
+
         }
 
         /**
-         * 選択したマーカーからルートを検索しマップ上に描画する
-         * 描画用domに描画する
-         * @param {string} mapInstance
-         * @param {Array<any>} selectedArray
-         * @return {Promise} -new Promise
+         * 
+         * 
          */
-        function searchRoute(mapInstance, el, selectedArray, resultArray, startDateTime) {
-            travelPlans = new mapTools.travel.Plan(startDateTime);
-            return new Promise((res, rej) => {
-                if (selectedArray.length >= 2) {
-                    mapTools.commons.showLoadUI(mapInstance);
-                    console.log("ルート検索開始");
-                    const placeTime = document.getElementsByName('placeTime');
-                    if (placeTime.length > 0) {
-                        for (let i = 0; i < selectedArray.length; i++) {
-                            selectedArray[i].time = Number(placeTime[i].value);
-                        }
-                    } else {
-                        for (let i = 0; i < selectedArray.length; i++) {
-                            selectedArray[i].time = 3600;
-                        }
-                    }
-                    const modeList = [];
-                    const data = document.getElementsByName('route');
-                    if (data.length > 0) {
-                        data.forEach(e => modeList.push(e.value));
-                    } else {
-                        for (let i = 0; i < selectedArray.length; i++) {
-                            modeList.push('DRIVING');
-                        }
-                    }
-                    mapTools.commons.deleteRenderer(resultArray);
-                    let prom = Promise.resolve();
-                    travelPlans.setPlan(selectedArray[0]);
-                    for (let i = 0; i < selectedArray.length - 1; i++) {
-                        const startLatlng = selectedArray[i].getPosition();
-                        const endLatlng = selectedArray[i + 1].getPosition();
-                        // const mode = 'DRIVING';
-                        prom = prom
-                            .then(() => mapTools.commons.fetchRoute(startLatlng, endLatlng, modeList[i], travelPlans.getPlanSchedule(0)))
-                            .then(response => {
-                                travelPlans.setPlan(response);
-                                travelPlans.setPlan(selectedArray[i + 1]);
-                                response.renderer = mapTools.commons.viewRoute(response, mapInstance);
-                                resultArray.push(response);
-                                mapTools.commons.addHoverEvent(mapInstance, selectedArray[i], response, resultArray);
-                            })
-                            .catch(e => {
-                                console.error(e);
-                            })
-                            .then(() => {
-                                console.log(`ルート検索${i}つ目終了`);
-                                return new Promise(resolve => {
-                                    setTimeout(() => { resolve() }, 500);
-                                })
-                            });
-                    }
-                    prom = prom.then(() => {
-                        mapTools.commons.clearLoadUI();
-                        res("ルート検索完全終了");
-                    });
-                } else {
-                    rej("二つ以上選択してください");
-                }
-            });
-        }
-
-        /**
-         * ルート検索ボタン
-         */
-        // markers = markers || [];
-        document.getElementById("routeSearch").addEventListener('click', () => {
-            travelPlans = new mapTools.travel.Plan(searchTime);
-            searchRoute(map, resultEl, markers, routeList, searchTime)
-                .then(message => console.log(message))
-                .catch(message => console.error(message))
-                .then(() => {
-                    const latlngbounds = mapTools.commons.createMarkerLatLngBounds(markers);
-                    map.fitBounds(latlngbounds);
-                });
-        });
-
-        /**
-         * ルート削除ボタン
-         */
-        document.getElementById("deleteRoute").addEventListener('click', () => {
-            routeList.forEach(e => {
-                if (e.middleMarker)
-                    e.middleMarker.setMap(null);
-            })
-            mapTools.commons.deleteRenderer(routeList);
-            routeList = [];
-        })
-
-        /**
-         * 時間
-         */
-        // document.getElementById("searchDateTime").addEventListener('change', e => {
-        //     searchTime = new Date(e.currentTarget.value);
-        //     document.getElementById("startTimeBox").innerHTML = searchTime;
-        // })
-
-        /**
-         * 自動ボタン
-         */
-
-
-        function decideCenterOfPlace(selectedArray) {
-            if (selectedArray.length == 0) return new Error("選択してください");
-            let center = selectedArray[0].getPosition();
-            return center;
-        }
-
-        function autoSearch(mapInstance, selectedArray) {
-            const latLng = decideCenterOfPlace(selectedArray);
-            //周辺検索
-            const keywordList = ['', '観光地', '自然', '寺社', '公園', '城'];
-            mapTools.commons.showLoadUI(mapInstance);
+        const fetchNearByPlace = function (mapInstance, latLng, radius, checkValue, keyword) {
+            const service = new google.maps.places.PlacesService(mapInstance);
+            const response = [];
             return new Promise((resolve, reject) => {
+                service.nearbySearch(
+                    {
+                        location: latLng,
+                        radius: radius,
+                        type: [checkValue],
+                        keyword: keyword,
+                        language: 'ja'
+                    },
+                    (results, status, pagination) => {
+                        response.push({ results, status, pagination });
+                        if (pagination.hasNextPage) {
+                            setTimeout(() => pagination.nextPage(), 1000)
+                        } else {
+                            resolve(response)
+                        }
+                    }
+                );
+            });
+        }
 
-                mapTools.commons.fetchAllNearByPlace(mapInstance, latLng, 30000, 'tourist_attraction', keywordList)
-                    .then(response => {
-                        const allList = [];
-                        for (const resolveArray of response) {
-                            for (const resp of resolveArray) {
-                                for (const place of resp.results) {
-                                    if (allList.findIndex(e => e.place_id == place.place_id) === -1) {
-                                        allList.push(place);
-                                    }
-                                }
-                            }
+        /**
+         * 
+         */
+        const fetchAllNearByPlace = function (mapInstance, latLng, radius, checkValue = 'tourist_attraction', keywordList) {
+            const prom = []
+            for (const keyword of keywordList) {
+                prom.push(this.fetchNearByPlace(mapInstance, latLng, radius, checkValue, keyword))
+            }
+            return Promise.all(prom)
+        }
+
+        const resultsToAutomaticObj = function (results) {
+            for (const place of data) {
+                place.item = place.name;
+                place.ranweight = 1;
+                place.ratweight = 1;
+                place.range = 0;
+                // place.rating = place.rating;
+                place.lat = place.location.lat;
+                place.lng = place.location.lng;
+                place.select = "False";
+            }
+        }
+
+        const createMarkerLatLngBounds = function (markerList) {
+            const latlngbounds = new google.maps.LatLngBounds();
+            markerList.forEach(e => {
+                latlngbounds.extend(e.getPosition());
+            });
+            return latlngbounds;
+        };
+        const createRouteTotalTimeMarker = function (maps, routeResponse) {
+            let index = Number(Math.floor(routeResponse.routes[0].overview_path.length / 2)) - 1;
+            const middleLatLng = new google.maps.LatLng(
+                routeResponse.routes[0].overview_path[index].lat(),
+                routeResponse.routes[0].overview_path[index].lng()
+            );
+            return new google.maps.Marker({
+                position: middleLatLng,
+                map: maps,
+                icon: {
+                    url: '',
+                    size: new google.maps.Size(1, 1)
+                },
+                label: {
+                    text: routeResponse.routes[0].legs[0].duration_in_traffic.text, //時間
+                    color: '#000000',
+                    fontFamily: 'sans-serif',
+                    fontWeight: 'bold',
+                    fontSize: '20px'
+                }
+            });
+        };
+
+        let _currentPop;
+        const addMarkerPopEvent = function (maps, marker) {
+            let name, url, attributions, address;
+
+            if (marker.place) {
+                const place = marker.place;
+                name = place.name;
+                url = place.photos && place.photos.length > 0 ? place.photos[0].getUrl() : '';
+                attributions = place.html_attributions || '';
+                address = place.vicinity || '';
+            }
+            const contentStr =
+                `<div id="pop">`
+                + `<h4 style="font-size: large;">${name}</h4>`
+                + `<p><img src="${url}" alt="" style="width: 100px; height: 100px;"></p>`
+                + `</div>`;
+            const infowindow = new google.maps.InfoWindow({
+                content: contentStr,
+            });
+
+            marker.addListener("click", () => {
+                if (_currentPop) {
+                    _currentPop.close()
+                }
+                _currentPop = infowindow;
+                infowindow.open({
+                    anchor: marker,
+                    maps,
+                    shouldFocus: false,
+                });
+                maps.addListener('click', () => {
+                    if (_currentPop) {
+                        _currentPop.close()
+                    }
+                })
+            });
+        }
+
+        let _hover;
+        const addHoverEvent = function (maps, marker, render, routeResponse) {
+            let middleMarker
+            marker.addListener("mouseover", () => {
+                if (!_hover) {
+                    middleMarker = createRouteTotalTimeMarker(maps, routeResponse);
+                    render.setOptions({
+                        polylineOptions: {
+                            strokeColor: '#FF6347',
+                            strokeOpacity: 1.0,
+                            strokeWeight: 7
                         }
-                        const startPoint = {
-                            item: document.getElementById("addressInput").value,
-                            rating: 4.3,
-                            lat: latLng.lat(),
-                            lng: latLng.lng()
-                        }
-                        let ans = automatic(startPoint, allList)
-                        for (let i = 1; i < ans.length; i++) {
-                            const place = ans[i];
-                            const location = place.geometry.location;
-                            const marker = mapTools.commons.createMarker(mapInstance, location, place.name);
-                            marker.place = place;
-                            marker.time = 3600;
-                            const photoUrl = place.photos && place.photos.length > 0 ? place.photos[0].getUrl() : '';
-                            mapTools.commons.addMarkerPopEvent(mapInstance, marker)
-                            selectedArray.push(marker);
-                            // photoList.push(photoUrl);
-                            // nameList.push(place.name);
-                        }
-                        travelPlans = new mapTools.travel.Plan(searchTime);
-                        mapTools.commons.clearLoadUI();
-                        searchRoute(mapInstance, resultEl, selectedArray, routeList, searchTime)
-                            .then(message => console.log(message))
-                            .catch(message => console.error(message))
-                            .then(() => {
-                                const latlngbounds = mapTools.commons.createMarkerLatLngBounds(selectedArray);
-                                map.fitBounds(latlngbounds);
-                                resolve();
-                            })
                     });
+                    render.setMap(null);
+                    render.setMap(maps);
+                    _hover = { middleMarker: middleMarker, render: render }
+                }
+            });
+            marker.addListener("mouseout", () => {
+                if (_hover) {
+                    render.setOptions({
+                        polylineOptions: {
+                            strokeColor: '#87CEEB',
+                            strokeOpacity: 0.8,
+                            strokeWeight: 5
+                        }
+                    });
+                    _hover.middleMarker.setMap(null);
+                    _hover.render.setMap(null);
+                    _hover.render.setMap(maps);
+                    _hover = null;
+                }
             });
         }
-        document.getElementById('autoSearch').addEventListener('click', e => {
-            if (markers.length > 0) {
-                autoSearch(map, markers)
-                    .then(() => {
-                        for (let i = 0; i < timeStamps.length; i++) {
-                            timeStamps.pop();
-                        }
-                        for (let i = 0; i < travelPlans.places.length; i++) {
-                            const dateTime = travelPlans.getPlaceSchedule(i);
-                            const placeStartTime = Number(dateTime.getHours() * 60) + Number(dateTime.getMinutes()) - (beginHour * 60)
-                            console.log(placeStartTime)
-                            const marker = travelPlans.places[i];
-                            timeStamps.push(
-                                new TimeStamp(
-                                    timeStamps.length,
-                                    marker.position,
-                                    "null",
-                                    marker.place.name,
-                                    placeStartTime, Math.floor(marker.time / 60)));
-                            resetClasses();
-                            console.log("place", i, ":", travelPlans.getPlaceSchedule(i));
-                        }
-                    })
-
+        const setMarkerLavelArray = function (markerList) {
+            for (let i = 0; i < markerList.length; i++) {
+                markerList[i].setLabel({
+                    text: `${i + 1}`,
+                    color: '#ffffff',
+                    fontFamily: 'sans-serif',
+                    fontWeight: 'bold',
+                    fontSize: '14px'
+                })
             }
-        });
+
+        }
+        const createLoadUI = function () {
+            const div = document.createElement('div');
+            div.innerHTML =
+                '<div class="spinner-border" role="status">'
+                + '</div>'
+            return div;
+        }
+        let loading;
+        const showLoadUI = function (maps) {
+            const div = createLoadUI();
+            loading = maps.controls[google.maps.ControlPosition.TOP_RIGHT]
+            loading.push(div);
+        }
+        const clearLoadUI = function () {
+            if (loading) {
+                loading.clear();
+                loading = null;
+            }
+        }
+        init();
+        return {
+            createMapInstance: createMapInstance,
+            createMarker: createMarker,
+            deleteMarker: deleteMarker,
+            viewRoute: viewRoute,
+            fetchRoute: fetchRoute,
+            searchRoute: searchRoute,
+            deleteRenderer: deleteRenderer,
+            fetchNearByPlace: fetchNearByPlace,
+            fetchAllNearByPlace: fetchAllNearByPlace,
+            resultsToAutomaticObj: resultsToAutomaticObj,
+            addMarkerPopEvent: addMarkerPopEvent,
+            createMarkerLatLngBounds: createMarkerLatLngBounds,
+            addHoverEvent: addHoverEvent,
+            setMarkerLavelArray: setMarkerLavelArray,
+            showLoadUI: showLoadUI,
+            clearLoadUI: clearLoadUI
+        }
+    })();
+// Object.freeze(mapTools.commons)
+</script>
+<script>
+    //カードのクラス
+    class ScheduleCard {
+
+        constructor(id, photoAddress, name, cardInfo, oneMinutesPixcel,
+            beginTime, stayTime, beginHour, endHour, routes = []) {
+            this.id = id; //ID
+
+            this.beginTime = beginTime;
+            this.stayTime = stayTime;
+            this.beginHour = beginHour;
+            this.endHour = endHour;
+
+            this.oneMinutesPixcel = oneMinutesPixcel;
+            this.cardInfo = cardInfo;
+            //カードクラスのinnerHTML
+            this.cardInfo.innerHTML = `
+    <div class="card__wrap">
+    <div class="card__content" name='grab'>
+        <img name="img" class="card__image" src='${photoAddress}' alt='${name}'>
+        <div>
+            <div class="card__desc">
+                <h4>${name}</h4>
+                <button name="memoRemoveScheduleBtnEvent">X</button>
+                <button name="memoSearchRouteBtnEvent">ルート検索</button>
+            </div>
+            <p name="time"></p>
+        </div>
+    </div>
+    <div class='card__resize' style='text-align: center; height: 10px; width: 100%; background-color: rgba(255, 255, 255, 0.5);' name='resize'></div>
+    </div>`;
+
+            this.cardTop = this.beginTime * this.oneMinutesPixcel;
+            this.cardInfo.style.top = this.cardTop + "px";
+
+            this.size = this.stayTime * this.oneMinutesPixcel - 10;
+            const table = this.cardInfo.getElementsByTagName('div')['grab'];
+            table.style.height = this.size + "px";
+            table.style.maxHeight = table.style.height;
+
+            this.cardInfo.id = this.id;
+
+
+            this.dragged = 0;
+
+            this.routes = routes;
+        }
+
+        //セッター
+        setId(id) {
+            this.id = id;
+            this.cardInfo.id = this.id;
+        }
+        setCardY(cardTop) {
+            this.cardTop = cardTop;
+        }
+        setDragged(dragged) {
+            //0＝なし
+            //1＝移動
+            //2＝伸縮
+            this.dragged = dragged;
+        }
+        setRoutes(routes) {
+            this.routes = routes;
+        }
+        //ゲッター
+        getId() {
+            return this.id;
+        }
+        getCardInfo() {
+            return this.cardInfo;
+        }
+        getCardTop() {
+            return this.cardTop;
+        }
+        getDragged() {
+            return this.dragged;
+        }
+        getBeginTime() {
+            return this.beginTime;
+        }
+        getEndTime() {
+            return this.beginTime + this.stayTime;
+        }
+        getStayTime() {
+            return this.stayTime;
+        }
+        init() {
+            this.timeFormat();
+            this.routeFormat();
+        }
+        routeDomCreate() {
+            const route = this.routes[0]
+            const height = route.getStay() / 60 * this.oneMinutesPixcel;
+            const insertText = `
+    <div class='card__route' style='height: ${height}px; width: 100%;' name='routeTitle'>
+    次の移動${route.getName()}m : ${route.getStay()}秒</div>`;
+            this.cardInfo.insertAdjacentHTML('beforeend', insertText)
+        }
 
         /**
-         * ピン
+         * yPos 高さ
          */
-        function callTogglePin(number) {
-            const place = placesList[number];
-            const lat = place.geometry.location.lat()
-            const lng = place.geometry.location.lng()
-            togglePin(
-                place.photos[0].getUrl(),
-                place.name,
-                lat, lng
-            )
-            const marker = markers[markers.length - 1];
-            marker.place = marker.place || place;
-            mapTools.commons.addMarkerPopEvent(map, marker);
+        move(yPos) {
+            this.cardTop += yPos;
+            this.cardInfo.style.top = this.cardTop + "px";
+
+            this.beginTime = Math.round(this.cardTop / this.oneMinutesPixcel);
+
+            this.timeFormat();
         }
+
         /**
-         * ここまで
+         * 
          */
+        extend(yPos) {
+            this.size += yPos;
+            this.stayTime = Math.round((this.size + 10) / this.oneMinutesPixcel);
 
+            const card = this.cardInfo.getElementsByTagName('*')["grab"];
+            card.style.height = this.size + "px";
+            card.style.maxHeight = card.style.height;
 
-        function initMap() {
-            map = new google.maps.Map(document.getElementById('map'), {
-                center: {
-                    lat: 34.7019399,
-                    lng: 135.51002519999997
-                },
-                mapTypeControl: false, //マップタイプ コントロール
-                fullscreenControl: false, //全画面表示コントロール
-
-                zoom: 19
-            });
-
-            /**
-             * 追加
-             * @author mizuki
-             */
-             map.addListener('idle', () => {
-                mapTools.commons.setMarkerLavelArray(markers)
-            })
-            /**
-             * ここまで
-             */
-
-            var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            var labelIndex = 0;
-            var totalDistance = 0;
-            var totalDuration = 0;
-
-            map = new google.maps.Map(document.getElementById("map"), mapOptions);
-            var infoWindow = new google.maps.InfoWindow();
-            var lat_lng = new Array();
-            var latlngbounds = new google.maps.LatLngBounds();
-
-            var element = document.getElementById("routes");
-            //var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
-            for (i = 0; i < markers.length; i++) {
-                var data = markers[i]
-                var myLatlng = new google.maps.LatLng(data.lat, data.lng);
-                lat_lng.push(myLatlng);
-                var marker = new google.maps.Marker({
-                    position: myLatlng,
-                    map: map,
-                    title: data.title,
-                    label: labels[labelIndex++ % labels.length],
-                    //icon: image
-
-                });
-
-                latlngbounds.extend(marker.position);
-                (function (marker, data) {
-                    // google.maps.event.addListener(marker, "click", function (e) {
-                    //     infoWindow.setContent(data.description);
-                    //     infoWindow.open(map, marker);
-                    // });
-                })(marker, data);
-            }
-            map.setCenter(latlngbounds.getCenter());
-            map.fitBounds(latlngbounds);
-
-            //***********ルーティング****************//
-
-            if (routing) {
-                //パス配列を初期化
-                var path = new google.maps.MVCArray();
-
-                //ディレクションサービスを初期化
-                var service = new google.maps.DirectionsService();
-
-                var directionsDisplay = new google.maps.DirectionsRenderer({
-                    setMap: map
-                });
-
-                //パスストロークの色を設定する
-                var poly = new google.maps.Polyline({
-                    map: map,
-                    strokeColor: '#4986E7'
-                });
-
-                //地図上のポイント間でパスルートをループして描画する
-                for (var i = 0; i < lat_lng.length; i++) {
-                    if ((i + 1) < lat_lng.length) {
-                        var src = lat_lng[i];
-                        var des = lat_lng[i + 1];
-                        //path.push(src);
-                        //poly.strokeColor = '#'+Math.floor(Math.random()*16777215).toString(16);
-                        poly.setPath(path);
-                        service.route({
-                            origin: src,
-                            destination: des,
-                            travelMode: google.maps.DirectionsTravelMode.DRIVING
-                        }, function (result, status) {
-                            if (status == google.maps.DirectionsStatus.OK) {
-                                directionsDisplay.setDirections(result);
-                                var myroute = directionsDisplay.directions.routes[0];
-                                var distance = 0;
-                                var duration = 0;
-
-                                for (i = 0; i < myroute.legs.length; i++) {
-                                    distance += myroute.legs[i].distance.value;
-                                    duration += myroute.legs[i].duration.value;
-                                    //for each 'leg'(route between two waypoints) we get the distance and add it to the total
-                                }
-
-                                var index = Number(Math.floor(result.routes[0].overview_path.length / 2)) - 1;
-
-                                for (var i = 0, len = result.routes[0].overview_path.length; i < len; i++) {
-                                    path.push(result.routes[0].overview_path[i]);
-
-                                    if (i == index) {
-                                        var middleLatLng = new google.maps.LatLng(
-                                            result.routes[0].overview_path[index].lat(),
-                                            result.routes[0].overview_path[index].lng()
-                                        );
-                                        new google.maps.Marker({
-                                            position: middleLatLng,
-                                            map,
-                                            icon: {
-                                                url: '',
-                                                size: new google.maps.Size(1, 1)
-                                            },
-                                            label: {
-                                                //text: String(distance / 1000) + 'km', //距離
-                                                text: String(Math.round(duration / 60)) + '分', //時間
-                                                color: '#000000',
-                                                fontFamily: 'sans-serif',
-                                                fontWeight: 'bold',
-                                                fontSize: '20px'
-                                            }
-                                        });
-                                    }
-                                }
-                                totalDistance += distance;
-                                totalDuration += duration;
-
-                                // element.insertAdjacentHTML("beforeend", "<p>No." + ('000' + i).slice(-3) + " : " + (distance / 1000) + " km</p>");
-                                // element.insertAdjacentHTML("beforeend", "<p>No." + ('000' + i).slice(-3) + " : " + Math.round(duration / 60) + "分</p><hr>");
-
-                                document.getElementById('totalDi').innerHTML = (totalDistance / 1000) + ' km';
-                                document.getElementById('totalDu').innerHTML = Math.round(totalDuration / 60) +
-                                    '分';
-                            }
-                        });
-                    }
-                }
-            }
+            this.timeFormat();
+        }
+        timeFormat() {
+            const elList = this.cardInfo.getElementsByTagName('*');
+            elList['time'].innerText =
+                `${this.getHour(this.beginTime)}:${this.getMinutes(this.beginTime)}～`
+                + `${this.getHour(this.getEndTime())}:${this.getMinutes(this.getEndTime())}`
         }
 
-        var placesList;
-
-        function getPlaces() {
-
-            //結果表示クリア
-            document.getElementById("results").innerHTML = "";
-            //placesList配列を初期化
-            placesList = new Array();
-
-            //入力した検索場所を取得
-            var addressInput = document.getElementById("addressInput").value;
-            if (addressInput == "") {
-                return;
-            }
-
-            //検索場所の位置情報を取得
-            var geocoder = new google.maps.Geocoder();
-            geocoder.geocode({
-                    address: addressInput
-                },
-                function (results, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
-                        //取得した緯度・経度を使って周辺検索
-                        startNearbySearch(results[0].geometry.location);
-                    } else {
-                        alert(addressInput + "：位置情報が取得できませんでした。");
-                    }
-                });
-        }
-
-        /*
-         位置情報を使って周辺検索
-          latLng : 位置座標（google.maps.LatLng）
-        */
-        function startNearbySearch(latLng) {
-            let elememts = document.getElementsByName('hoge');
-            let len = elememts.length;
-            let checkValue = '';
-
-            for (let i = 0; i < len; i++) {
-                if (elememts.item(i).checked) {
-                    checkValue = elememts.item(i).value;
-                    console.log(checkValue);
-                }
-            }
-            //読み込み中表示
-            document.getElementById("cardDisplay").innerHTML =
-                "\
-      <div class='wrapper'>\
-        <div class='balls-guruguru'>\
-          <span class='ball ball-1'></span>\
-          <span class='ball ball-2'></span>\
-          <span class='ball ball-3'></span>\
-          <span class='ball ball-4'></span>\
-          <span class='ball ball-5'></span>\
-          <span class='ball ball-6'></span>\
-          <span class='ball ball-7'></span>\
-          <span class='ball ball-8'></span>\
-        </div>\
-      </div>\
-        ";
-
-            //Mapインスタンス生成
-            var map = new google.maps.Map(
-                document.createElement("div")
-            );
-
-            //PlacesServiceインスタンス生成
-            var service = new google.maps.places.PlacesService(map);
-
-            //入力したKeywordを取得
-            var keywordInput = document.getElementById("addressInput").value;
-
-            //周辺検索
-            service.nearbySearch({
-                    location: latLng,
-                    radius: 800,
-                    type: [checkValue],
-                    keyword: keywordInput,
-                    language: 'ja'
-                },
-                displayCards
-            );
-        }
-
-        /*
-         周辺検索の結果表示（カード形式）
-         ※nearbySearchのコールバック関数
-          results : 検索結果
-          status ： 実行結果ステータス
-          pagination : ページネーション
-        */
-        function displayCards(results, status, pagination) {
-            var card = document.getElementById("cardDisplay");
-            if (status == google.maps.places.PlacesServiceStatus.OK) {
-                //検索結果をplacesList配列に連結
-                placesList = placesList.concat(results);
-
-                //pagination.hasNextPage==trueの場合、
-                //続きの検索結果あり
-                if (pagination.hasNextPage) {
-                    //pagination.nextPageで次の検索結果を表示する
-                    //※連続実行すると取得に失敗するので、
-                    //1秒くらい間隔をおく
-                    setTimeout(pagination.nextPage(), 1000);
-
-                    //pagination.hasNextPage==falseになったら
-                    //全ての情報が取得できているので、
-                    //結果を表示する
-                } else {
-                    card.innerHTML = "";
-
-                    for (var i = 0; i < placesList.length; i++) {
-                        placesList.sort(function (a, b) {
-                            return b.rating - a.rating;
-                        });
-
-                        place = placesList[i];
-
-                        //console.log(place);
-                        var lat = place.geometry.location.lat();
-                        var lng = place.geometry.location.lng();
-
-                        //console.log(place.geometry.location);
-
-                        // var rating = place.rating;
-                        // if(rating == -1) rating = '---';
-                        
-                        /**
-                         * 変更
-                         * @auther mizuki
-                         */
-                         const insertText =
-                         `<div class="col-sm mt-3 mr-3 p-0 ml">`
-                         + `<div class="card" style="width: 320px;">`
-                         + `<img src="${(place.photos ? place.photos[0].getUrl() : '')}" alt="" width="100%" height="250">`
-                         + `<div class="card-body">`
-                         + `<h5 class="card-title">${omittedContent(place.name)}</h5>`
-                         + `<p>${(place.rating)}</p>`
-                         + `<a href="#" class="btn btn-primary"> 詳しく見る</a>`
-                         + `<div class="btn btn-primary ml-1" onclick="`
-                         + `callTogglePin(${i})">追加</div>`
-                         + `</div>`
-                         + `</div>`
-                         + `</div>`;
-                     card.insertAdjacentHTML("beforeend", insertText)
-                     /**
-                      * ここまで
-                      * 下は旧
-                      */
-
-                        //card.insertAdjacentHTML(
-                          //  "beforeend",
-                            //'\
-                //<div class="col-sm mt-3 mr-3 p-0 ml-">\
-                  //<div class="card" style="width: 320px;">\
-                    //<img src="' + (place.photos ? place.photos[0].getUrl() : '') + '" alt="" width="100%" height="250">\
-                    //<div class="card-body">\
-                      //<h5 class="card-title">' + omittedContent(place.name) + '</h5>\
-                      //<p class="card-text">' + place.rating + '</p>\
-                      //<a href="#" class="btn btn-primary">詳しく見る</a>\
-                      //<div class="btn btn-primary" onclick="togglePin(\'' +
-                        //    place.photos[0].getUrl() + '\', \'' +
-                          //  place.name + '\', ' +
-                            //lat + ', ' + lng +
-                            //');">追加</div>\
-                    //</div>\
-                  //</div>\
-                //</div>'
-                  //      );
-                    }
+        routeFormat() {
+            if (this.routes.length == 0) {
+                const route = this.cardInfo.getElementsByTagName('*')['routeTitle'];
+                if (route) {
+                    route.remove();
                 }
             } else {
-                //エラー表示
-                var results = document.getElementById("results");
-                if (status == google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
-                    alert("検索結果が0件です。");
-                } else if (status == google.maps.places.PlacesServiceStatus.ERROR) {
-                    alert("サーバ接続に失敗しました。");
-                } else if (status == google.maps.places.PlacesServiceStatus.INVALID_REQUEST) {
-                    alert("リクエストが無効でした。");
-                } else if (status == google.maps.places.PlacesServiceStatus.OVER_QUERY_LIMIT) {
-                    alert("リクエストの利用制限回数を超えました。");
-                } else if (status == google.maps.places.PlacesServiceStatus.REQUEST_DENIED) {
-                    alert("サービスが使えない状態でした。");
-                } else if (status == google.maps.places.PlacesServiceStatus.UNKNOWN_ERROR) {
-                    alert("原因不明のエラーが発生しました。");
+                this.routeDomCreate();
+            }
+        }
+
+        getHour(time) {
+            return ('00' + Math.floor(time / 60)).slice(-2);
+        }
+        getMinutes(time) {
+            return ('00' + time % 60).slice(-2);
+        }
+    }
+
+</script>
+<script>
+    const getCircularReplacer = () => {
+        const seen = new WeakSet();
+        return (key, value) => {
+            if (typeof value === "object" && value !== null) {
+                if (seen.has(value)) {
+                    return;
+                }
+                seen.add(value);
+            }
+            return value;
+        };
+    };
+    // console.log(JSON.stringify(res, getCircularReplacer()))
+
+    /**
+     * 
+     */
+    const Schedule = function (begin, stay, name) {
+        this._begin = begin;
+        this._stay = stay;
+        this._name = name;
+        return this;
+    }
+
+    Schedule.prototype.setBegin = function (begin) {
+        this._begin = begin;
+    }
+    Schedule.prototype.setStay = function (stay) {
+        this._stay = stay;
+    }
+    Schedule.prototype.setName = function (name) {
+        this._name = name;
+    }
+    Schedule.prototype.getBegin = function () {
+        return this._begin;
+    }
+    Schedule.prototype.getStay = function () {
+        return this._stay;
+    }
+    Schedule.prototype.getName = function () {
+        return this._name;
+    }
+
+    Schedule.prototype.getStayed = function () {
+        return this._begin + this._stay;
+    }
+    Schedule.prototype.calcBegin = function (date) {
+        date.setSeconds(date.getSeconds() + this.getBegin());
+        return date;
+    }
+    Schedule.prototype.calcStay = function (date) {
+        date.setSeconds(date.getSeconds() + this.getStay());
+        return date;
+    }
+    Schedule.prototype.calcStayed = function (date) {
+        date.setSeconds(date.getSeconds() + this.getStayed());
+        return date;
+    }
+
+    /**
+     * 
+     */
+    const ScheduleRoute = function (begin, stay, name, step = null) {
+        Schedule.call(this, begin, stay, name);
+        this.step = step;
+    }
+    ScheduleRoute.prototype = Object.create(Schedule.prototype);
+    ScheduleRoute.prototype.setStep = function (args) {
+        if (!this.step) {
+            this.step = [];
+        }
+        this.step.push(args);
+    }
+
+
+    /**
+     * 
+     */
+    const SchedulePlace = function (begin, stay, name, id, placeId, photoAddress, movement, route = []) {
+        Schedule.call(this, begin, stay, name);
+        this._id = id;
+        this._placeId = placeId
+        this._photoAddress = photoAddress; //写真
+        this._movement = movement;
+        this.route = route;
+        return this;
+    }
+    SchedulePlace.prototype = Object.create(Schedule.prototype);
+    SchedulePlace.prototype.getRoute = function (n = null) {
+        if (n === null) return this.route;
+        return this.route[n];
+    }
+    SchedulePlace.prototype.setId = function (id) {
+        this._id = id;
+    }
+    SchedulePlace.prototype.getId = function () {
+        return this._id;
+    }
+    SchedulePlace.prototype.getPlaceId = function () {
+        return this._placeId;
+    }
+    SchedulePlace.prototype.getMovement = function () {
+        return this._movement;
+    }
+    SchedulePlace.prototype.getPhotoAddress = function () {
+        return this._photoAddress;
+    }
+    SchedulePlace.prototype.setRoute = function (args) {
+        if (!this.route) {
+            this.route = [];
+        }
+        this.route.push(args);
+    }
+    SchedulePlace.prototype.addRoute = function (args) {
+        this.route.push(args);
+    }
+    SchedulePlace.prototype.removeRoute = function () {
+        this.route.length = 0;
+    }
+
+    SchedulePlace.prototype.calcToRoute = function (date, n) {
+        for (let i = 0; i < n + 1; i++) {
+            this.getRoute[n].calcStayed(date);
+        }
+        return date;
+    }
+
+
+
+    /**
+     * 
+     */
+    const ScheduleArray = function (...args) {
+        Array.call(this, ...args);
+        this.observers = [];
+        return this;
+    }
+
+    ScheduleArray.prototype = Object.create(Array.prototype);
+    ScheduleArray.prototype.subscribe = function (fn) {
+        this.observers.push(fn)
+    }
+    ScheduleArray.prototype.unsubscribe = function (fn) {
+        this.observers = this.observers.filter(f => f !== fn)
+    }
+    ScheduleArray.prototype.broadcast = function (data) {
+        this.observers.forEach(f => f(data))
+    }
+
+    /**
+     * 
+     */
+    const SchedulePage = (function () {
+        let _id;
+        let _obj;
+        let _date;
+        const init = function () {
+            _date = new Date();
+            _id = 0;
+            _obj = {}
+        }
+        const getSchedule = function (id) {
+            return _obj[id].enable ? _obj[id] : false;
+        }
+        const getSchedules = function () {
+            const enableSchedules = {}
+            const array = Object.keys(_obj)
+                .filter(key => _obj[key].enable);
+            for (const item of array) {
+                enableSchedules[item] = _obj[item];
+            }
+            return enableSchedules;
+        }
+        const _createId = function () {
+            _id++;
+            return _id;
+        }
+        const enable = function (id) {
+            _obj[id].enable = true;
+        }
+        const disable = function (id) {
+            _obj[id].enable = false;
+        }
+        const add = function (obj) {
+            const id = _createId();
+            _obj[id] = obj;
+            enable(id);
+            return id;
+        }
+        const sortTimeSchedules = function () {
+            const obj = getSchedules();
+            const array = Object.keys(obj)
+            array.sort((a, b) => obj[a].getBegin() - obj[b].getBegin());
+
+            const result = [];
+            for (const item of array) {
+                result.push(obj[item])
+            }
+            return result;
+
+        }
+        const nextSchedule = function (id) {
+            const array = sortTimeSchedules();
+            for (let i = 0; i < array.length - 1; i++) {
+                if (id == array[i].getId()) {
+                    return array[i + 1];
+                }
+            }
+            return false;
+        }
+        const outSchedule = function (schedule) {
+            const name = schedule.getName();
+            const placeId = schedule.getPlaceId();
+            const begin = schedule.getBegin() / 60;
+            const stay = schedule.getStay() / 60;
+            return `${name},${placeId},${begin},${stay}`;
+        }
+        const outLineSchedules = function () {
+            const array = sortTimeSchedules();
+            let text = '';
+            for (let i = 0; i < array.length; i++) {
+                text += outSchedule(array[i]);
+                if (i == array.length - 1) {
+                    break;
+                }
+                text += ';'
+            }
+            return text;
+        }
+        init();
+
+        return {
+            getSchedule: getSchedule,
+            getSchedules: getSchedules,
+            sortTimeSchedules: sortTimeSchedules,
+            nextSchedule: nextSchedule,
+            outLineSchedules: outLineSchedules,
+            add: add,
+            enable: enable,
+            disable: disable
+        }
+    })();
+</script>
+<script>
+    const memo = (function () {
+        /* メモスペースdom */
+        const memoSpace = document.getElementById("memoSpace");
+        /* */
+        const MEMO_ONE_MINUTES_SIZE_PIXCEL = 4;
+        let _timeStamps;
+        let _cardClasses;
+        //始端時刻
+        let beginHour;
+        //終端時刻
+        let endHour;
+
+        const init = function () {
+            _timeStamps = [];
+            _cardClasses = [];
+            beginHour = 0;
+            endHour = 23;
+
+            close();
+        }
+
+        const setTimeStamps = function (timeStamps) {
+            _timeStamps = timeStamps;
+        }
+        const getTimeStamps = function () {
+            return _timeStamps;
+        }
+
+        const tableEl = document.getElementsByClassName("schedule_table")[0];
+
+
+        /**
+         * 
+         */
+        const createTimeBoard = function () {
+            const between = endHour - beginHour + 1;
+
+            tableEl.style.height = MEMO_ONE_MINUTES_SIZE_PIXCEL * 60 * between + "px";
+
+            let writeHTML = '';
+            const oneBoxHeight = MEMO_ONE_MINUTES_SIZE_PIXCEL * 30;
+
+            for (let i = 0; i < (between * 2); i++) {
+
+                //30分か1時間
+                writeHTML += `<div class="${i % 2 == 0 ? 'thirty-box' : 'hour-box' //30分か1時間
+                    }" style="top: ${oneBoxHeight * i}px; height: ${oneBoxHeight}px;"></div>`;
+
+            }
+
+            //左にHH:MMを１時間ごとに表示
+            for (var i = beginHour; i <= endHour; i++) {
+                writeHTML += `<div class="timestamp" style="height: ${oneBoxHeight * 2}px;">${("00" + i).slice(-2)}:00</div>`;
+            }
+
+            tableEl.insertAdjacentHTML("beforeend", writeHTML);
+        }
+
+
+
+
+        //マウスオーバーされたカードクラスのインデックス
+        let hoverCard;
+        /**
+         * 
+         */
+        const cardTrackEvent = function (e) {
+            if (mouseDownCard) return true;
+            for (const card of _cardClasses) {
+                if (card.id != this.id) {
+                    card.setDragged(0);
+                } else {
+                    hoverCard = card;
                 }
             }
         }
-        //文字数制限
-        let contents = document.getElementsByClassName('card-title');
 
-        // contents.forEach(content => {
-        //     content.textContent = omittedContent(content.textContent);
-        // });
-        for (let content of contents) {
-            content.textContent = omittedContent(content.textContent);
+
+        /**
+         * 
+         */
+        const cardMouseenterEvent = function (e) {
+
+            this.style.backgroundColor = "#AAA"; //（背景：灰色）
+            this.style.zIndex = 999; //最前面に移動
+
         }
 
-        function omittedContent(string) {
-            // 定数で宣言
-            const MAX_LENGTH = 14;
 
-            // もしstringの文字数がMAX_LENGTH（今回は14）より大きかったら末尾に...を付け足して返す。
-            if (string.length > MAX_LENGTH) {
+        /**
+         * 
+         */
+        const cardMouseleaveEvent = function (e) {
+            if (mouseDownCard) return true;
+            this.style.backgroundColor = "#FFF";//（背景：白色）
+            this.style.zIndex = 0;
 
-                // substr(何文字目からスタートするか, 最大値);
-                return string.substr(0, MAX_LENGTH) + '...';
+        }
+
+        /* */
+        let mouseHeight;
+
+        /* */
+        let mouseDownCard;
+
+        /**
+         * 
+         */
+        const cardMouseDownEvent = function (e) {
+            if (!hoverCard) return true;
+
+            mouseDownCard = hoverCard;
+            let mouseDownHeight = e.clientY;
+
+            const cardMousemoveEvent = function (e) {
+                mouseHeight = e.clientY;
+
+                const movePix = Math.floor(mouseHeight - mouseDownHeight);
+
+                if (Math.abs(movePix) < MEMO_ONE_MINUTES_SIZE_PIXCEL) {
+                    return true
+                }
+
+                switch (mouseDownCard.getDragged()) {
+                    case 1: //移動
+                        mouseDownCard.move(movePix);
+                        break;
+
+                    case 2: //伸縮
+                        mouseDownCard.extend(movePix);
+                        break;
+                    default:
+                        break;
+                }
+                mouseDownHeight = e.clientY;
             }
-            //　文字数がオーバーしていなければそのまま返す
-            return string;
+
+            document.addEventListener("mousemove", cardMousemoveEvent);
+
+            const disableDragEvent = () => {
+                document.removeEventListener("mousemove", cardMousemoveEvent);
+                document.removeEventListener("mouseup", disableDragEvent);
+                memoSpace.removeEventListener("mouseleave", disableDragEvent);
+                applySchedule(mouseDownCard.getId(), mouseDownCard.getBeginTime(), mouseDownCard.getStayTime());
+                mouseDownCard = null;
+            }
+
+            document.addEventListener("mouseup", disableDragEvent);
+            memoSpace.addEventListener("mouseleave", disableDragEvent);
+
         }
-        //文字数制限
-    </script>
-    <script>
-        $(".openbtn4").click(function () {
-            $(this).toggleClass('active');
-            ToggleMemo();
+
+
+
+        const changeCursorGrabbingEvent = function (e) {
+            this.style.cursor = "grabbing";
+        }
+        const changeCursorGrabEvent = function (e) {
+            this.style.cursor = "grab";
+        }
+        const changeCursorResizeEvent = function (e) {
+            this.style.cursor = "ns-resize";
+        }
+        const changeCursorResizeSetEvent = function (card, e) {
+            if (mouseDownCard) return true;
+            changeCursorResizeEvent.call(e.currentTarget);
+            card.setDragged(2);
+        }
+        const changeCursorGrabSetEvent = function (card, e) {
+            if (mouseDownCard) return true;
+            changeCursorGrabEvent.call(e.currentTarget);
+            card.setDragged(1);
+        }
+        const memoRemoveBtnEvent = function (card, e) {
+            removeSchedule(card.getId());
+            e.stopPropagation();
+        }
+        const memoSearchRouteBtnEvent = function (card, e) {
+            searchRouteBtnEvent(card.getId());
+            e.stopPropagation();
+        }
+
+        /**
+         * 
+         */
+        const createCard = function () {
+
+            /** */
+            let insertText = '';
+            for (let i = 0; i < _timeStamps.length; i++) {
+                insertText += '<div class="schedule_card"></div>'
+            }
+
+            tableEl.insertAdjacentHTML("beforeend", insertText);
+
+            /** */
+            const cardDomList = document.getElementsByClassName("schedule_card");
+            const cardList = [];
+
+            /** */
+            for (let i = 0; i < _timeStamps.length; i++) {
+                const schedule = new ScheduleCard(
+                    _timeStamps[i].getId(),
+                    _timeStamps[i].getPhotoAddress(),
+                    _timeStamps[i].getName(),
+                    cardDomList[i],
+                    MEMO_ONE_MINUTES_SIZE_PIXCEL,
+                    _timeStamps[i].getBegin() / 60,
+                    _timeStamps[i].getStay() / 60,
+                    beginHour,
+                    endHour, _timeStamps[i].route
+                );
+
+                schedule.init();
+                schedule.timeFormat();
+
+                const card = schedule.getCardInfo();
+
+                card.addEventListener('mouseenter', cardMouseenterEvent);
+                card.addEventListener('mouseleave', cardMouseleaveEvent);
+                card.addEventListener('mousedown', cardMouseDownEvent)
+                card.addEventListener('mousemove', cardTrackEvent);
+
+                const elList = card.getElementsByTagName('*');
+                elList['resize'].addEventListener('mouseenter', changeCursorResizeSetEvent.bind(this, schedule));
+
+                const grabEl = elList['grab'];
+                grabEl.addEventListener('mouseenter', changeCursorGrabSetEvent.bind(this, schedule));
+                grabEl.addEventListener('mousedown', changeCursorGrabbingEvent);
+                grabEl.addEventListener('mouseup', changeCursorGrabEvent);
+
+                elList['img'].ondragstart = () => false;
+
+                elList['memoRemoveScheduleBtnEvent'].addEventListener('click', memoRemoveBtnEvent.bind(this, schedule));
+                elList['memoSearchRouteBtnEvent'].addEventListener('click', memoSearchRouteBtnEvent.bind(this, schedule));
+
+                cardList.push(schedule)
+            }
+
+            return cardList
+        }
+
+
+
+        /**
+         * 
+         */
+        const reload = function (scheduleArray) {
+            tableEl.innerHTML = '';
+            createTimeBoard();
+            setTimeStamps(scheduleArray);
+            _cardClasses = createCard();
+        }
+
+
+        /**
+         * 
+         */
+        const open = function (scheduleArray) {
+            tableEl.style.display = "block";
+            memoSpace.style.height = "400px";
+            reload(scheduleArray);
+        }
+
+
+        /**
+         * 
+         */
+        const close = function () {
+            tableEl.innerHTML = '';
+            tableEl.style.display = "none";
+            memoSpace.style.height = "0";
+        }
+
+        /* */
+        let isOpened = false;
+
+        /**
+         * 
+         */
+        const toggleMemo = function (scheduleArray) {
+            if (isOpened) {
+                close();
+            } else {
+                open(scheduleArray);
+            }
+            isOpened = !isOpened;
+        }
+
+        /**
+         * 
+         */
+        const applySchedule = function (id, begin, stay) {
+            const schedule = SchedulePage.getSchedule(id);
+            if (
+                mouseDownCard.getBeginTime() == schedule.getBegin() / 60 &&
+                mouseDownCard.getStayTime() == schedule.getStay() / 60
+            ) {
+                return false
+            };
+            schedule.setBegin(begin * 60);
+            schedule.setStay(stay * 60);
+            // schedule.removeRoute();
+            reload(SchedulePage.sortTimeSchedules())
+
+        }
+
+        init();
+        const get = function () {
+            return { card_classes: _cardClasses, timeStamps: _timeStamps };
+        }
+        return {
+            toggleMemo: toggleMemo,
+            reload: reload,
+            setTimeStamps: setTimeStamps,
+            getTimeStamps: getTimeStamps,
+            get: get
+        }
+    })();
+    //開始時間、滞在時間をまとめたクラス
+
+
+    $(".openbtn4").click(function () {
+        $(this).toggleClass('active');
+        memo.toggleMemo(SchedulePage.sortTimeSchedules());
+    });
+
+</script>
+<script>
+    /**
+ * 
+ */
+    let map;
+
+    /**
+     * スケジュール機能
+     */
+
+
+    /**
+     * 
+     */
+    function addSchedulePlaceBtnEvent(place) {
+
+        const insertTime = document.getElementById("insertTime").value.split(":");
+        const beginSeconds = (Number(insertTime[0]) * 3600) + (Number(insertTime[1]) * 60);
+        const staySeconds = Number(document.getElementById("insertMinutes").value) * 60
+        addSchedulePlace(place, beginSeconds, staySeconds)
+    }
+    /**
+     * 
+     */
+    function addSchedulePlace(place, beginSeconds, staySeconds) {
+
+        const scheduleName = place.name;
+        const photoAddress = place.photos && place.photos.length > 0 ? place.photos[0].getUrl() : '';
+        const placeId = place.place_id;
+        const schedule = new SchedulePlace(beginSeconds, staySeconds, scheduleName, '', placeId, photoAddress, 'DRIVING');
+        const id = SchedulePage.add(schedule);
+        schedule.setId(id);
+
+        addMarker(id, place);
+        memo.reload(SchedulePage.sortTimeSchedules());
+        return schedule;
+    }
+
+
+    function addScheduleRoute(schedule, leg) {
+        let scheduleStart = schedule.getStayed();
+        const routeValue = leg.duration.value || 0;
+        const routeName = leg.distance.value || 0;
+        const route = new ScheduleRoute(scheduleStart, routeValue, routeName, [])
+        const stepList = [];
+        for (const step of leg.steps) {
+            const stepValue = step.duration.value || 0;
+            const stepName = step.instructions;
+            stepList.push(
+                new ScheduleRoute(scheduleStart, stepValue, stepName)
+            );
+            scheduleStart += stepValue;
+        }
+        route.setStep(stepList);
+        schedule.setRoute(route);
+
+        memo.reload(SchedulePage.sortTimeSchedules());
+    }
+
+    function removeSchedule(id) {
+        //timeStamps配列から削除
+        SchedulePage.disable(id);
+
+        //マーカーもはずす
+        removeMarker(id);
+
+        memo.reload(SchedulePage.sortTimeSchedules());
+    }
+
+    let markers = [];
+    let renders = [];
+
+    /**
+     * マップ
+     */
+    function addMarker(id, place) {
+        const lat = place.geometry.location.lat();
+        const lng = place.geometry.location.lng();
+        const findMarker = markers.find(m => m.position.lat() == lat && m.position.lng() == lng);
+        if (findMarker) {
+            findMarker.setMap(map);
+            return findMarker.scheduleId.push(id);
+        }
+        const marker = new google.maps.Marker({
+            position: {
+                lat: lat,
+                lng: lng
+            },
+            map: map,
+            animation: google.maps.Animation.DROP,
+        })
+
+        marker.scheduleId = marker.scheduleId || [];
+        marker.scheduleId.push(id);
+
+        marker.place = marker.place || place;
+
+        mapTools.commons.addMarkerPopEvent(map, marker);
+
+        //ピンを指す
+        markers.push(marker);
+
+        //ピンを指す場所に移動
+        map.setCenter({
+            lat: lat,
+            lng: lng
+        });
+    }
+
+    function removeMarker(id) {
+        for (const marker of markers) {
+            const index = marker.scheduleId.findIndex(scheduleId => scheduleId === id);
+            if (index != -1) {
+                marker.scheduleId.splice(index, 1);
+                if (marker.scheduleId.length == 0) {
+                    marker.setMap(null);
+                }
+            }
+        }
+    }
+
+    function addRender(id, response) {
+
+    }
+
+    /** スケジュールの地点を取得 */
+    function findSchedulePlace(id) {
+        console.log(markers);
+        console.log(id);
+        for (const marker of markers) {
+            const index = marker.scheduleId.findIndex(scheduleId => scheduleId === id);
+            console.log("index :", index)
+            if (index != -1) {
+                return marker.place;
+            }
+        }
+        return 'not found';
+    }
+    function findScheduleMarker(id) {
+        for (const marker of markers) {
+            const index = marker.scheduleId.findIndex(scheduleId => scheduleId === id);
+            if (index != -1) {
+                return marker
+            }
+        }
+        return false;
+    }
+
+
+
+
+
+    /**
+     * コード追加
+     * @author mizuki
+     */
+
+    /**
+     * 検索結果のルートを格納
+     */
+    let routeList = [];
+
+    /**
+     * 検索する時間
+     */
+    let searchTime = new Date();
+
+    /**
+     * 旅行計画時間
+     */
+    let travelPlans;
+
+    /**
+     * 選択したマーカーを描画する
+     * 未使用
+     */
+    function createSelectListView(el, selectedArray) {
+        console.log("createSelectList");
+        let dom = '';
+        selectedArray.forEach(e => {
+            const li = document.createElement('li');
+            dom += `<li><h3>${e.title}</h3>`;
+            dom += `滞在時間<input type="number" value="0" name="placeTime">秒 `;
+            dom += `次の移動<select name="route">`;
+            dom += `<option value="DRIVING" selected>車</option>`;
+            dom += `<option value="WALKING">歩き</option></select></li>`;
+        });
+        el.innerHTML = dom;
+    }
+
+    /**
+     * 選択したマーカーと検索したルートを描画する
+     * 未使用
+     */
+    function createRouteListView(el, plans) {
+        console.log("createSearchResult");
+        let dom = '';
+        for (let i = 0, j = 0; i < plans.places.length; i++, j += 2) {
+            if (i < plans.routes.length) {
+                dom += `<li><h3>${plans.places[i].title}</h3>`
+                dom += `<p>移動方法 : ${plans.routes[i].request.travelMode == 'DRIVING' ? '車' : '歩き'}</p> `
+                dom += `<p>出発時間 : ${mapTools.timeFormat.formatTime(plans.getPlanSchedule(j + 1))}</p>`
+                dom += `<p> 移動時間: ${mapTools.timeFormat.timeToString(plans.routes[i].time)}</p><ul>`;
+                plans.routes[i].routes[0].legs[0].steps.forEach(e => {
+                    dom += `<li>${e.instructions}</li>`
+                })
+                dom += `</ul>`;
+                dom += `<p> 到着時間 : ${mapTools.timeFormat.formatTime(plans.getPlanSchedule(j + 2))}</p></li>`
+            } else {
+                dom += `<li> <h3>${plans.places[i].title}</h3></li> `
+            }
+        }
+        el.innerHTML = dom;
+    }
+
+    /**
+     * 選択したマーカーからルートを検索しマップ上に描画する
+     * 描画用domに描画する
+     * @param {string} mapInstance
+     * @param {Array<any>} selectedArray
+     * @return {Promise} -new Promise
+     */
+
+    let scheduleStartDate = new Date();
+
+    /** 部分ルート検索 */
+    function searchRouteBtnEvent(startId, e) {
+        const startSchedule = SchedulePage.getSchedule(startId);
+
+        const startPlace = findSchedulePlace(startId);
+
+        const endId = SchedulePage.nextSchedule(startId).getId();
+        const endPlace = findSchedulePlace(endId);
+        const mode = startSchedule.getMovement();
+        let time;
+        if (mode == google.maps.DirectionsTravelMode.DRIVING) {
+            time = startSchedule.calcStayed(new Date(scheduleStartDate));
+        }
+        fetchRoute(startPlace, endPlace, mode, time)
+            .then(response => {
+                const leg = response.routes[0].legs[0];
+                addScheduleRoute(startSchedule, leg);
+                const render = mapTools.commons.viewRoute(response, map);
+                render.scheduleId = startId;
+                renders.push(render);
+                const marker = findScheduleMarker(startId);
+                mapTools.commons.addHoverEvent(map, marker, render, response);
+            });
+    }
+    /** 全ルート検索 */
+    function allSearchRouteBtnEvent(e) {
+        allSearchRoute();
+    }
+    function allSearchRoute() {
+        const scheduleList = SchedulePage.sortTimeSchedules();
+        let prom = Promise.resolve();
+        let startPlace = findSchedulePlace(scheduleList[0].getId());
+        let endPlace;
+        for (let i = 0; i < scheduleList.length - 1; i++) {
+            const s = scheduleList[i];
+            prom = prom
+                .then(() => {
+                    endPlace = findSchedulePlace(scheduleList[i + 1].getId());
+                    const mode = scheduleList[i].getMovement();
+                    let time;
+                    if (mode == google.maps.DirectionsTravelMode.DRIVING) {
+                        time = scheduleList[i].calcStayed(new Date(scheduleStartDate));
+                    }
+                    return fetchRoute(startPlace, endPlace, mode, time);
+                })
+                .then(response => {
+                    const leg = response.routes[0].legs[0];
+                    addScheduleRoute(scheduleList[i], leg);
+                    const render = mapTools.commons.viewRoute(response, map);
+                    render.scheduleId = scheduleList[i].getId();
+                    renders.push(render);
+                    const marker = findScheduleMarker(scheduleList[i].getId())
+                    mapTools.commons.addHoverEvent(map, marker, render, response);
+                    startPlace = endPlace;
+                })
+        }
+        return prom;
+    }
+    /** */
+    function decideCenterOfPlace() {
+        const schedule = SchedulePage.sortTimeSchedules();
+        if (schedule.length == 0) return new Error("選択してください");
+        return schedule[schedule.length - 1];
+    }
+
+
+    /** 自動ボタン */
+    function autoBtnEvent(e) {
+        const startSchedule = decideCenterOfPlace();
+        const startPlace = findSchedulePlace(startSchedule.getId());
+        //周辺検索
+        const keywordList = ['', '観光地', '自然', '寺社', '商店街', '城'];
+        const latLng = startPlace.geometry.location;
+
+        mapTools.commons.fetchAllNearByPlace(map, latLng, 30000, 'tourist_attraction', keywordList)
+            .then(response => {
+                const allList = [];
+                for (const resolveArray of response) {
+                    for (const resp of resolveArray) {
+                        for (const place of resp.results) {
+                            if (allList.findIndex(item => item.place_id == place.place_id) === -1) {
+                                allList.push(place);
+                            }
+                        }
+                    }
+                }
+                const startPoint = {
+                    item: document.getElementById("addressInput").value,
+                    rating: 5,
+                    lat: latLng.lat(),
+                    lng: latLng.lng()
+                }
+                const chosedList = [startPlace, ...automatic(startPoint, allList)];
+                console.log(chosedList);
+                const waypoint = [];
+                for (let i = 1; i < chosedList.length - 1; i++) {
+                    const place = chosedList[i];
+                    const location = place.geometry.location;
+                    waypoint.push({
+                        location: location,
+                        stopover: true
+                    });
+                }
+
+                const directionsService = new google.maps.DirectionsService();
+                let request = {
+                    origin: chosedList[0].geometry.location, // スタート地点
+                    destination: chosedList[chosedList.length - 1].geometry.location, // ゴール地点
+                    travelMode: google.maps.DirectionsTravelMode.DRIVING, // 移動手段
+                    optimizeWaypoints: true,
+                    waypoints: waypoint
+                };
+                directionsService.route(request)
+                    .then(res => {
+                        console.log(JSON.stringify(res, getCircularReplacer()))
+                        let time = startSchedule.getStayed();
+                        const route = res.routes[0];
+                        const oderIndexList = [0];
+                        for (const n of route.waypoint_order) {
+                            oderIndexList.push(n + 1);
+                        }
+                        oderIndexList.push(chosedList.length - 1);
+                        // res.routes[0].legs.pop();
+                        // mapTools.commons.viewRoute(res, map)
+                        let schedule = startSchedule;
+                        for (let i = 0; i < oderIndexList.length - 1; i++) {
+                            const nextPlace = chosedList[oderIndexList[i + 1]];
+                            const staySeconds = 3600;
+                            time += Math.ceil(route.legs[i].duration.value / 60) * 60;
+                            addScheduleRoute(schedule, route.legs[i])
+                            // const marker = findScheduleMarker(schedule.getId());
+                            // mapTools.commons.addHoverEvent(map, marker, render, response);
+                            schedule = addSchedulePlace(nextPlace, time, staySeconds);
+                            time += staySeconds;
+
+
+                        }
+                        memo.reload(SchedulePage.sortTimeSchedules());
+                        // const list = SchedulePage.sortTimeSchedules();
+                        // for (let i = 0; i < list.length; i++) {
+
+                        // }
+
+                    })
+                // console.log(request);
+                // directionsService.route(request, function (response, status) {
+                //     if (status === google.maps.DirectionsStatus.OK) {
+                //         autoResult = response;
+                //         new google.maps.DirectionsRenderer({
+                //             map: map,
+                //             directions: response,
+                //             suppressMarkers: true // デフォルトのマーカーを削除
+                //         });
+                // let leg = response.routes[0].legs[0];
+                // makeMarker(leg.end_location, markers.goalMarker, map);
+                // setTimeout(function () {
+                //     map.setZoom(16); // ルート表示後にズーム率を変更
+                // });
+                // const setMarker = (n) => {
+                //     const place = chosedList[n];
+                //     const location = place.geometry.location;
+                //     const marker = mapTools.commons.createMarker(mapInstance, location, place.name);
+                //     marker.place = place;
+                //     marker.time = 3600;
+                //     const photoUrl = place.photos && place.photos.length > 0 ? place.photos[0].getUrl() : '';
+                //     mapTools.commons.addMarkerPopEvent(mapInstance, marker)
+                //     selectedArray.push(marker);
+                // }
+                // setMarker(0);
+                // for (const num of response.routes[0].waypoint_order) {
+                //     setMarker(num + 1)
+                // }
+                // setMarker(chosedList.length - 1)
+
+                // mapTools.commons.clearLoadUI();
+                // for (const a of autoResult.routes[0].legs) {
+                //     for (const b of a.steps) {
+                //         console.log('value : ', b.duration.value)
+                //         console.log('instructions : ', b.instructions)
+                //     }
+                // }
+                // resolve();
+                // }
+                // });
+                // travelPlans = new mapTools.travel.Plan(searchTime);
+                // searchRoute(mapInstance, resultEl, selectedArray, routeList, searchTime)
+                //     .then(message => console.log(message))
+                //     .catch(message => console.error(message))
+                //     .then(() => {
+                //         const latlngbounds = mapTools.commons.createMarkerLatLngBounds(selectedArray);
+                //         map.fitBounds(latlngbounds);
+                //     })
+                // });
+
+            })
+    }
+
+    /** ルート取得 */
+    function fetchRoute(placeA, placeB, mode, time = null) {
+        console.log(placeA);
+        const startLatLng = placeA.geometry.location;
+        const endLatLng = placeB.geometry.location;
+        const directionsService = new google.maps.DirectionsService();
+        const options = {
+            origin: startLatLng,
+            destination: endLatLng,
+            travelMode: google.maps.DirectionsTravelMode[mode], // 移動手段
+        };
+        if (time && mode == 'DRIVING') {
+            options.drivingOptions = { departureTime: time };
+        }
+        return directionsService.route(options);
+    }
+    // /** 場所情報を探す */
+    // function findSchedulePlace() { }
+    /** ポリラインを引く */
+    function renderLine(responce) { }
+
+    // }
+    // function searchRoute(mapInstance, el, selectedArray, resultArray, startDateTime) {
+    //     travelPlans = new mapTools.travel.Plan(startDateTime);
+    //     return new Promise((res, rej) => {
+    //         if (selectedArray.length >= 2) {
+    //             mapTools.commons.showLoadUI(mapInstance);
+    //             console.log("ルート検索開始");
+    //             const placeTime = document.getElementsByName('placeTime');
+    //             if (placeTime.length > 0) {
+    //                 for (let i = 0; i < selectedArray.length; i++) {
+    //                     selectedArray[i].time = Number(placeTime[i].value);
+    //                 }
+    //             } else {
+    //                 for (let i = 0; i < selectedArray.length; i++) {
+    //                     selectedArray[i].time = 3600;
+    //                 }
+    //             }
+    //             const modeList = [];
+    //             const data = document.getElementsByName('route');
+    //             if (data.length > 0) {
+    //                 data.forEach(e => modeList.push(e.value));
+    //             } else {
+    //                 for (let i = 0; i < selectedArray.length; i++) {
+    //                     modeList.push('DRIVING');
+    //                 }
+    //             }
+    //             mapTools.commons.deleteRenderer(resultArray);
+    //             let prom = Promise.resolve();
+    //             travelPlans.setPlan(selectedArray[0]);
+    //             for (let i = 0; i < selectedArray.length - 1; i++) {
+    //                 // const mode = 'DRIVING';
+    //                 const startLatlng = selectedArray.getPosition();
+    //                 const endLatlng = placeB.getPosition();
+    //                 prom = prom
+    //                     .then(() => mapTools.commons.fetchRoute(startLatlng, endLatlng, modeList[i], travelPlans.getPlanSchedule(0)))
+    //                     .then(response => {
+    //                         console.log(response);
+    //                         travelPlans.setPlan(response);
+    //                         travelPlans.setPlan(selectedArray[i + 1]);
+    //                         response.renderer = mapTools.commons.viewRoute(response, mapInstance);
+    //                         resultArray.push(response);
+    //                         mapTools.commons.addHoverEvent(mapInstance, selectedArray[i], response, resultArray);
+    //                     })
+    //                     .catch(e => {
+    //                         console.error(e);
+    //                     })
+    //                     .then(() => {
+    //                         console.log(`ルート検索${i}つ目終了`);
+    //                         return new Promise(resolve => {
+    //                             setTimeout(() => { resolve() }, 500);
+    //                         })
+    //                     });
+    //             }
+    //             prom = prom.then(() => {
+    //                 mapTools.commons.clearLoadUI();
+    //                 res("ルート検索完全終了");
+    //             });
+    //         } else {
+    //             rej("二つ以上選択してください");
+    //         }
+    //     });
+    // }
+
+    /**
+     * ルート検索ボタン
+     */
+    document.getElementById("routeSearch").addEventListener('click', allSearchRouteBtnEvent);
+    // document.getElementById("routeSearch").addEventListener('click', () => {
+    //     travelPlans = new mapTools.travel.Plan(searchTime);
+    //     searchRoute(map, resultEl, markers, routeList, searchTime)
+    //         .then(message => console.log(message))
+    //         .catch(message => console.error(message))
+    //         .then(() => {
+    //             const latlngbounds = mapTools.commons.createMarkerLatLngBounds(markers);
+    //             map.fitBounds(latlngbounds);
+    //         });
+    // });
+
+    /**
+     * ルート削除ボタン
+     */
+    document.getElementById("deleteRoute").addEventListener('click', () => {
+        routeList.forEach(e => {
+            if (e.middleMarker)
+                e.middleMarker.setMap(null);
+        })
+        mapTools.commons.deleteRenderer(routeList);
+        routeList = [];
+    })
+
+
+
+    /**
+     * 
+     */
+    let autoResult;
+
+    /**
+     * 自動ボタン
+     */
+    function autoSearch(mapInstance, selectedArray) {
+        const latLng = decideCenterOfPlace(selectedArray);
+        //周辺検索
+        const keywordList = ['', '観光地', '自然', '寺社', '公園', '城'];
+        mapTools.commons.showLoadUI(mapInstance);
+        return new Promise((resolve, reject) => {
+
+            mapTools.commons.fetchAllNearByPlace(mapInstance, latLng, 800, 'tourist_attraction', keywordList)
+                .then(response => {
+                    const allList = [];
+                    for (const resolveArray of response) {
+                        for (const resp of resolveArray) {
+                            for (const place of resp.results) {
+                                if (allList.findIndex(e => e.place_id == place.place_id) === -1) {
+                                    allList.push(place);
+                                }
+                            }
+                        }
+                    }
+                    const startPoint = {
+                        item: document.getElementById("addressInput").value,
+                        rating: 4.3,
+                        lat: latLng.lat(),
+                        lng: latLng.lng()
+                    }
+                    let ans = automatic(startPoint, allList)
+                    const waypoint = [];
+                    for (let i = 1; i < ans.length - 1; i++) {
+                        const place = ans[i];
+                        const location = place.geometry.location;
+                        waypoint.push({
+                            location: location,
+                            stopover: true
+                        });
+                    }
+
+                    /** */
+                    let rendererOptions = {
+                        map: map, // 描画先の地図
+                        draggable: true, // ドラッグ可
+                        preserveViewport: true // centerの座標、ズームレベルで表示
+                    };
+                    let directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
+                    const directionsService = new google.maps.DirectionsService();
+                    let request = {
+                        origin: ans[0].geometry.location, // スタート地点
+                        destination: ans[ans.length - 1].geometry.location, // ゴール地点
+                        travelMode: google.maps.DirectionsTravelMode.DRIVING, // 移動手段
+                        optimizeWaypoints: true,
+                        waypoints: waypoint
+                    };
+                    console.log(request);
+                    directionsService.route(request, function (response, status) {
+                        if (status === google.maps.DirectionsStatus.OK) {
+                            autoResult = response;
+                            new google.maps.DirectionsRenderer({
+                                map: map,
+                                directions: response,
+                                suppressMarkers: true // デフォルトのマーカーを削除
+                            });
+                            // let leg = response.routes[0].legs[0];
+                            // makeMarker(leg.end_location, markers.goalMarker, map);
+                            // setTimeout(function () {
+                            //     map.setZoom(16); // ルート表示後にズーム率を変更
+                            // });
+                            const setMarker = (n) => {
+                                const place = ans[n];
+                                const location = place.geometry.location;
+                                const marker = mapTools.commons.createMarker(mapInstance, location, place.name);
+                                marker.place = place;
+                                marker.time = 3600;
+                                const photoUrl = place.photos && place.photos.length > 0 ? place.photos[0].getUrl() : '';
+                                mapTools.commons.addMarkerPopEvent(mapInstance, marker)
+                                selectedArray.push(marker);
+                            }
+                            setMarker(0);
+                            for (const num of response.routes[0].waypoint_order) {
+                                setMarker(num + 1)
+                            }
+                            setMarker(ans.length - 1)
+
+                            mapTools.commons.clearLoadUI();
+                            // for (const a of autoResult.routes[0].legs) {
+                            //     for (const b of a.steps) {
+                            //         console.log('value : ', b.duration.value)
+                            //         console.log('instructions : ', b.instructions)
+                            //     }
+                            // }
+                            resolve();
+                        }
+                    });
+                    // travelPlans = new mapTools.travel.Plan(searchTime);
+                    // searchRoute(mapInstance, resultEl, selectedArray, routeList, searchTime)
+                    //     .then(message => console.log(message))
+                    //     .catch(message => console.error(message))
+                    //     .then(() => {
+                    //         const latlngbounds = mapTools.commons.createMarkerLatLngBounds(selectedArray);
+                    //         map.fitBounds(latlngbounds);
+                    //     })
+                });
+        });
+    }
+    document.getElementById('autoSearch').addEventListener('click', autoBtnEvent)
+    // document.getElementById('autoSearch').addEventListener('click', e => {
+    //     if (markers.length > 0) {
+    //         autoSearch(map, markers)
+    //             .then(() => {
+    //                 for (let i = 0; i < timeStamps.length; i++) {
+    //                     timeStamps.pop();
+    //                 }
+    //                 for (let i = 0; i < markers.length; i++) {
+    //                     // const dateTime = travelPlans.getPlaceSchedule(i);
+    //                     // const placeStartTime = Number(dateTime.getHours() * 60) + Number(dateTime.getMinutes()) - (beginHour * 60)
+
+    //                     // console.log(placeStartTime)
+    //                     const marker = markers[i];
+    //                     timeStamps.push(
+    //                         new TimeStamp(
+    //                             timeStamps.length,
+    //                             marker.position,
+    //                             "null",
+    //                             marker.place.name,
+    //                             0, Math.floor(marker.time / 60)));
+    //                     resetClasses();
+    //                     // console.log("place", i, ":", travelPlans.getPlaceSchedule(i));
+    //                 }
+    //             })
+
+    //     }
+    // });
+
+
+
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: {
+                lat: 34.7019399,
+                lng: 135.51002519999997
+            },
+            mapTypeControl: false, //マップタイプ コントロール
+            fullscreenControl: false, //全画面表示コントロール
+
+            zoom: 19
         });
 
-        var prefecturesSpace = document.getElementById("prefecturesSpace");
-        var planSpace = document.getElementById("planSpace");
+        if (pageOption.DATA != null) {
+            makeSchedule(pageOption.DATA, map);
+        }
 
-        setInterval(() => {
-            // var preArray = [];
-            // for (var prefecture in array) {
+    }
 
-            //     preArray.push(prefecture);
-            // }
+    /**
+     * 
+     */
+    function makeSchedule(data, maps) {
+        const scheduleDataArray = (() => {
+            const list = data.split(';');
+            const newList = []
+            for (const item of list)
+                newList.push(item.split(','))
+            return newList
+        })();
+        const service = new google.maps.places.PlacesService(maps);
+        let prom = Promise.resolve();
+        for (const scheduleData of scheduleDataArray) {
+            prom = prom.then(() => searchDetails(service, scheduleData[1]))
+                .then(response => {
+                    addSchedulePlace(response, Number(scheduleData[2]) * 60, Number(scheduleData[3]) * 60);
+                })
+        }
+        prom.then(() => { allSearchRoute() });
+    }
+    function searchDetails(service, placeId) {
+        return new Promise((resolve, reject) => {
+            service.getDetails({ placeId: placeId }, function (response) {
+                resolve(response)
+            });
+        })
+    }
+    /**
+     * 検索機能
+     */
+    const placesList = [];
 
-            var prefectures_details = "東京都";
+    /**
+     * 
+     */
+    function getPlaces() {
 
-            prefecturesSpace.value = prefectures_details;
+        //結果表示クリア
+        document.getElementById("results").innerHTML = "";
+        //placesList配列を初期化
+        placesList.length = 0;
 
+        //入力した検索場所を取得
+        var addressInput = document.getElementById("addressInput").value;
+        if (addressInput == "") {
+            return false;
+        }
 
-            var plan_details = "";
+        //検索場所の位置情報を取得
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({
+            address: addressInput
+        },
+            function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    //取得した緯度・経度を使って周辺検索
+                    startNearbySearch(results[0].geometry.location);
+                } else {
+                    alert(addressInput + "：位置情報が取得できませんでした。");
+                }
+            });
+    }
 
-            for (var i = 0; i < markers.length; i++){
-                plan_details += markers[i].place.name + ",";
-                plan_details += markers[i].place.place_id + ",";
-                plan_details += timeStamps[i].getBegin() + ",";
-                plan_details += timeStamps[i].getStaying();
-                if (i != (markers.length-1)) plan_details += ";";
+    /*
+     位置情報を使って周辺検索
+      latLng : 位置座標（google.maps.LatLng）
+    */
+    function startNearbySearch(latLng) {
+        let elememts = document.getElementsByName('hoge');
+        let len = elememts.length;
+        let checkValue = '';
+        for (let i = 0; i < len; i++) {
+            if (elememts.item(i).checked) {
+                checkValue = elememts.item(i).value;
             }
+        }
+        //読み込み中表示
+        const insertText =
+            "<div class='wrapper'><div class='balls-guruguru'>"
+            + "<span class='ball ball-1'></span>"
+            + "<span class='ball ball-2'></span>"
+            + "<span class='ball ball-3'></span>"
+            + "<span class='ball ball-4'></span>"
+            + "<span class='ball ball-5'></span>"
+            + "<span class='ball ball-6'></span>"
+            + "<span class='ball ball-7'></span>"
+            + "<span class='ball ball-8'></span>"
+            + "</div></div>";
+        document.getElementById("cardDisplay").innerHTML = insertText;
 
-            planSpace.value = plan_details;
-        }, 1);
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?language=ja&key=AIzaSyDeL7_U--qzVwi963J1elplZfLTCIsduZQ&libraries=places&callback=initMap"></script>
-    <!-- <script src="https://maps.googleapis.com/maps/api/js?language=ja&key=AIzaSyAIvDT6aSB8xK3ASJLRpicJ_SZV8KngMLM&libraries=places&callback=initMap"></script> -->
+        //PlacesServiceインスタンス生成
+        var service = new google.maps.places.PlacesService(map);
+
+        //入力したKeywordを取得
+        var keywordInput = document.getElementById("addressInput").value;
+
+        //周辺検索
+        service.nearbySearch({
+            location: latLng,
+            radius: 800,
+            type: [checkValue],
+            keyword: keywordInput,
+            language: 'ja'
+        },
+            displayCards
+        );
+    }
+
+    /*
+     周辺検索の結果表示（カード形式）
+     ※nearbySearchのコールバック関数
+      results : 検索結果
+      status ： 実行結果ステータス
+      pagination : ページネーション
+    */
+    function displayCards(results, status, pagination) {
+        const cardDisplayEl = document.getElementById("cardDisplay");
+        if (status != google.maps.places.PlacesServiceStatus.OK) {
+            return serviceStatusError(status)
+        }
+        //検索結果をplacesList配列に連結
+        for (const result of results) {
+            placesList.push(result)
+        }
+
+        //pagination.hasNextPage==trueの場合、
+        //続きの検索結果あり
+        // if (pagination.hasNextPage) {
+        //pagination.nextPageで次の検索結果を表示する
+        //※連続実行すると取得に失敗するので、
+        //1秒くらい間隔をおく
+        // return setTimeout(() => pagination.nextPage(), 1000);
+
+        //pagination.hasNextPage==falseになったら
+        //全ての情報が取得できているので、
+        //結果を表示する
+        // }
+
+        placesList.sort((a, b) => {
+            return b.rating - a.rating;
+        });
+
+        const getCircularReplacer = () => {
+            const seen = new WeakSet();
+            return (key, value) => {
+                if (typeof value === "object" && value !== null) {
+                    if (seen.has(value)) {
+                        return;
+                    }
+                    seen.add(value);
+                }
+                return value;
+            };
+        };
+        console.log(JSON.stringify(placesList, getCircularReplacer()))
+        cardDisplayEl.innerHTML = "";
+        let insertText = "";
+        for (const place of placesList) {
+            insertText +=
+                `<div class="col-sm mt-3 mr-3 p-0 ml">`
+                + `<div class="card" style="width: 320px;">`
+                + `<img src="${(place.photos ? place.photos[0].getUrl() : '')}" alt="" width="100%" height="250">`
+                + `<div class="card-body">`
+                + `<h5 class="card-title">${omittedContent(place.name)}</h5>`
+                + `<p>${(place.rating)}</p>`
+                + `<a href="#" class="btn btn-primary"> 詳しく見る</a>`
+                + `<div class="btn btn-primary ml-1" name="togglePin" >追加</div>`
+                + `</div></div></div>`;
+        }
+        cardDisplayEl.innerHTML = insertText;
+
+        const searchCardBtn = document.getElementsByName("togglePin");
+        for (let i = 0; i < placesList.length; i++) {
+            searchCardBtn[i].addEventListener('click', addSchedulePlaceBtnEvent.bind(this, placesList[i]))
+        }
+
+    }
+
+    /**
+     * 
+     */
+    function serviceStatusError(status) {
+        const serviceStatus = google.maps.places.PlacesServiceStatus;
+        let text;
+        switch (status) {
+            case serviceStatus.ZERO_RESULTS:
+                text = "検索結果が0件です。";
+                break;
+            case serviceStatus.ERROR:
+                text = "サーバ接続に失敗しました。";
+                break;
+            case serviceStatus.INVALID_REQUEST:
+                text = "リクエストが無効でした。";
+                break;
+            case serviceStatus.OVER_QUERY_LIMIT:
+                text = "リクエストの利用制限回数を超えました。";
+                break;
+            case serviceStatus.REQUEST_DENIED:
+                text = "サービスが使えない状態でした。";
+                break;
+            case serviceStatus.UNKNOWN_ERROR:
+                text = "原因不明のエラーが発生しました。";
+                break;
+            default:
+                text = "原因不明のエラーが発生しました。";
+                break;
+        }
+        alert(text);
+    }
+
+
+    function omittedContent(string) {
+        // 定数で宣言
+        const MAX_LENGTH = 14;
+
+        // もしstringの文字数がMAX_LENGTH（今回は14）より大きかったら末尾に...を付け足して返す。
+        if (string.length > MAX_LENGTH) {
+
+            // substr(何文字目からスタートするか, 最大値);
+            return string.substr(0, MAX_LENGTH) + '...';
+        }
+        //　文字数がオーバーしていなければそのまま返す
+        return string;
+    }
+    //文字数制限
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const sc = document.createElement('script');
+        sc.src = `https://maps.googleapis.com/maps/api/js?key=${pageOption.GOOGLE_MAPS_API_KEY}&libraries=places&callback=initMap`;
+        document.body.appendChild(sc);
+    });
+
+
+// https://stackoverflow.com/questions/41263389/change-the-color-of-the-line-between-2-waypoints
+// https://stackoverflow.com/questions/47750420/google-map-directionsrenderer-using-polyline-miss-some-routes-in-waypoints?noredirect=1&lq=1
+</script>
+<script>
+    const form = document.getElementById("planForm");
+    const submitBtn = document.getElementById("submitBtn");
+    let canSubmit = true;
+    submitBtn.addEventListener('click', function (e) {
+        const lineData = SchedulePage.outLineSchedules()
+        const prefecturesSpace = document.getElementById("prefecturesSpace");
+        const planSpace = document.getElementById("planSpace");
+        // form.setAttribute("onsubmit", "test(); return false;")
+        var prefectures_details = "東京都";
+
+        prefecturesSpace.value = prefectures_details;
+        planSpace.value = lineData;
+        // form.insertAdjacentHTML('beforeend', insertText)
+        console.log('submit');
+        form.submit();
+    });
+</script>
+<!-- <script src="./js/key.js"></script> -->
+<!-- <script src="./js/automatic.js"></script> -->
+<!-- <script src="./js/tools.js"></script> -->
+<!-- <script src="./js/schedule-card.js"></script> -->
+<!-- <script src="./js/schedule.js"></script> -->
+<!-- <script src="./js/memo_.js"></script> -->
+<!-- <script src="./js/script_.js"></script> -->
+
 {% endblock %}

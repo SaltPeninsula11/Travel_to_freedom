@@ -5,6 +5,9 @@ name = "pypi"
 
 [packages]
 django = "==2.2.2"
+django-allauth = "*"
+django-mathfilters = "*"
+pillow = "*"
 
 [dev-packages]
 
