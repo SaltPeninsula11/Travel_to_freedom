@@ -40,7 +40,7 @@ class SharePlanView(LoginRequiredMixin, generic.DetailView):
 
         for i in range(len(perPlace)):
             place = perPlace[i].split(",")
-            place.append(detailList[i])
+            place.append(detailList[i] if i < len(detailList) else '')
             planList.append(place)
         
         context = {
@@ -62,8 +62,12 @@ class ShareResultView(generic.TemplateView):
             if index != (len(context['subDescription'])-1):
                 subDes += ';'
 
-        plan = Plan.objects.filter(id=request.POST['ID']).update(detail=context['mainDescription'], sub_details=subDes)
-        return render(request, 'shiozaki/share_results.html', context)
+        Plan.objects.filter(id=request.POST['ID']).update(
+            photo=context['mainPhoto'],
+            detail=context['mainDescription'], 
+            sub_details=subDes, is_action=True
+        )
+        return render(request, 'shiozaki/share_results.html')
 
 
 class MyPlanListView(generic.ListView):
@@ -96,7 +100,7 @@ class MyPlanDetailView(generic.DetailView):
 
         for i in range(len(perPlace)):
             place = perPlace[i].split(",")
-            place.append(detailList[i])
+            place.append(detailList[i] if i < len(detailList) else '')
             planList.append(place)
         
         context = {
