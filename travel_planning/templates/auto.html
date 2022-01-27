@@ -102,7 +102,7 @@
 
 <script>
     const pageOption = {
-        GOOGLE_MAPS_API_KEY: 'AIzaSyCBVWDqsxdSXEk015GQxHCqmjN4kOnep0E',
+        GOOGLE_MAPS_API_KEY: '',
         DATA: null
         // DATA: '麺処 三虎（みとら）,ChIJ9xa_aXWFGGARGOZiaa0z8hU,572,60;初代 GONZO,ChIJO8GUOtKFGGARsXamtsDXFsM,650,60;麺処となみ,ChIJbQqlX16FGGAR20_7Mwqy9xs,733,60'
     }
@@ -2468,11 +2468,6 @@
     }
     //文字数制限
 
-    document.addEventListener('DOMContentLoaded', function () {
-        const sc = document.createElement('script');
-        sc.src = `https://maps.googleapis.com/maps/api/js?key=${pageOption.GOOGLE_MAPS_API_KEY}&libraries=places&callback=initMap`;
-        document.body.appendChild(sc);
-    });
 
 
 // https://stackoverflow.com/questions/41263389/change-the-color-of-the-line-between-2-waypoints
