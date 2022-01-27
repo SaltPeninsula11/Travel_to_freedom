@@ -57,20 +57,10 @@ textarea#mainDescription {
 }
 
 /* タイムライン */
-.space_1x2 table {
+.space_1x1 table {
     width: 100%;
 }
 
-#schedulePhotoSpace {
-    width: 100%;
-    height: 100%;
-}
-
-textarea {
-    resize: none;
-    width: 95%;
-    height: 60px;
-}
 #mainDescription:not(textarea) {
     width: 95%;
     height: 135px;
@@ -90,17 +80,13 @@ td #Timeline_Span {
 }
 
 td#Timeline_TimePlace {
-    width: 50%;
+    width: 100%;
 }
 .timeDisplay {
     font-size: 48px;
 }
 .timeDisplay span {
     font-size: 16px;
-}
-
-td#Timeline_Photo {
-    width: 50%;
 }
 
 .numberLine {

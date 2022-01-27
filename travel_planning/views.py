@@ -3,6 +3,7 @@ from django.views import generic
 from django.contrib import messages
 
 from .models import *
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 # class MapView(generic.TemplateView):
@@ -25,20 +26,27 @@ class PlanListView(generic.ListView):
         plans = Plan.objects.filter().order_by('-created_at')
         return plans
 
-class SharePlanView(generic.DetailView):
+class SharePlanView(LoginRequiredMixin, generic.DetailView):
     model = Plan
     template_name = "shiozaki/share_plan.html"
 
     def get_context_data(self, **kwargs):
         plan = Plan.objects.get(id=self.kwargs['pk']).plan
+        subD = Plan.objects.get(id=self.kwargs['pk']).sub_details
+        detailList = subD.split(';')
 
         perPlace = plan.split(';')
         planList = []
 
-        for place in perPlace:
-            planList.append(place.split(","))
+        for i in range(len(perPlace)):
+            place = perPlace[i].split(",")
+            place.append(detailList[i])
+            planList.append(place)
         
-        context = { 'planList' : planList }
+        context = {
+            'object' : Plan.objects.get(id=self.kwargs['pk']),
+            'planList' : planList,
+        }
         return context
 
 class ShareResultView(generic.TemplateView):
@@ -46,9 +54,15 @@ class ShareResultView(generic.TemplateView):
         context = {
             'mainPhoto': request.POST['メイン画像'],
             'mainDescription': request.POST['詳細'],
-            'subDescription0': request.POST['サブ詳細0'],
-            'subDescription1': request.POST['サブ詳細1'],
+            'subDescription': request.POST.getlist('サブ詳細'),
         }
+        subDes = ''
+        for index in range(len(context['subDescription'])):
+            subDes += context['subDescription'][index]
+            if index != (len(context['subDescription'])-1):
+                subDes += ';'
+
+        plan = Plan.objects.filter(id=request.POST['ID']).update(detail=context['mainDescription'], sub_details=subDes)
         return render(request, 'shiozaki/share_results.html', context)
 
 
@@ -63,7 +77,7 @@ class MyPlanListView(generic.ListView):
     def post(self, request, *args, **kwargs):
         messages.success(request, '計画を保存しました。')
 
-        plan = Plan(user=request.user, prefectural_names=request.POST["県名"], detail="テスト", plan=request.POST["計画欄"])
+        plan = Plan(user=request.user, prefectural_names=request.POST["県名"], plan=request.POST["計画欄"])
         plan.save()
 
         return render(request, 'my_plan_list.html')
@@ -74,12 +88,19 @@ class MyPlanDetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         plan = Plan.objects.get(id=self.kwargs['pk']).plan
+        subD = Plan.objects.get(id=self.kwargs['pk']).sub_details
+        detailList = subD.split(';')
 
         perPlace = plan.split(';')
         planList = []
 
-        for place in perPlace:
-            planList.append(place.split(","))
+        for i in range(len(perPlace)):
+            place = perPlace[i].split(",")
+            place.append(detailList[i])
+            planList.append(place)
         
-        context = { 'planList' : planList }
+        context = {
+            'object' : Plan.objects.get(id=self.kwargs['pk']),
+            'planList' : planList
+        }
         return context

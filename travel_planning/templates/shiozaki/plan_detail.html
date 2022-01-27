@@ -7,61 +7,60 @@
 {% block content %}
 
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/sharePlan.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/planDetail.css' %}">
 
 <div id="contents">
 
     <h1>旅行計画</h1>
 
-    <form action="{% url 'travel_planning:result' %}" method="post">
-        {% csrf_token %}
-
-        <div class="space_1x2">
-            {% for plan in planList %}
-            {% load mathfilters %}
-            <table>
-                <tr>
-                    <td id="Timeline_Span">
-                        <div class="dot">
-                            {% if forloop.counter > 1 %}
-                            <div class="numberLine" style="top: -160px; height: 160px;"></div>
-                            {% endif %}
-                        </div>
-                    </td>
-                    <td id="Timeline_TimePlace" class="timeDisplay">
-                        {% if plan.2 != "NaN" %}
-                        {{ plan.2|div:60|sub:0.5|floatformat:0 }}:{% if plan.2|mod:60 < 10 %}0{% endif %}{{ plan.2|mod:60 }}
-                        {% else %}
-                        --:--
+    <div class="space_1x1">
+        {% for plan in planList %}
+        {% load mathfilters %}
+        <table>
+            <tr>
+                <td id="Timeline_Span">
+                    <div class="dot">
+                        {% if forloop.counter > 1 %}
+                        <div class="numberLine" style="top: -163px; height: 163px;"></div>
                         {% endif %}
-                    </td>
-                    <td rowspan="3" id="Timeline_Photo">
-                        <div id="schedulePhotoSpace">
-                            <img src="" alt="">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td rowspan="2" id="Timeline_Span">
-                        
-                    </td>
-                    <td id="Timeline_TimePlace">
-                        {{ plan.0 }}
-                    </td>
-                </tr>
-                <tr>
-                    <td id="Timeline_TimePlace">
-                        <textarea name="サブ詳細0" id="" cols="30" rows="10"></textarea>
-                    </td>
-                </tr>
-            </table>
-            {% endfor %}
-        </div>
+                    </div>
+                </td>
+                <td id="Timeline_TimePlace" class="timeDisplay">
+                    {% if plan.2 != "NaN" %}
+                    {{ plan.2|div:60|sub:0.5|floatformat:0 }}:{% if plan.2|mod:60 < 10 %}0{% endif %}{{ plan.2|mod:60 }}
+                    {% else %}
+                    --:--
+                    {% endif %}
+                </td>
+                <td rowspan="3" id="Timeline_Photo">
+                    <div id="schedulePhotoSpace">
+                        <img src="" alt="">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="2" id="Timeline_Span">                    
+                </td>
+                <td id="Timeline_TimePlace">
+                    {{ plan.0 }}
+                </td>
+            </tr>
+            <tr>
+                <td id="Timeline_TimePlace">
+                    <div id="descriptionSpace">{{ plan.4 }}</div>
+                </td>
+            </tr>
+        </table>
+        {% endfor %}
+    </div>
 
-        <div class="buttons">
-            <a class="btn btn-outline-primary" href="{% url 'travel_planning:list' %}">戻る</a>
-        </div>
-    </form>
+    <div class="space_1x1">
+        a
+    </div>
+
+    <div class="buttons">
+        <a class="btn btn-outline-primary" href="{% url 'travel_planning:list' %}">戻る</a>
+    </div>
 </div>
 
 {% endblock %}
