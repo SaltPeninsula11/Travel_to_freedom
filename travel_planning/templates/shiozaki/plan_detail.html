@@ -28,10 +28,7 @@
                 <td id="Timeline_TimePlace" class="timeDisplay">
                     {% if plan.2 != "NaN" %}
                     {{ plan.2|div:60|sub:0.5|floatformat:0 }}:{% if plan.2|mod:60 < 10 %}0{% endif %}{{ plan.2|mod:60 }}
-                    {% else %}
-                    --:--
-                    {% endif %}
-                </td>
+                        {% else %} --:-- {% endif %} </td>
                 <td rowspan="3" id="Timeline_Photo">
                     <div id="schedulePhotoSpace">
                         <img src="" alt="">
@@ -39,7 +36,7 @@
                 </td>
             </tr>
             <tr>
-                <td rowspan="2" id="Timeline_Span">                    
+                <td rowspan="2" id="Timeline_Span">
                 </td>
                 <td id="Timeline_TimePlace">
                     {{ plan.0 }}
@@ -60,6 +57,7 @@
 
     <div class="buttons">
         <a class="btn btn-outline-primary" href="{% url 'travel_planning:list' %}">戻る</a>
+        <a class="btn btn-outline-primary" href="{% url 'travel_planning:plan-update' object.pk %}">編集</a>
     </div>
 </div>
 

@@ -3,6 +3,10 @@ from django.shortcuts import render
 from django.views import generic
 from django.contrib import messages
 
+from django.http import JsonResponse
+from .forms import MyPlanUpdateForm, MyPlanCreateForm
+from django.urls import reverse_lazy
+
 from .models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -12,8 +16,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 class IndexView(generic.TemplateView):
     template_name = "index.html"
     
-class AutomapView(generic.TemplateView):
-    template_name="auto.html"
+class AutomapView(generic.CreateView):
+    template_name = 'auto.html'
+    model = Plan
+    form_class = MyPlanCreateForm
 
 
 class TestView(generic.TemplateView):
@@ -110,16 +116,17 @@ class MyPlanDetailView(generic.DetailView):
         }
         return context
 
-# class MyPlanUpdateView(LoginRequiredMixin, generic.UpdateView):
-#     model = Plan
-#     template_name = 'auto.html'
-    # form_class = DiaryCreateForm
+class MyPlanUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Plan
+    template_name = 'auto.html'
+    form_class = MyPlanUpdateForm
 
-    # def get_success_url(self):
-    #     return reverse_lazy('diary:diary_detail', kwargs={'pk': self.kwargs['pk']})
-    # def form_valid(self, form):
-    #     messages.success(self.request, '日記を更新しました。')
-    #     return super().form_valid(form)
-    # def form_invalid(self, form):
-    #     messages.error(self.request, "日記の更新に失敗しました。")
-    #     return super().form_invalid(form)
+    def get_success_url(self):
+        return reverse_lazy('travel_planning:mydetail', kwargs={'pk': self.kwargs['pk']})
+    def form_valid(self, form):
+        messages.success(self.request, '更新しました。')
+        return super().form_valid(form)
+    def form_invalid(self, form):
+        messages.error(self.request, "更新に失敗しました。")
+        return super().form_invalid(form)
+
