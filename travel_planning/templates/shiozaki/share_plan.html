@@ -2,7 +2,7 @@
 
 {% load i18n %}
 
-{% block head_title %}共有機能{% endblock %}
+{% block head_title %}旅行計画投稿{% endblock %}
 
 {% block content %}
 
@@ -13,7 +13,7 @@
 
     <h1>旅行計画投稿</h1>
 
-    <form action="{% url 'travel_planning:result' %}" method="post">
+    <form action="{% url 'travel_planning:success' %}" method="post">
         {% csrf_token %}
 
         <input type="hidden" name="ID" value="{{ object.pk }}">
@@ -33,11 +33,9 @@
                     <img src="" alt="" id="mainPhotoDisplay">
                 </div>
             </section>
+            <br>
             <section>
-                <h3>詳細</h3>
-                <textarea name="詳細" id="mainDescription" placeholder="32字以内で入力" maxlength="32">
-                    {{ object.detail }}
-                </textarea>
+                <textarea name="詳細" id="mainDescription" placeholder="32字以内で詳細を入力" maxlength="32">{{ object.detail }}</textarea>
             </section>
         </div>
 
@@ -53,7 +51,7 @@
                     <td id="Timeline_Span">
                         <div class="dot">
                             {% if forloop.counter > 1 %}
-                            <div class="numberLine"></div>
+                            <div class="numberLine" style="top: -201px; height: 201px;"></div>
                             {% endif %}
                         </div>
                     </td>
@@ -80,10 +78,7 @@
                 </tr>
                 <tr>
                     <td id="Timeline_TimePlace">
-                        詳細<br>
-                        <textarea name="サブ詳細" cols="30" rows="10" placeholder="128字以内で入力" maxlength="128">
-                            {{ plan.4 }}
-                        </textarea>
+                        <textarea name="サブ詳細" cols="30" rows="20" placeholder="128字以内で詳細を入力" maxlength="128">{{ plan.4 }}</textarea>
                     </td>
                 </tr>
             </table>

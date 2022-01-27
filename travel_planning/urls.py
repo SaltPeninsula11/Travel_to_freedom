@@ -10,7 +10,7 @@ urlpatterns = [
     path('share/detail/<int:pk>/', views.SharePlanView.as_view(), name='share'),
     
     path('share/plan-list', views.PlanListView.as_view(), name='list'),
-    path('share/result', views.ShareResultView.as_view(), name='result'),
+    path('share/success', views.ShareSuccessView.as_view(), name='success'),
     
     path('my-plan-list', views.MyPlanListView.as_view(), name='mylist'),
     path('plan-detail/<int:pk>', views.MyPlanDetailView.as_view(), name='mydetail'),

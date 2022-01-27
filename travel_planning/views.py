@@ -49,7 +49,7 @@ class SharePlanView(LoginRequiredMixin, generic.DetailView):
         }
         return context
 
-class ShareResultView(generic.TemplateView):
+class ShareSuccessView(generic.TemplateView):
     def post(self, request, *args, **kwargs):
         context = {
             'mainPhoto': request.POST['メイン画像'],
@@ -67,7 +67,7 @@ class ShareResultView(generic.TemplateView):
             detail=context['mainDescription'], 
             sub_details=subDes, is_action=True
         )
-        return render(request, 'shiozaki/share_results.html')
+        return render(request, 'shiozaki/share_success.html')
 
 
 class MyPlanListView(generic.ListView):

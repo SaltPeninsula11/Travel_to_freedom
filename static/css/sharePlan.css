@@ -69,7 +69,7 @@ textarea#mainDescription {
 textarea {
     resize: none;
     width: 95%;
-    height: 60px;
+    height: 128px;
 }
 #mainDescription:not(textarea) {
     width: 95%;
