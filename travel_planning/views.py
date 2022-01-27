@@ -23,8 +23,16 @@ class PlanListView(generic.ListView):
     template_name = "plan_list.html"
 
     def get_queryset(self):
-        plans = Plan.objects.filter().order_by('-created_at')
+        plans = Plan.objects.filter(prefectural_names__contains='北海道').order_by('-created_at')
         return plans
+
+    def post(self, request, *args, **kwargs):
+        plans = Plan.objects.filter(prefectural_names__contains=request.POST['prefs']).order_by('-created_at')
+        context = {
+            ''
+            'plan_list' : plans
+        }
+        return render(request, 'plan_list.html', context)
 
 class SharePlanView(LoginRequiredMixin, generic.DetailView):
     model = Plan

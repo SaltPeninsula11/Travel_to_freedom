@@ -74,24 +74,26 @@
         <hr>
         <div class="m-2">
             <div class="container">
-                <form action="" class="w-50 mr-auto ml-auto">
+                <form action="{% url 'travel_planning:list' %}" method="post" class="w-50 mr-auto ml-auto">
+                    {% csrf_token %}
+
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Example select</label>
-                        <select class="form-control" id="exampleFormControlSelect1">
-                            <option value="1">北海道</option>
-                            <option value="2">青森県</option>
-                            <option value="3">岩手県</option>
-                            <option value="4">宮城県</option>
+                        <select class="form-control" id="exampleFormControlSelect1" name="prefs" onchange="submit(this.form)">
+                            <option value="北海道">北海道</option>
+                            <option value="青森県">青森県</option>
+                            <option value="岩手県">岩手県</option>
+                            <option value="宮城県">宮城県</option>
                             <option value="5">秋田県</option>
                             <option value="6">山形県</option>
                             <option value="7">福島県</option>
                             <option value="8">茨城県</option>
                             <option value="9">栃木県</option>
                             <option value="10">群馬県</option>
-                            <option value="11">埼玉県</option>
-                            <option value="12">千葉県</option>
-                            <option value="13">東京都</option>
-                            <option value="14">神奈川県</option>
+                            <option value="埼玉県">埼玉県</option>
+                            <option value="千葉県">千葉県</option>
+                            <option value="東京都">東京都</option>
+                            <option value="神奈川県">神奈川県</option>
                             <option value="15">新潟県</option>
                             <option value="16">富山県</option>
                             <option value="17">石川県</option>
@@ -129,21 +131,6 @@
                     </div>
                 </form>
                 <div class="row">
-                    <div class="card mr-auto al-auto mb-4">
-                        <div class="card-horizontal">
-                            <div class="img-square-wrapper">
-                                <img class="" src="http://via.placeholder.com/300x180" alt="Card image cap">
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title">20代 女性</h4>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">Last updated 3 mins ago</small>
-                        </div>
-                    </div>
-                    
                     {% for plan in plan_list %}
                     <div class="card mr-auto al-auto mb-4">
                         <div class="card-horizontal">
@@ -176,4 +163,11 @@
 
             </div>
     </main>
+    <script type="text/javascript">
+        $(function(){
+          $("#submit_select").change(function(){
+            $("#submit_form").submit();
+          });
+        });
+    </script>
     {% endblock %}
