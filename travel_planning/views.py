@@ -29,7 +29,7 @@ class PlanListView(generic.ListView):
     def post(self, request, *args, **kwargs):
         plans = Plan.objects.filter(prefectural_names__contains=request.POST['prefs']).order_by('-created_at')
         context = {
-            ''
+            'prefsValue' : request.POST['prefs'],
             'plan_list' : plans
         }
         return render(request, 'plan_list.html', context)
