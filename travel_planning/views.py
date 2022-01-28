@@ -88,7 +88,7 @@ class MyPlanListView(generic.ListView):
     def post(self, request, *args, **kwargs):
         messages.success(request, '計画を保存しました。')
 
-        plan = Plan(user=request.user, prefectural_names=request.POST["県名"], plan=request.POST["計画欄"])
+        plan = Plan(user=request.user, prefectural_names=request.POST["prefectural_names"], plan=request.POST["plan"])
         plan.save()
 
         return render(request, 'my_plan_list.html')
