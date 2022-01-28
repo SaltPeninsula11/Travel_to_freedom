@@ -2,7 +2,6 @@
 
 #memo {
     position: relative;
-    left: -5px;
     top: 0px;
 }
 
@@ -23,7 +22,7 @@
 .thirty-box {
     width: 90%;
     height: 72px; /* fiveMinPerPx * 6ブロック */
-    position: relative;
+    position: absolute;
     right: 0;
     margin: 0 5%;
     border-bottom: 1px solid #000;
@@ -31,7 +30,7 @@
 .hour-box {
     width: 100%;
     height: 72px; /* fiveMinPerPx * 6ブロック */
-    position: relative;
+    position: absolute;
     right: 0;
     border-bottom: 1px solid #000;
 }
@@ -43,7 +42,7 @@
     background-color: #EEE;
 }
 .schedule_card {
-    position: relative;
+    position: absolute;
     width: 84%;
     right: 0;
     background-color: #FFF;
