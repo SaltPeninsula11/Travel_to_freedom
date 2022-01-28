@@ -1,10 +1,3 @@
-//始端時刻
-beginHour = 0;
-//終端時刻
-endHour = 23;
-//5分あたりのピクセル（例：16px）
-fiveMinPerPx = 12;
-
 //タイムスタンプのクラス
 class TimeStamp {
     constructor (id, photoAddress, name, beginTime, stayingTime) {
@@ -136,12 +129,25 @@ class ScheduleCard {
         return ('00' + ((time + this.beginHour * 60) % 60)).slice(-2);
     }
 }
-//開始時間、滞在時間をまとめたクラス（ここを改造する予定）
-var timeStamps = [
-    new TimeStamp(0, "images/pic_a.png", "Test0", 0, 30),
-    new TimeStamp(1, "images/pic_b.png", "Test1", 40, 30),
-    new TimeStamp(2, "images/pic_c.png", "Test2", 80, 30)
-];
+
+nameList = document.getElementsByName("scheduleName");
+beginList = document.getElementsByName("scheduleBeginTime");
+stayList = document.getElementsByName("scheduleStayTime");
+
+//始端時刻
+beginHour = Math.floor(Number(beginList[0].value) / 60);
+//終端時刻
+var endBegin = Number(beginList[beginList.length-1].value);
+var endStay = Number(stayList[stayList.length-1].value);
+endHour = Math.floor((endBegin + endStay) / 60);
+//5分あたりのピクセル（例：16px）
+fiveMinPerPx = 12;
+
+//開始時間、滞在時間をまとめたクラス
+var timeStamps = [];
+for (var i = 0; i < beginList.length; i++) {
+    timeStamps.push(new TimeStamp(i, "images/pic_a.png", nameList[i].value, Number(beginList[i].value)-(beginHour*60), Number(stayList[i].value)));
+}
 
 window.onload = resetClasses();
 

@@ -50,6 +50,13 @@
                     </div>
                 </div>
             </div>
+            {% for plan in planList %}
+            {% if plan.2 != "NaN" %}
+            <input type="hidden" name="scheduleName" value="{{ plan.0 }}">
+            <input type="hidden" name="scheduleBeginTime" value="{{ plan.2 }}">
+            <input type="hidden" name="scheduleStayTime" value="{{ plan.3 }}">
+            {% endif %}
+            {% endfor %}
         </div>
 
         <div class="space_1x2">
