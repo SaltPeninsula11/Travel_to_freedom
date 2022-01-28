@@ -30,8 +30,16 @@ class PlanListView(generic.ListView):
     template_name = "plan_list.html"
 
     def get_queryset(self):
-        plans = Plan.objects.filter().order_by('-created_at')
+        plans = Plan.objects.filter(prefectural_names__contains='北海道').filter(is_action=True).order_by('-created_at')
         return plans
+
+    def post(self, request, *args, **kwargs):
+        plans = Plan.objects.filter(prefectural_names__contains=request.POST['prefs']).filter(is_action=True).order_by('-created_at')
+        context = {
+            'prefsValue' : request.POST['prefs'],
+            'plan_list' : plans
+        }
+        return render(request, 'plan_list.html', context)
 
 class SharePlanView(LoginRequiredMixin, generic.DetailView):
     model = Plan
@@ -86,10 +94,13 @@ class MyPlanListView(generic.ListView):
         return plans
     
     def post(self, request, *args, **kwargs):
-        messages.success(request, '計画を保存しました。')
+        try:
+            plan = Plan(user=request.user, prefectural_names=request.POST["県名"], plan=request.POST["計画欄"])
+            plan.save()
 
-        plan = Plan(user=request.user, prefectural_names=request.POST["prefectural_names"], plan=request.POST["plan"])
-        plan.save()
+            messages.success(request, '計画を保存しました。')
+        except:
+            messages.error(request, 'エラーが起きたようです。')
 
         return render(request, 'my_plan_list.html')
 

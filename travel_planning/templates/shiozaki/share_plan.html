@@ -8,6 +8,7 @@
 
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/sharePlan.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/memoSpaceSmall.css' %}">
 
 <div id="contents">
 
@@ -41,6 +42,21 @@
 
         <div class="space_1x1">
             <h3>スケジュール</h3>
+            <div id="memo" class="memo">
+                <div id="memoSpace">
+                    <!-- なぜか下に来とる！ -->
+                    <div class="schedule_table">
+                        ここはスケジュールカードが入る欄
+                    </div>
+                </div>
+            </div>
+            {% for plan in planList %}
+            {% if plan.2 != "NaN" %}
+            <input type="hidden" name="scheduleName" value="{{ plan.0 }}">
+            <input type="hidden" name="scheduleBeginTime" value="{{ plan.2 }}">
+            <input type="hidden" name="scheduleStayTime" value="{{ plan.3 }}">
+            {% endif %}
+            {% endfor %}
         </div>
 
         <div class="space_1x2">
@@ -93,5 +109,6 @@
 </div>
 
 <script src="{% static 'js/sharePlan.js' %}"></script>
+<script src="{% static 'js/memoSpaceSmall.js' %}"></script>
 
 {% endblock %}

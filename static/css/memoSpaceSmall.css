@@ -1,0 +1,72 @@
+@charset "utf-8";
+
+#memo {
+    position: relative;
+    top: 0px;
+}
+
+#memoSpace {
+    width: 100%;
+    height: 400px;
+
+    overflow: auto;
+}
+.schedule_table {
+    width: calc(100% - 55px);
+    position: relative;
+    left: 55px;
+    height: 3456px; /* fiveMinPerPx * 12ブロック * 24時間 */
+
+    background-color: #EEE;
+}
+.thirty-box {
+    width: 90%;
+    height: 72px; /* fiveMinPerPx * 6ブロック */
+    position: absolute;
+    right: 0;
+    margin: 0 5%;
+    border-bottom: 1px solid #000;
+}
+.hour-box {
+    width: 100%;
+    height: 72px; /* fiveMinPerPx * 6ブロック */
+    position: absolute;
+    right: 0;
+    border-bottom: 1px solid #000;
+}
+.timestamp {
+    width: 45px;
+    position: relative;
+    left: -45px;
+    height: 144px; /* fiveMinPerPx * 12ブロック */
+    background-color: #EEE;
+}
+.schedule_card {
+    position: absolute;
+    width: 84%;
+    right: 0;
+    background-color: #FFF;
+    border-radius: 2%;
+    box-shadow: 0px 4px 10px #000;
+
+    margin: 0 8%;
+
+    user-select: none;
+}
+.schedule_card .cardPhoto {
+    width: 56px;
+    height: 56px;
+
+    border-radius: 5%;
+
+    border: 1px solid #000;
+}
+.schedule_card .cardPhoto img {
+    width: 100%;
+    height: 100%;
+
+    vertical-align: bottom;
+}
+.schedule_card .nameAndTime {
+    width: 80%;
+}
