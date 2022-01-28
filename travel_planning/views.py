@@ -23,7 +23,7 @@ class PlanListView(generic.ListView):
     template_name = "plan_list.html"
 
     def get_queryset(self):
-        plans = Plan.objects.filter(prefectural_names__contains='北海道').order_by('-created_at')
+        plans = Plan.objects.filter(prefectural_names__contains='北海道').filter(is_action=True).order_by('-created_at')
         return plans
 
     def post(self, request, *args, **kwargs):
