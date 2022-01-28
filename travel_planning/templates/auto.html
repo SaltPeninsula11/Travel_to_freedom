@@ -2166,13 +2166,32 @@
         var planSpace = document.getElementById("planSpace");
 
         setInterval(() => {
-            // var preArray = [];
-            // for (var prefecture in array) {
+            //都道府県の取得
+            var prefsList = [];
+            
+            if (travelPlans != null) {
+                travelPlans.routes.forEach(function(route) {
+                    var getAddress = route.routes[0].legs[0].start_address.split(' ');
+                    var pref = getAddress[1].replace(/^(.{2}[都道府県]|.{3}県)(.+)/, "$1 $2").split(' ')[0];
+    
+                    if (prefsList.indexOf(pref) < 0) {
+                        prefsList.push(pref);
+                    }
+                                        
+                    getAddress = route.routes[0].legs[0].end_address.split(' ');
+                    pref = getAddress[1].replace(/^(.{2}[都道府県]|.{3}県)(.+)/, "$1 $2").split(' ')[0];
+    
+                    if (prefsList.indexOf(pref) < 0) {
+                        prefsList.push(pref);
+                    }
+                });
+            }
 
-            //     preArray.push(prefecture);
-            // }
-
-            var prefectures_details = "東京都";
+            var prefectures_details = "";
+            for (var i = 0; i < prefsList.length; i++) {
+                prefectures_details += prefsList[i];
+                if (i != (prefsList.length-1)) prefectures_details += ","; 
+            }
 
             prefecturesSpace.value = prefectures_details;
 
