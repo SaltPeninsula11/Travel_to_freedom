@@ -109,6 +109,7 @@ class MyPlanDetailView(generic.DetailView):
     template_name = "shiozaki/plan_detail.html"
 
     def get_context_data(self, **kwargs):
+        user = Plan.objects.get(id=self.kwargs['pk']).user
         plan = Plan.objects.get(id=self.kwargs['pk']).plan
         subD = Plan.objects.get(id=self.kwargs['pk']).sub_details
         detailList = subD.split(';')
@@ -123,6 +124,7 @@ class MyPlanDetailView(generic.DetailView):
         
         context = {
             'object' : Plan.objects.get(id=self.kwargs['pk']),
+            'planOwner' : user,
             'planList' : planList
         }
         return context

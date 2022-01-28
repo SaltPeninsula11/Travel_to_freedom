@@ -57,7 +57,11 @@
 
     <div class="buttons">
         <a class="btn btn-outline-primary" href="{% url 'travel_planning:list' %}">戻る</a>
+        {% if user == planOwner %}
         <a class="btn btn-outline-primary" href="{% url 'travel_planning:plan-update' object.pk %}">編集</a>
+        {% elif user.is_authenticated %}
+        <a class="btn btn-outline-primary" href="{% url 'travel_planning:list' %}">コピー</a>
+        {% endif %}
     </div>
 </div>
 
