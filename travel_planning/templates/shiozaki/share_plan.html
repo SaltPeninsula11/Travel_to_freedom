@@ -8,6 +8,7 @@
 
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/sharePlan.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/memoSpaceSmall.css' %}">
 
 <div id="contents">
 
@@ -41,6 +42,13 @@
 
         <div class="space_1x1">
             <h3>スケジュール</h3>
+            <div id="memo" class="memo">
+                <div id="memoSpace">
+                    <div class="schedule_table">
+                        ここはスケジュールカードが入る欄
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="space_1x2">
@@ -93,5 +101,6 @@
 </div>
 
 <script src="{% static 'js/sharePlan.js' %}"></script>
+<script src="{% static 'js/memoSpaceSmall.js' %}"></script>
 
 {% endblock %}

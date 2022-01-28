@@ -171,7 +171,9 @@
         });
 
         window.onload = function (){
-            document.getElementById("exampleFormControlSelect1").value = "{{ prefsValue }}";
+            if ("{{ prefsValue }}" != "") {
+                document.getElementById("exampleFormControlSelect1").value = "{{ prefsValue }}";
+            }
         }
     </script>
     {% endblock %}
