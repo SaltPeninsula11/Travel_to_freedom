@@ -4,8 +4,6 @@ from accounts.models import CustomUser
 #旅行計画モデル
 class Plan(models.Model):
     user = models.ForeignKey(CustomUser, verbose_name='ユーザー', on_delete=models.PROTECT)
-    plan_id = models.IntegerField(verbose_name='計画ID', default=0)
-    # prefectural_name = models.ForeignKey(PrefecturalName, verbose_name='県名', on_delete=models.PROTECT) #複数にしよう！
     prefectural_names = models.TextField(verbose_name='県名') #例：'千葉県,東京都'
     photo = models.ImageField(verbose_name='メイン画像', blank=True, null=True)
     detail = models.TextField(verbose_name='詳細')
@@ -22,10 +20,6 @@ class Plan(models.Model):
     def __str__(self):
         string = self.plan.split(",")
         return string[0] #例：20代男性
-    
-    def save(self, *args, **kwargs):
-        self.plan_id = Plan.objects.count()
-        super(Plan, self).save(*args, **kwargs)
 
 #いいねモデル
 class Like(models.Model):

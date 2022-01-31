@@ -143,3 +143,15 @@ class MyPlanUpdateView(LoginRequiredMixin, generic.UpdateView):
         messages.error(self.request, "更新に失敗しました。")
         return super().form_invalid(form)
 
+class PlanCopyView(LoginRequiredMixin, generic.CreateView):
+    model = Plan
+    template_name = 'auto.html'
+    form_class = MyPlanCreateForm
+
+    def get_context_data(self, **kwargs):
+        plan = Plan.objects.get(id=self.kwargs['pk']).plan
+
+        context = {
+            'copiedPlan' : plan
+        }
+        return context

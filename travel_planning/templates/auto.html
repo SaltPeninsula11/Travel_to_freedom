@@ -105,7 +105,13 @@
     const pageOption = {
         GOOGLE_MAPS_API_KEY: 'AIzaSyCBVWDqsxdSXEk015GQxHCqmjN4kOnep0E',
         DATA:
-            {% if object.pk %}'{{ form.plan.value }}'{% else %} null {% endif %}
+            {% if object.pk %}
+            '{{ form.plan.value }}'
+            {% elif copiedPlan %}
+            '{{ copiedPlan }}'
+            {% else %}
+            null
+            {% endif %}
 
     }
 </script>
@@ -2284,7 +2290,7 @@
     const submitBtn = document.getElementById("submitBtn");
     let canSubmit = true;
     submitBtn.addEventListener('click', function (e) {
-        const prefList = [];
+        let prefList = [];
         const scheduleList = SchedulePage.sortTimeSchedules();
         for (const schedule of scheduleList) {
             const route = schedule.getRoute();
