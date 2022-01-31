@@ -22,6 +22,10 @@ class Plan(models.Model):
     def __str__(self):
         string = self.plan.split(",")
         return string[0] #例：20代男性
+    
+    def save(self, *args, **kwargs):
+        self.plan_id = Plan.objects.count()
+        super(Plan, self).save(*args, **kwargs)
 
 #いいねモデル
 class Like(models.Model):
