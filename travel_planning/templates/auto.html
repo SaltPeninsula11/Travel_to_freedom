@@ -65,8 +65,13 @@
                         action="{% if object.pk %}{% url 'travel_planning:plan-update' object.pk %}{% else %}{% url 'travel_planning:mylist' %}{% endif%}"
                         onsubmit="return false;">
                         {% csrf_token %}
+                        {% if form %}
                         {{ form.prefectural_names.as_hidden }}
                         {{ form.plan.as_hidden }}
+                        {% else %}
+                        <input type="hidden" name="prefectural_names" id="id_prefectural_names">
+                        <input type="hidden" name="plan" id="id_plan">
+                        {% endif %}
                     </form>
                     <button id="submitBtn" class="btn btn-outline-primary ml-1 mb-1">保存</button>
                 </table>
@@ -2312,8 +2317,8 @@
             if (i != (prefList.length - 1)) prefectures_details += ",";
         }
         const lineData = SchedulePage.outLineSchedules()
-        const prefecturesSpace = document.getElementById("id_prefectural_names");
-        const planSpace = document.getElementById("id_plan");
+        let prefecturesSpace = document.getElementById("id_prefectural_names");
+        let planSpace = document.getElementById("id_plan");
         // form.setAttribute("onsubmit", "test(); return false;")
 
         prefecturesSpace.value = prefectures_details;
