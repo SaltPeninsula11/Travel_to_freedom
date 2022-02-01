@@ -161,7 +161,7 @@ AUTHENTICATION_BACKENDS = (
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_USERNAME_REQUIRED = False
 
-#サインアップにメールアドレス確認をはさまないように設定
+#サインアップにメールアドレス確認をはさまないように設定（塩崎）
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_EMAIL_REQUIRED = True
 

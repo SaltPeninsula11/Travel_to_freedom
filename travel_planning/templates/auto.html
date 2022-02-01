@@ -65,10 +65,13 @@
                         action="{% if object.pk %}{% url 'travel_planning:plan-update' object.pk %}{% else %}{% url 'travel_planning:mylist' %}{% endif%}"
                         onsubmit="return false;">
                         {% csrf_token %}
+                        <!-- 編集の分岐（塩崎） -->
                         {% if form %}
+                        <!-- 編集する場合 -->
                         {{ form.prefectural_names.as_hidden }}
                         {{ form.plan.as_hidden }}
                         {% else %}
+                        <!-- 編集しない場合およびコピーしている場合 -->
                         <input type="hidden" name="prefectural_names" id="id_prefectural_names">
                         <input type="hidden" name="plan" id="id_plan">
                         {% endif %}

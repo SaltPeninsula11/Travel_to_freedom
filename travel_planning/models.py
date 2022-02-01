@@ -21,7 +21,7 @@ class Plan(models.Model):
         string = self.plan.split(",")
         return string[0] #例：20代男性
 
-#いいねモデル
+#いいねモデル（未使用）
 class Like(models.Model):
     user = models.ForeignKey(CustomUser, verbose_name='ユーザー', on_delete=models.PROTECT)
     plan = models.ForeignKey(Plan, verbose_name='旅行計画', on_delete=models.PROTECT)
