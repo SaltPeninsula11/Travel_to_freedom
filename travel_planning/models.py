@@ -1,6 +1,10 @@
 from django.db import models
 from accounts.models import CustomUser
 
+import os
+import time
+from datetime import datetime
+
 #旅行計画モデル
 class Plan(models.Model):
     user = models.ForeignKey(CustomUser, verbose_name='ユーザー', on_delete=models.PROTECT)
@@ -20,6 +24,27 @@ class Plan(models.Model):
     def __str__(self):
         string = self.plan.split(",")
         return string[0] #例：20代男性
+    
+    def ago(self):
+        dt_now = time.time() #現在時刻
+        dt_updated = self.updated_at.timestamp() #更新日の取得
+        
+        diff = dt_now - dt_updated #差分
+        
+        d = datetime.utcfromtimestamp(diff)
+        
+        if d.year - 1970:
+            return str(d.year - 1970) + "年前"
+        elif d.month - 1:
+            return str(d.month - 1) + "ヵ月前"
+        elif d.day - 1:
+            return str(d.day) + "日前"
+        elif d.hour:
+            return str(d.hour) + "時間前"
+        elif d.minute:
+            return str(d.minute) + "分前"
+        else:
+            return str(d.second) + "秒前"
 
 #いいねモデル（未使用）
 class Like(models.Model):

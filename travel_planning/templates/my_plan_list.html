@@ -33,7 +33,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <small class="text-muted">Last updated 3 mins ago</small>
+                        <small class="text-muted">{{ plan.ago }}</small>
                         
                         <div class="btn-group ml-5">
                             <a href="{% url 'travel_planning:mydetail' plan.pk %}">
