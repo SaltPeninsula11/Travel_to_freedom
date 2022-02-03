@@ -8,25 +8,23 @@
 {% block content %}
 <div class="search-page">
     <nav class="nav-l bg-light">
-        <div class="nav-l_item bg-white m-5">
-            <div class="nav-l_item_box m-4">
-                <h1 class="text-center pt-2">Planning</h1>
-                <div class="change">
-                    <input type="button" class="btn btn-outline-primary" id="autoSearch" value="オート">
-                    <!-- <input type="button" value="カスタム"> -->
+        <div class="nav-l_item bg-white ml-5 mr-5">
+            <div class="nav-l_item_box m-1">
+                <div class="change" style="display: none;">
+                    <input type="button" class="btn btn-outline-primary"  value="オート">
                 </div>
                 <div class="a">
-                    <div class="formg-group">
+                    <div class="formg-group" style="display: none;">
                         <table>
                             <tr>
                                 <td>
                                     <div class="addTime">
-                                        <input type="time" id="insertTime">&nbsp;
+                                        <input type="time" id="insertTime" value="10:00">&nbsp;
                                     </div>
                                 </td>
                                 <td>
                                     <div class="addTime">
-                                        <input type="number" id="insertMinutes" style="width: 50px;">分&nbsp;
+                                        <input type="number" value="60" id="insertMinutes" style="width: 50px;">分&nbsp;
                                     </div>
                                 </td>
                                 <td>
@@ -37,7 +35,7 @@
                                                 photoAddress ・・・ place.getUrl()で取得したURLを格納
                                                 name         ・・・ place.name取得した名称を格納
                                         -->
-                                        <!-- <button>追加</button> -->
+                                        <button>追加</button>
                                     </div>
                                 </td>
                             </tr>
@@ -55,35 +53,36 @@
                     <label for="radio3" class="btn btn-outline-primary">ホテル</label>
                 </div>
                 <table>
-                    <div class="form-group">
-                        <input type="text" class="form-control mt-2" id="addressInput" name="hoge" placeholder="施設・地域">
+                    <div class="input-group mt-2 mb-2">
+                        <input type="text" class="form-control" id="addressInput" name="hoge" placeholder="施設検索">
+                        <div class="input-group-append">
+                          <button class="btn btn-primary" type="button" onclick="getPlaces();">
+                            <i class="fa fa-search"></i>
+                          </button>
+                        </div>
                     </div>
-                    <input type="button" class="btn btn-outline-primary mb-1" value="情報取得" onclick="getPlaces();">
-                    <button class="btn btn-outline-primary ml-1 mb-1" id="routeSearch">ルート検索</button>
-                    <button class="btn btn-outline-primary ml-1 mb-1" id="deleteRoute">ルート削除</button>
-                    <form id="planForm" method="post"
-                        action="{% if object.pk %}{% url 'travel_planning:plan-update' object.pk %}{% else %}{% url 'travel_planning:mylist' %}{% endif%}"
-                        onsubmit="return false;">
-                        {% csrf_token %}
-                        <!-- 編集の分岐（塩崎） -->
-                        {% if form %}
-                        <!-- 編集する場合 -->
-                        {{ form.prefectural_names.as_hidden }}
-                        {{ form.plan.as_hidden }}
-                        {% else %}
-                        <!-- 編集しない場合およびコピーしている場合 -->
-                        <input type="hidden" name="prefectural_names" id="id_prefectural_names">
-                        <input type="hidden" name="plan" id="id_plan">
-                        {% endif %}
-                    </form>
-                    <button id="submitBtn" class="btn btn-outline-primary ml-1 mb-1">保存</button>
+                    <div class="d-flex">
+                        <button class="btn btn-outline-primary mb-1" id="routeSearch">ルート検索</button>
+                        <button class="btn btn-outline-primary mb-1" id="deleteRoute" style="display: none;">ルート削除</button>
+                        <form id="planForm" method="post"
+                            action="{% if object.pk %}{% url 'travel_planning:plan-update' object.pk %}{% else %}{% url 'travel_planning:mylist' %}{% endif%}"
+                            onsubmit="return false;">
+                            {% csrf_token %}
+                            {{ form.prefectural_names.as_hidden }}
+                            {{ form.plan.as_hidden }}
+                        </form>
+                        <button id="submitBtn" class="btn btn-outline-primary ml-1 mb-1">保存</button>
+                        <div class="change ml-auto">
+                            <input type="button" class="btn btn-outline-primary" id="autoSearch" value="オート">
+                        </div>
+                    </div>
                 </table>
             </div>
 
         </div>
 
         <div id="results" hidden></div>
-        <div class="container m-2">
+        <div class="container m-2 p-0">
             <div class="row scroll-box m-auto" style="width: 675px;" id="cardDisplay">
 
             </div>
@@ -111,15 +110,9 @@
 
 <script>
     const pageOption = {
-        GOOGLE_MAPS_API_KEY: 'AIzaSyCBVWDqsxdSXEk015GQxHCqmjN4kOnep0E',
+        GOOGLE_MAPS_API_KEY: 'https://maps.googleapis.com/maps/api/js?language=ja&key=AIzaSyDeL7_U--qzVwi963J1elplZfLTCIsduZQ&libraries=places&callback=initMap',
         DATA:
-            {% if object.pk %}
-            '{{ form.plan.value }}'
-            {% elif copiedPlan %}
-            '{{ copiedPlan }}'
-            {% else %}
-            null
-            {% endif %}
+            {% if object.pk %}'{{ form.plan.value }}'{% else %} null {% endif %}
 
     }
 </script>
@@ -1057,8 +1050,6 @@
      */
     const ScheduleRoute = function (begin, stay, name, step = null) {
         Schedule.call(this, begin, stay, name);
-        this._startAddress = '';
-        this._endAddress = '';
         this.step = step;
     }
     ScheduleRoute.prototype = Object.create(Schedule.prototype);
@@ -1068,18 +1059,7 @@
         }
         this.step.push(args);
     }
-    ScheduleRoute.prototype.setStartAddress = function (startAddress) {
-        this._startAddress = startAddress;
-    }
-    ScheduleRoute.prototype.setEndAddress = function (endAddress) {
-        this._endAddress = endAddress;
-    }
-    ScheduleRoute.prototype.getStartAddress = function () {
-        return this._startAddress;
-    }
-    ScheduleRoute.prototype.getEndAddress = function () {
-        return this._endAddress;
-    }
+
 
     /**
      * 
@@ -1090,7 +1070,6 @@
         this._placeId = placeId
         this._photoAddress = photoAddress; //写真
         this._movement = movement;
-        this._address = '';
         this.route = route;
         return this;
     }
@@ -1098,9 +1077,6 @@
     SchedulePlace.prototype.getRoute = function (n = null) {
         if (n === null) return this.route;
         return this.route[n];
-    }
-    SchedulePlace.prototype.getAddress = function () {
-        return this._address;
     }
     SchedulePlace.prototype.setId = function (id) {
         this._id = id;
@@ -1116,9 +1092,6 @@
     }
     SchedulePlace.prototype.getPhotoAddress = function () {
         return this._photoAddress;
-    }
-    SchedulePlace.prototype.setAddress = function (address) {
-        this._address = address
     }
     SchedulePlace.prototype.setRoute = function (args) {
         if (!this.route) {
@@ -1528,7 +1501,7 @@
          */
         const open = function (scheduleArray) {
             tableEl.style.display = "block";
-            memoSpace.style.height = "400px";
+            memoSpace.style.height = "560px";
             reload(scheduleArray);
         }
 
@@ -1650,8 +1623,6 @@
             scheduleStart += stepValue;
         }
         route.setStep(stepList);
-        route.setStartAddress(addressPrefectures(leg, 'start_address'));
-        route.setEndAddress(addressPrefectures(leg, 'end_address'));
         schedule.setRoute(route);
 
         memo.reload(SchedulePage.sortTimeSchedules());
@@ -2216,8 +2187,8 @@
         for (const place of placesList) {
             insertText +=
                 `<div class="col-sm mt-3 mr-3 p-0 ml">`
-                + `<div class="card" style="width: 320px;">`
-                + `<img src="${(place.photos ? place.photos[0].getUrl() : '')}" alt="" width="100%" height="250">`
+                + `<div class="card" style="width: 280px;">`
+                + `<img src="${(place.photos ? place.photos[0].getUrl() : '')}" alt="" width="100%" height="200px">`
                 + `<div class="card-body">`
                 + `<h5 class="card-title">${omittedContent(place.name)}</h5>`
                 + `<p>${(place.rating)}</p>`
@@ -2266,10 +2237,6 @@
         alert(text);
     }
 
-    function addressPrefectures(addressLine, type = 'start_address') {
-        const addressList = addressLine[type].split(' ');
-        return addressList[1].replace(/^(.{2}[都道府県]|.{3}県)(.+)/, "$1 $2").split(' ')[0];
-    }
 
     function omittedContent(string) {
         // 定数で宣言
@@ -2298,31 +2265,11 @@
     const submitBtn = document.getElementById("submitBtn");
     let canSubmit = true;
     submitBtn.addEventListener('click', function (e) {
-        let prefList = [];
-        const scheduleList = SchedulePage.sortTimeSchedules();
-        for (const schedule of scheduleList) {
-            const route = schedule.getRoute();
-            if (route.length != 0) {
-                const startAddress = route[0].getStartAddress();
-                if (prefList.indexOf(startAddress) < 0) {
-                    prefList.push(startAddress);
-                }
-                const endAddress = route[0].getEndAddress();
-                if (prefList.indexOf(endAddress) < 0) {
-                    prefList.push(endAddress);
-                }
-            }
-
-        }
-        let prefectures_details = "";
-        for (let i = 0; i < prefList.length; i++) {
-            prefectures_details += prefList[i];
-            if (i != (prefList.length - 1)) prefectures_details += ",";
-        }
         const lineData = SchedulePage.outLineSchedules()
-        let prefecturesSpace = document.getElementById("id_prefectural_names");
-        let planSpace = document.getElementById("id_plan");
+        const prefecturesSpace = document.getElementById("id_prefectural_names");
+        const planSpace = document.getElementById("id_plan");
         // form.setAttribute("onsubmit", "test(); return false;")
+        const prefectures_details = "東京都";
 
         prefecturesSpace.value = prefectures_details;
         planSpace.value = lineData;
