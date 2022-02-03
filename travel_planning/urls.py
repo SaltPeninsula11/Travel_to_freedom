@@ -15,6 +15,7 @@ urlpatterns = [
     
     path('my-plan-list', views.MyPlanListView.as_view(), name='mylist'),
     path('plan-detail/<int:pk>', views.MyPlanDetailView.as_view(), name='mydetail'),
+    path('plan-delete/<int:pk>', views.MyPlanDeleteView.as_view(), name='mydelete'),
 
     #コピーのURL
     path('map_copy/<int:pk>/',views.PlanCopyView.as_view(), name='plan-copy'),

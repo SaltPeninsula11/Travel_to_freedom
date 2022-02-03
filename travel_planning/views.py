@@ -142,8 +142,18 @@ class MyPlanUpdateView(LoginRequiredMixin, generic.UpdateView):
     def form_invalid(self, form):
         messages.error(self.request, "更新に失敗しました。")
         return super().form_invalid(form)
-
 #追加コード（塩崎）
+class MyPlanDeleteView(LoginRequiredMixin, generic.DeleteView):
+    #削除ビュー
+    model = Plan
+    template_name = 'shiozaki/share_delete.html'
+    success_url = reverse_lazy('travel_planning:mylist')
+
+    def delete(self, request, *args, **kwargs):
+        #削除フラグ使う・・・？
+        messages.success(self.request, "計画を削除しました。")
+        return super().delete(request, *args, **kwargs)
+
 class PlanCopyView(LoginRequiredMixin, generic.CreateView):
     #コピーに使うビュー
     model = Plan

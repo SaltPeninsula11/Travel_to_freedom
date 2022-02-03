@@ -1,0 +1,36 @@
+{% extends "../base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}結果{% endblock %}
+
+{% block content %}
+
+{% load static %}
+<style>
+    h2 {
+        text-align: center;
+        padding: 14px 0;
+    }
+
+    #buttons button,
+    #buttons a {
+        width: 106px;
+    }
+    #buttons {
+        width: 230px;
+        margin: 0 auto;
+        padding-bottom: 100px;
+    }
+</style>
+
+<form method="post">
+    {% csrf_token %}
+    <h2>本当に削除しますか？</h2>
+    <div id="buttons">
+        <button class="btn btn-outline-primary">削除</button>
+        <a class="btn btn-outline-primary" href="{% url 'travel_planning:mylist' %}">キャンセル</a>
+    </div>
+</form>
+
+{% endblock %}
