@@ -68,8 +68,16 @@
                             action="{% if object.pk %}{% url 'travel_planning:plan-update' object.pk %}{% else %}{% url 'travel_planning:mylist' %}{% endif%}"
                             onsubmit="return false;">
                             {% csrf_token %}
-                            {{ form.prefectural_names.as_hidden }}
-                            {{ form.plan.as_hidden }}
+                            <!-- 編集の分岐（塩崎） -->
+                            {% if form %}
+                                <!-- 編集する場合 -->
+                                {{ form.prefectural_names.as_hidden }}
+                                {{ form.plan.as_hidden }}
+                            {% elif copiedPlan %}
+                                <!-- コピーしている場合 -->
+                                <input type="hidden" name="prefectural_names" id="id_prefectural_names">
+                                <input type="hidden" name="plan" id="id_plan">
+                            {% endif %}
                         </form>
                         <button id="submitBtn" class="btn btn-outline-primary ml-1 mb-1">保存</button>
                         <div class="change ml-auto">
@@ -112,7 +120,13 @@
     const pageOption = {
         GOOGLE_MAPS_API_KEY: 'https://maps.googleapis.com/maps/api/js?language=ja&key=AIzaSyDeL7_U--qzVwi963J1elplZfLTCIsduZQ&libraries=places&callback=initMap',
         DATA:
-            {% if object.pk %}'{{ form.plan.value }}'{% else %} null {% endif %}
+            {% if object.pk %}
+            '{{ form.plan.value }}'
+            {% elif copiedPlan %}
+            '{{ copiedPlan }}'
+            {% else %}
+            null
+            {% endif %}
 
     }
 </script>
