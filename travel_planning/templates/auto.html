@@ -1064,15 +1064,33 @@
      */
     const ScheduleRoute = function (begin, stay, name, step = null) {
         Schedule.call(this, begin, stay, name);
+        this._startAddress = '';
+        this._endAddress = '';
         this.step = step;
     }
     ScheduleRoute.prototype = Object.create(Schedule.prototype);
-    ScheduleRoute.prototype.setStep = function (args) {
-        if (!this.step) {
-            this.step = [];
+    Object.assign(ScheduleRoute.prototype, {
+
+        setStep: function (args) {
+            if (!this.step) {
+                this.step = [];
+            }
+            this.step.push(args);
+        },
+        setStartAddress: function (startAddress) {
+            this._startAddress = startAddress;
+        },
+        setEndAddress: function (endAddress) {
+            this._endAddress = endAddress;
+        },
+        getStartAddress: function () {
+            return this._startAddress;
+        },
+        getEndAddress: function () {
+            return this._endAddress;
         }
-        this.step.push(args);
-    }
+
+    })
 
 
     /**
@@ -1637,6 +1655,8 @@
             scheduleStart += stepValue;
         }
         route.setStep(stepList);
+        route.setStartAddress(addressPrefectures(leg, 'start_address'));
+        route.setEndAddress(addressPrefectures(leg, 'end_address'));
         schedule.setRoute(route);
 
         memo.reload(SchedulePage.sortTimeSchedules());
@@ -2267,6 +2287,11 @@
     }
     //文字数制限
 
+    function addressPrefectures(addressLine, type = 'start_address') {
+        const addressList = addressLine[type].split(' ');
+        return addressList[1].replace(/^(.{2}[都道府県]|.{3}県)(.+)/, "$1 $2").split(' ')[0];
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
         const sc = document.createElement('script');
         sc.src = `https://maps.googleapis.com/maps/api/js?key=${pageOption.GOOGLE_MAPS_API_KEY}&libraries=places&callback=initMap`;
@@ -2279,11 +2304,30 @@
     const submitBtn = document.getElementById("submitBtn");
     let canSubmit = true;
     submitBtn.addEventListener('click', function (e) {
+        let prefList = [];
+        const scheduleList = SchedulePage.sortTimeSchedules();
+        for (const schedule of scheduleList) {
+            const route = schedule.getRoute();
+            if (route.length != 0) {
+                const startAddress = route[0].getStartAddress();
+                if (prefList.indexOf(startAddress) < 0) {
+                    prefList.push(startAddress);
+                }
+                const endAddress = route[0].getEndAddress();
+                if (prefList.indexOf(endAddress) < 0) {
+                    prefList.push(endAddress);
+                }
+            }
+        }
+        let prefectures_details = "";
+        for (let i = 0; i < prefList.length; i++) {
+            prefectures_details += prefList[i];
+            if (i != (prefList.length - 1)) prefectures_details += ",";
+        }
         const lineData = SchedulePage.outLineSchedules()
         const prefecturesSpace = document.getElementById("id_prefectural_names");
         const planSpace = document.getElementById("id_plan");
         // form.setAttribute("onsubmit", "test(); return false;")
-        const prefectures_details = "東京都";
 
         prefecturesSpace.value = prefectures_details;
         planSpace.value = lineData;

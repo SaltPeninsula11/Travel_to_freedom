@@ -19,6 +19,8 @@
 
         <input type="hidden" name="ID" value="{{ object.pk }}">
 
+        <p>{{ object.prefectural_names }}</p>
+
         <div class="space_1x1">
             <section>
                 <h2>
@@ -43,7 +45,6 @@
             <h3>スケジュール</h3>
             <div id="memo" class="memo">
                 <div id="memoSpace">
-                    <!-- なぜか狭まっとる！ -->
                     <div class="schedule_table">
                         ここはスケジュールカードが入る欄
                     </div>
@@ -61,7 +62,7 @@
         <div class="space_1x2">
             {% for plan in planList %}
             {% load mathfilters %}
-            <table>
+            <table border="1">
                 <tr>
                     <td id="Timeline_Span">
                         <div class="dot">
@@ -98,6 +99,21 @@
                 </tr>
             </table>
             {% endfor %}
+            <table>
+                <tr>
+                    <td id="Timeline_Span">
+                        <div class="dot">
+                            <div class="numberLine" style="top: -201px; height: 201px;"></div>
+                        </div>
+                    </td>
+                    <td id="Timeline_TimePlace" class="timeDisplay">
+                        FINISH
+                    </td>
+                    <td id="Timeline_Photo">
+                        
+                    </td>
+                </tr>
+            </table>
         </div>
 
         <div class="buttons">
