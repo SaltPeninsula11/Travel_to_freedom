@@ -84,6 +84,13 @@ class ShareSuccessView(generic.TemplateView):
         )
         return render(request, 'shiozaki/share_success.html')
 
+class ShareCanceledView(generic.TemplateView):
+    def post(self, request, *args, **kwargs):
+        Plan.objects.filter(id=request.POST['ID']).update(
+            is_action=False
+        )
+        return render(request, 'shiozaki/share_canceled.html')
+
 
 class MyPlanListView(generic.ListView):
     model = Plan

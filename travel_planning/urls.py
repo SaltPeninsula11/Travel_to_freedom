@@ -12,6 +12,7 @@ urlpatterns = [
     
     path('share/plan-list', views.PlanListView.as_view(), name='list'),
     path('share/success', views.ShareSuccessView.as_view(), name='success'),
+    path('share/canceled', views.ShareCanceledView.as_view(), name='canceled'),
     
     path('my-plan-list', views.MyPlanListView.as_view(), name='mylist'),
     path('plan-detail/<int:pk>', views.MyPlanDetailView.as_view(), name='mydetail'),
