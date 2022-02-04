@@ -85,6 +85,7 @@ class ShareSuccessView(generic.TemplateView):
         return render(request, 'shiozaki/share_success.html')
 
 class ShareCanceledView(generic.TemplateView):
+    #共有取り消しビュー（塩﨑）
     def post(self, request, *args, **kwargs):
         Plan.objects.filter(id=request.POST['ID']).update(
             is_action=False
@@ -137,6 +138,7 @@ class MyPlanDetailView(generic.DetailView):
         return context
 
 class MyPlanUpdateView(LoginRequiredMixin, generic.UpdateView):
+    #問題点：他人の計画を編集できてしまう
     model = Plan
     template_name = 'auto.html'
     form_class = MyPlanUpdateForm
@@ -163,6 +165,7 @@ class MyPlanDeleteView(LoginRequiredMixin, generic.DeleteView):
 
 class PlanCopyView(LoginRequiredMixin, generic.CreateView):
     #コピーに使うビュー
+    #問題点：自分の計画をコピーできてしまう（多分）
     model = Plan
     template_name = 'auto.html'
     form_class = MyPlanCreateForm
@@ -170,6 +173,8 @@ class PlanCopyView(LoginRequiredMixin, generic.CreateView):
     def get_context_data(self, **kwargs):
         #URLにあるPKから計画一覧を取得
         plan = Plan.objects.get(id=self.kwargs['pk']).plan
+
+        #self.request.user
 
         context = {
             'copiedPlan' : plan
