@@ -42,6 +42,8 @@ textarea#mainDescription {
 #mainPhotoDisplay {
     width: 100%;
     height: 100%;
+    border: 2px solid #777;
+    border-radius: 10px;
 }
 
 @media screen and (max-width: 767px) {
@@ -69,12 +71,18 @@ textarea#mainDescription {
 textarea {
     resize: none;
     width: 95%;
-    height: 128px;
+    height: 136px;
+
+    padding: 5px;
+    border: 2px solid #777;
+    border-radius: 10px;
 }
 #mainDescription:not(textarea) {
     width: 95%;
     height: 135px;
-    border: 1px solid #000;
+    padding: 5px;
+    border: 2px solid #777;
+    border-radius: 10px;
 }
 
 td #Timeline_Span {

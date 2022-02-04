@@ -29,12 +29,6 @@
     /* background-color: #AAF; */
 }
 
-textarea#mainDescription {
-    resize: none;
-    width: 90%;
-    height: 150px;
-}
-
 #imageSpace {
     width: 90%;
     height: 280px;
@@ -42,6 +36,8 @@ textarea#mainDescription {
 #mainPhotoDisplay {
     width: 100%;
     height: 100%;
+    border: 2px solid #777;
+    border-radius: 10px;
 }
 
 @media screen and (max-width: 767px) {
@@ -61,10 +57,12 @@ textarea#mainDescription {
     width: 100%;
 }
 
-#mainDescription:not(textarea) {
+#mainDescription {
     width: 95%;
-    height: 135px;
-    border: 1px solid #000;
+    height: 60px;
+    padding: 5px;
+    border: 2px solid #777;
+    border-radius: 10px;
 }
 
 td #Timeline_Span {
@@ -76,7 +74,7 @@ td #Timeline_Span {
     width: 40px;
     height: 40px;
     border-radius: 22px;
-    border: 4px solid #000;
+    border: 4px solid #212529;
 }
 
 td#Timeline_TimePlace {
@@ -95,11 +93,13 @@ td#Timeline_TimePlace {
     margin-left: 14px;
 
     width: 4px;
-    background: #000;
+    background: #212529;
 }
 
 #descriptionSpace {
     width: 95%;
-    height: 6em;
-    border: 1px solid #000;
+    height: 136px;
+    padding: 5px;
+    border: 2px solid #777;
+    border-radius: 10px;
 }

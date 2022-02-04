@@ -15,6 +15,48 @@
     <h1>旅行計画</h1>
 
     <div class="space_1x1">
+        <section>
+            <h2>
+                {% if object %}
+                {{ object }}
+                {% else %}
+                タイトルなし
+                {% endif %}
+            </h2>
+            <div id="imageSpace">
+                {% if object.photo %}
+                <img src="{{ object.photo }}" id="mainPhotoDisplay">
+                {% else %}
+                <img src="{% static 'images.png' %}" id="mainPhotoDisplay">
+                {% endif %}
+            </div>
+        </section>
+        <br>
+        <section>
+            <div id="mainDescription">{{ object.detail }}</div>
+        </section>
+    </div>
+
+    <div class="space_1x1">
+        <h3>スケジュール</h3>
+        <div id="memo" class="memo">
+            <div id="memoSpace">
+                <!-- なぜか狭まっとる！ -->
+                <div class="schedule_table">
+                    ここはスケジュールカードが入る欄
+                </div>
+            </div>
+        </div>
+        {% for plan in planList %}
+        {% if plan.2 != "NaN" %}
+        <input type="hidden" name="scheduleName" value="{{ plan.0 }}">
+        <input type="hidden" name="scheduleBeginTime" value="{{ plan.2 }}">
+        <input type="hidden" name="scheduleStayTime" value="{{ plan.3 }}">
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="space_1x2">
         {% for plan in planList %}
         {% load mathfilters %}
         <table>
@@ -22,7 +64,7 @@
                 <td id="Timeline_Span">
                     <div class="dot">
                         {% if forloop.counter > 1 %}
-                        <div class="numberLine" style="top: -163px; height: 163px;"></div>
+                        <div class="numberLine" style="top: -203px; height: 203px;"></div>
                         {% endif %}
                     </div>
                 </td>
@@ -54,33 +96,17 @@
             <tr>
                 <td id="Timeline_Span">
                     <div class="dot">
-                        <div class="numberLine" style="top: -163px; height: 163px;"></div>
+                        <div class="numberLine" style="top: -203px; height: 203px;"></div>
                     </div>
                 </td>
                 <td id="Timeline_TimePlace" class="timeDisplay">
                     FINISH
                 </td>
+                <td id="Timeline_Photo">
+                    
+                </td>
             </tr>
         </table>
-    </div>
-
-    <div class="space_1x1">
-        <h3>スケジュール</h3>
-        <div id="memo" class="memo">
-            <div id="memoSpace">
-                <!-- なぜか狭まっとる！ -->
-                <div class="schedule_table">
-                    ここはスケジュールカードが入る欄
-                </div>
-            </div>
-        </div>
-        {% for plan in planList %}
-        {% if plan.2 != "NaN" %}
-        <input type="hidden" name="scheduleName" value="{{ plan.0 }}">
-        <input type="hidden" name="scheduleBeginTime" value="{{ plan.2 }}">
-        <input type="hidden" name="scheduleStayTime" value="{{ plan.3 }}">
-        {% endif %}
-        {% endfor %}
     </div>
 
     <div class="space_1x2">
