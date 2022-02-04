@@ -3,6 +3,9 @@
 #memo {
     position: relative;
     top: 0px;
+    left: -55px;
+    
+    width: 100%;
 }
 
 #memoSpace {

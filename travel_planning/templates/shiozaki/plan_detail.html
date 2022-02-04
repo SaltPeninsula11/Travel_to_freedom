@@ -8,6 +8,7 @@
 
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/planDetail.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/memoSpaceSmall.css' %}">
 
 <div id="contents">
 
@@ -52,18 +53,42 @@
     </div>
 
     <div class="space_1x1">
-        
+        <h3>スケジュール</h3>
+        <div id="memo" class="memo">
+            <div id="memoSpace">
+                <!-- なぜか狭まっとる！ -->
+                <div class="schedule_table">
+                    ここはスケジュールカードが入る欄
+                </div>
+            </div>
+        </div>
+        {% for plan in planList %}
+        {% if plan.2 != "NaN" %}
+        <input type="hidden" name="scheduleName" value="{{ plan.0 }}">
+        <input type="hidden" name="scheduleBeginTime" value="{{ plan.2 }}">
+        <input type="hidden" name="scheduleStayTime" value="{{ plan.3 }}">
+        {% endif %}
+        {% endfor %}
     </div>
 
-    <div class="buttons">
-        <a class="btn btn-outline-primary" href="{% url 'travel_planning:list' %}">戻る</a>
-        {% if user == planOwner %}
-        <a class="btn btn-outline-success" href="{% url 'travel_planning:plan-update' object.pk %}">編集</a>
-        <a class="btn btn-outline-danger" href="{% url 'travel_planning:mydelete' object.pk %}">削除</a>
-        {% elif user.is_authenticated %}
-        <a class="btn btn-outline-warning" href="{% url 'travel_planning:plan-copy' object.pk %}">コピー</a>
-        {% endif %}
+    <div class="space_1x2">
+        <br>
+        <div class="d-flex">
+            <div class="change mr-auto">
+                <a class="btn btn-outline-primary" href="{% url 'travel_planning:list' %}">戻る</a>
+            </div>
+            
+            {% if user == planOwner %}
+            <a class="btn btn-outline-success mb-1" href="{% url 'travel_planning:plan-update' object.pk %}">編集</a>
+            <a class="btn btn-outline-danger mb-1" href="{% url 'travel_planning:mydelete' object.pk %}">削除</a>
+            {% elif user.is_authenticated %}
+            <a class="btn btn-outline-warning" href="{% url 'travel_planning:plan-copy' object.pk %}">コピー</a>
+            {% endif %}
+        </div>
+        <br>
     </div>
 </div>
+
+<script src="{% static 'js/memoSpaceSmall.js' %}"></script>
 
 {% endblock %}
