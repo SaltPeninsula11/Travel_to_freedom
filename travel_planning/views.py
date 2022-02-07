@@ -1,5 +1,5 @@
 from re import template
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views import generic
 from django.contrib import messages
 
@@ -46,6 +46,8 @@ class SharePlanView(LoginRequiredMixin, generic.DetailView):
     template_name = "shiozaki/share_plan.html"
 
     def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
         plan = Plan.objects.get(id=self.kwargs['pk']).plan
         subD = Plan.objects.get(id=self.kwargs['pk']).sub_details
         detailList = subD.split(';')
@@ -117,6 +119,8 @@ class MyPlanDetailView(generic.DetailView):
     template_name = "shiozaki/plan_detail.html"
 
     def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
         user = Plan.objects.get(id=self.kwargs['pk']).user
         plan = Plan.objects.get(id=self.kwargs['pk']).plan
         subD = Plan.objects.get(id=self.kwargs['pk']).sub_details
@@ -171,12 +175,19 @@ class PlanCopyView(LoginRequiredMixin, generic.CreateView):
     form_class = MyPlanCreateForm
 
     def get_context_data(self, **kwargs):
-        #URLにあるPKから計画一覧を取得
-        plan = Plan.objects.get(id=self.kwargs['pk']).plan
+        try:
+            if Plan.objects.get(id=self.kwargs['pk']).user == self.request.user:
+                messages.error(self.request, "エラーが起こりました。")
 
-        #self.request.user
+                return {}
+            else:
+                #URLにあるPKから計画一覧を取得
+                plan = Plan.objects.get(id=self.kwargs['pk']).plan
 
-        context = {
-            'copiedPlan' : plan
-        }
-        return context
+                context = {
+                    'copiedPlan' : plan
+                }
+                return context
+        except self.model.DoesNotExist:
+            messages.error(self.request, "エラーが起こりました。")
+            return {}
