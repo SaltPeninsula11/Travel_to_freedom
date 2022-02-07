@@ -155,7 +155,7 @@ class MyPlanUpdateView(LoginRequiredMixin, generic.UpdateView):
     #問題点：他人の計画を編集できてしまう
     """
     注意！
-    仕様のため、保存ボタンを押さないとエラーが置きません！
+    仕様のため、保存ボタンを押さないとエラーが起きません！
     """
     model = Plan
     template_name = 'auto.html'
