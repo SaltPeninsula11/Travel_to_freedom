@@ -21,6 +21,16 @@ class AutomapView(generic.CreateView):
     model = Plan
     form_class = MyPlanCreateForm
 
+    def post(self, request, *args, **kwargs):
+        try:
+            plan = Plan(user=request.user, prefectural_names=request.POST["prefectural_names"], plan=request.POST["plan"])
+            plan.save()
+
+            messages.success(request, '計画を保存しました。')
+        except:
+            messages.error(request, 'エラーが起きたようです。')
+        return render(request, 'auto.html')
+
 
 class TestView(generic.TemplateView):
     template_name = "test.html"
@@ -143,6 +153,10 @@ class MyPlanDetailView(generic.DetailView):
 
 class MyPlanUpdateView(LoginRequiredMixin, generic.UpdateView):
     #問題点：他人の計画を編集できてしまう
+    """
+    注意！
+    仕様のため、保存ボタンを押さないとエラーが置きません！
+    """
     model = Plan
     template_name = 'auto.html'
     form_class = MyPlanUpdateForm
@@ -150,8 +164,13 @@ class MyPlanUpdateView(LoginRequiredMixin, generic.UpdateView):
     def get_success_url(self):
         return reverse_lazy('travel_planning:mydetail', kwargs={'pk': self.kwargs['pk']})
     def form_valid(self, form):
-        messages.success(self.request, '更新しました。')
-        return super().form_valid(form)
+        if Plan.objects.get(id=self.kwargs['pk']).user == self.request.user:
+            messages.success(self.request, '更新しました。')
+            return super().form_valid(form)
+        else:
+            messages.error(self.request, "更新に失敗しました。")
+            return super().form_invalid(form)
+
     def form_invalid(self, form):
         messages.error(self.request, "更新に失敗しました。")
         return super().form_invalid(form)

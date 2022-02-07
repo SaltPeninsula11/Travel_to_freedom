@@ -65,7 +65,7 @@
                         <button class="btn btn-outline-primary mb-1" id="routeSearch">ルート検索</button>
                         <button class="btn btn-outline-primary mb-1" id="deleteRoute" style="display: none;">ルート削除</button>
                         <form id="planForm" method="post"
-                            action="{% if object.pk %}{% url 'travel_planning:plan-update' object.pk %}{% else %}{% url 'travel_planning:mylist' %}{% endif%}"
+                            action="{% if object.pk %}{% url 'travel_planning:plan-update' object.pk %}{% else %}{% url 'travel_planning:automap' %}{% endif%}"
                             onsubmit="return false;">
                             {% csrf_token %}
                             <!-- 編集の分岐（塩崎） -->
