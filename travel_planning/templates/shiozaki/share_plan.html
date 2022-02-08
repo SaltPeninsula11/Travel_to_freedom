@@ -30,14 +30,14 @@
                     タイトルなし
                     {% endif %}
                 </h2>
-                <input type="file" onchange="OnFileSelect(this);" name="メイン画像" id="mainPhoto"><br>
+                <input type="file" onchange="OnFileSelect(this);" name="メイン画像" id="mainPhoto" required><br>
                 <div id="imageSpace">
                     <img src="" alt="" id="mainPhotoDisplay">
                 </div>
             </section>
             <br>
             <section>
-                <textarea name="詳細" id="mainDescription" placeholder="32字以内で詳細を入力" maxlength="32">{{ object.detail }}</textarea>
+                <textarea name="詳細" id="mainDescription" placeholder="32字以内で詳細を入力" maxlength="32" required>{{ object.detail }}</textarea>
             </section>
         </div>
 
@@ -94,7 +94,7 @@
                 </tr>
                 <tr>
                     <td id="Timeline_TimePlace">
-                        <textarea name="サブ詳細" cols="30" rows="20" placeholder="128字以内で詳細を入力" maxlength="128">{{ plan.4 }}</textarea>
+                        <textarea name="サブ詳細" cols="30" rows="20" placeholder="128字以内で詳細を入力" maxlength="128" required>{{ plan.4 }}</textarea>
                     </td>
                 </tr>
             </table>
