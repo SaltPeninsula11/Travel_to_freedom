@@ -25,7 +25,7 @@
             </h2>
             <div id="imageSpace">
                 {% if object.photo %}
-                <img src="{{ object.photo }}" id="mainPhotoDisplay">
+                <img src="{{ object.photo.url }}" id="mainPhotoDisplay">
                 {% else %}
                 <img src="{% static 'images.png' %}" id="mainPhotoDisplay">
                 {% endif %}

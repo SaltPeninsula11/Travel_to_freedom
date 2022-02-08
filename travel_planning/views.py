@@ -78,6 +78,8 @@ class SharePlanView(LoginRequiredMixin, generic.DetailView):
 
 class ShareSuccessView(generic.TemplateView):
     def post(self, request, *args, **kwargs):
+        # print("POST :", request.POST)
+
         context = {
             'mainPhoto': request.POST['メイン画像'],
             'mainDescription': request.POST['詳細'],
