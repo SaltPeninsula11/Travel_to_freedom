@@ -14,7 +14,7 @@
 
     <h1>旅行計画投稿</h1>
 
-    <form action="{% url 'travel_planning:success' %}" method="post">
+    <form action="{% url 'travel_planning:success' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
         <input type="hidden" name="ID" value="{{ object.pk }}">

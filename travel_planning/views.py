@@ -1,18 +1,17 @@
-from re import template
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.views import generic
 from django.contrib import messages
 
-from django.http import JsonResponse
 from .forms import MyPlanUpdateForm, MyPlanCreateForm
 from django.urls import reverse_lazy
 
 from .models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+from config import settings
+import os
+
 # Create your views here.
-# class MapView(generic.TemplateView):
-#     template_name="map.html"
 class IndexView(generic.TemplateView):
     template_name = "index.html"
     
@@ -78,10 +77,8 @@ class SharePlanView(LoginRequiredMixin, generic.DetailView):
 
 class ShareSuccessView(generic.TemplateView):
     def post(self, request, *args, **kwargs):
-        print("POST :", request.POST)
-
         context = {
-            'mainPhoto': request.POST['メイン画像'],
+            'mainPhoto': request.FILES['メイン画像'],
             'mainDescription': request.POST['詳細'],
             'subDescription': request.POST.getlist('サブ詳細'),
         }
@@ -90,6 +87,18 @@ class ShareSuccessView(generic.TemplateView):
             subDes += context['subDescription'][index]
             if index != (len(context['subDescription'])-1):
                 subDes += ';'
+
+        os.chdir(os.getcwd() + settings.MEDIA_URL)
+
+        file_obj = request.FILES.get("メイン画像")
+        f1=open(file_obj.name,"wb")
+
+        for i in file_obj.chunks():
+            f1.write(i)
+
+        f1.close()
+
+        os.chdir('..')
 
         Plan.objects.filter(id=request.POST['ID']).update(
             photo=context['mainPhoto'],
