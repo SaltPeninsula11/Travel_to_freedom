@@ -51,9 +51,13 @@ class PlanListView(generic.ListView):
         return render(request, 'plan_list.html', context)
 
 class SharePlanView(LoginRequiredMixin, generic.DetailView):
+    # 問題点：自分が他人の計画を投稿できてしまう
     model = Plan
     template_name = "shiozaki/share_plan.html"
 
+    def __init__(self, *args, **kwargs):
+        print(args)
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 

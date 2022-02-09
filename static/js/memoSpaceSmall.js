@@ -109,9 +109,6 @@ class ScheduleCard {
             "\
             <table>\
                 <tr>\
-                    <td rowspan='2' class='cardPhoto'>\
-                        <img src='" + this.photoAddress + "' alt='" + this.name + "'>\
-                    </td>\
                     <td class='nameAndTime'>" + this.name + "</td>\
                 </tr>\
                 <tr>\
