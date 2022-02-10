@@ -8,7 +8,6 @@
 {% block content %}
 <div id="container">
     <div class="search-page">
-        <div class="openbtn4"><span></span><span></span></div>
         <nav class="nav-l bg-light col-md-4" id="memoContainer">
             <div id="memo" class="memo">
                 <div id="memoSpace">
@@ -18,6 +17,7 @@
                 </div>
             </div>
         </nav>
+        <div class="openbtn4"><span></span><span></span></div>
         <nav class="nav-l bg-light navStretch col-md-6">
             <div class="nav-l_item bg-white ml-5 mr-5">
                 <div class="nav-l_item_box m-1">
@@ -80,9 +80,9 @@
                                     <input type="hidden" name="plan" id="id_plan">
                                 {% endif %}
                             </form>
-                            <button id="submitBtn" class="btn btn-outline-primary ml-1 mb-1">保存</button>
+                            <input type="button" class="btn btn-outline-primary mb-1" id="autoSearch" value="オート">
                             <div class="change ml-auto">
-                                <input type="button" class="btn btn-outline-primary" id="autoSearch" value="オート">
+                                <button id="submitBtn" class="btn btn-outline-primary ml-1 mb-1">保存</button>
                             </div>
                         </div>
                     </table>
@@ -1279,7 +1279,7 @@
             _timeStamps = [];
             _cardClasses = [];
             beginHour = 0;
-            endHour = 23;
+            endHour = 20;
 
             close();
         }
