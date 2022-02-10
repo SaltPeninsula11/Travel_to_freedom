@@ -6,105 +6,105 @@
 
 
 {% block content %}
-<div class="search-page">
-    <nav class="nav-l bg-light">
-        <div id="memo" class="memo">
-            <div class="openbtn4"><span></span><span></span></div>
-
-
-            <div id="memoSpace">
-                <div class="schedule_table">
-                    ここはスケジュールカードが入る欄
-                </div>
-            </div>
-        </div>
-    </nav>
-    <nav class="nav-l bg-light">
-        <div class="nav-l_item bg-white ml-5 mr-5">
-            <div class="nav-l_item_box m-1">
-                <div class="change" style="display: none;">
-                    <input type="button" class="btn btn-outline-primary"  value="オート">
-                </div>
-                <div class="a">
-                    <div class="formg-group" style="display: none;">
-                        <table>
-                            <tr>
-                                <td>
-                                    <div class="addTime">
-                                        <input type="time" id="insertTime" value="10:00">&nbsp;
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="addTime">
-                                        <input type="number" value="60" id="insertMinutes" style="width: 50px;">分&nbsp;
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="addTime">
-                                        <!--
-                                            メソッドaddSchedule()の定義
-                                            引数：
-                                                photoAddress ・・・ place.getUrl()で取得したURLを格納
-                                                name         ・・・ place.name取得した名称を格納
-                                        -->
-                                        <button>追加</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
+<div id="container">
+    <div class="search-page">
+        <div class="openbtn4"><span></span><span></span></div>
+        <nav class="nav-l bg-light col-md-4" id="memoContainer">
+            <div id="memo" class="memo">
+                <div id="memoSpace">
+                    <div class="schedule_table">
+                        ここはスケジュールカードが入る欄
                     </div>
                 </div>
-                <table>
-                    <div class="input-group mt-2 mb-2">
-                        <input type="text" class="form-control" id="addressInput" name="hoge" placeholder="施設検索">
-                        <div class="input-group-append">
-                          <button class="btn btn-primary" type="button" onclick="getPlaces();">
-                            <i class="fa fa-search"></i>
-                          </button>
+            </div>
+        </nav>
+        <nav class="nav-l bg-light col-md-6">
+            <div class="nav-l_item bg-white ml-5 mr-5">
+                <div class="nav-l_item_box m-1">
+                    <div class="change" style="display: none;">
+                        <input type="button" class="btn btn-outline-primary"  value="オート">
+                    </div>
+                    <div class="a">
+                        <div class="formg-group" style="display: none;">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div class="addTime">
+                                            <input type="time" id="insertTime" value="10:00">&nbsp;
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="addTime">
+                                            <input type="number" value="60" id="insertMinutes" style="width: 50px;">分&nbsp;
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="addTime">
+                                            <!--
+                                                メソッドaddSchedule()の定義
+                                                引数：
+                                                    photoAddress ・・・ place.getUrl()で取得したURLを格納
+                                                    name         ・・・ place.name取得した名称を格納
+                                            -->
+                                            <button>追加</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
-                    <div class="d-flex">
-                        <button class="btn btn-outline-primary mb-1" id="routeSearch">ルート検索</button>
-                        <button class="btn btn-outline-primary mb-1" id="deleteRoute" style="display: none;">ルート削除</button>
-                        <form id="planForm" method="post"
-                            action="{% if object.pk %}{% url 'travel_planning:plan-update' object.pk %}{% else %}{% url 'travel_planning:automap' %}{% endif%}"
-                            onsubmit="return false;">
-                            {% csrf_token %}
-                            <!-- 編集の分岐（塩崎） -->
-                            {% if form %}
-                                <!-- 編集する場合 -->
-                                {{ form.prefectural_names.as_hidden }}
-                                {{ form.plan.as_hidden }}
-                            {% elif copiedPlan %}
-                                <!-- コピーしている場合 -->
-                                <input type="hidden" name="prefectural_names" id="id_prefectural_names">
-                                <input type="hidden" name="plan" id="id_plan">
-                            {% endif %}
-                        </form>
-                        <button id="submitBtn" class="btn btn-outline-primary ml-1 mb-1">保存</button>
-                        <div class="change ml-auto">
-                            <input type="button" class="btn btn-outline-primary" id="autoSearch" value="オート">
+                    <table>
+                        <div class="input-group mt-2 mb-2">
+                            <input type="text" class="form-control" id="addressInput" name="hoge" placeholder="施設検索">
+                            <div class="input-group-append">
+                            <button class="btn btn-primary" type="button" onclick="getPlaces();">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            </div>
                         </div>
-                    </div>
-                </table>
+                        <div class="d-flex">
+                            <button class="btn btn-outline-primary mb-1" id="routeSearch">ルート検索</button>
+                            <button class="btn btn-outline-primary mb-1" id="deleteRoute" style="display: none;">ルート削除</button>
+                            <form id="planForm" method="post"
+                                action="{% if object.pk %}{% url 'travel_planning:plan-update' object.pk %}{% else %}{% url 'travel_planning:automap' %}{% endif%}"
+                                onsubmit="return false;">
+                                {% csrf_token %}
+                                <!-- 編集の分岐（塩崎） -->
+                                {% if form %}
+                                    <!-- 編集する場合 -->
+                                    {{ form.prefectural_names.as_hidden }}
+                                    {{ form.plan.as_hidden }}
+                                {% elif copiedPlan %}
+                                    <!-- コピーしている場合 -->
+                                    <input type="hidden" name="prefectural_names" id="id_prefectural_names">
+                                    <input type="hidden" name="plan" id="id_plan">
+                                {% endif %}
+                            </form>
+                            <button id="submitBtn" class="btn btn-outline-primary ml-1 mb-1">保存</button>
+                            <div class="change ml-auto">
+                                <input type="button" class="btn btn-outline-primary" id="autoSearch" value="オート">
+                            </div>
+                        </div>
+                    </table>
+                </div>
+
             </div>
 
-        </div>
+            <div id="results" hidden></div>
+            <div class="container m-2 p-0">
+                <div class="row scroll-box m-auto" style="width: 675px;" id="cardDisplay">
 
-        <div id="results" hidden></div>
-        <div class="container m-2 p-0">
-            <div class="row scroll-box m-auto" style="width: 675px;" id="cardDisplay">
-
+                </div>
+                <br>
+                <div class="results" hidden></div>
             </div>
-            <br>
-            <div class="results" hidden></div>
-        </div>
 
 
-    </nav>
-    <aside class="nav-r">
-        <div id="map"></div>
-    </aside>
+        </nav>
+        <aside class="nav-r col-md-6">
+            <div id="map"></div>
+        </aside>
+    </div>
 </div>
 
 <script>
@@ -1292,6 +1292,7 @@
         }
 
         const tableEl = document.getElementsByClassName("schedule_table")[0];
+        const memoCont = document.getElementById("memoContainer");
 
 
         /**
@@ -1523,7 +1524,7 @@
          * 
          */
         const open = function (scheduleArray) {
-            tableEl.style.display = "block";
+            memoCont.style.display = "block";
             memoSpace.style.height = "560px";
             reload(scheduleArray);
         }
@@ -1534,7 +1535,7 @@
          */
         const close = function () {
             tableEl.innerHTML = '';
-            tableEl.style.display = "none";
+            memoCont.style.display = "none";
             memoSpace.style.height = "0";
         }
 
