@@ -8,6 +8,18 @@
 {% block content %}
 <div class="search-page">
     <nav class="nav-l bg-light">
+        <div id="memo" class="memo">
+            <div class="openbtn4"><span></span><span></span></div>
+
+
+            <div id="memoSpace">
+                <div class="schedule_table">
+                    ここはスケジュールカードが入る欄
+                </div>
+            </div>
+        </div>
+    </nav>
+    <nav class="nav-l bg-light">
         <div class="nav-l_item bg-white ml-5 mr-5">
             <div class="nav-l_item_box m-1">
                 <div class="change" style="display: none;">
@@ -41,16 +53,6 @@
                             </tr>
                         </table>
                     </div>
-                </div>
-                <div class="radiobox rounded-lg btn-group" data-toggle="buttons">
-                    <!--style="display: none;"-->
-                    <input id="radio1" class="btn" name="hoge" type="radio" value="restaurant" style="display: none;" />
-                    <label for="radio1" class="btn btn-outline-primary">飲食店</label>
-                    <input id="radio2" class="btn" name="hoge" type="radio" value="tourist_attraction"
-                        style="display: none;" />
-                    <label for="radio2" class="btn btn-outline-primary">観光地</label>
-                    <input id="radio3" class="btn" name="hoge" type="radio" value="lodging" style="display: none;" />
-                    <label for="radio3" class="btn btn-outline-primary">ホテル</label>
                 </div>
                 <table>
                     <div class="input-group mt-2 mb-2">
@@ -96,17 +98,6 @@
             </div>
             <br>
             <div class="results" hidden></div>
-
-            <div id="memo" class="memo">
-                <div class="openbtn4"><span></span><span></span></div>
-
-
-                <div id="memoSpace">
-                    <div class="schedule_table">
-                        ここはスケジュールカードが入る欄
-                    </div>
-                </div>
-            </div>
         </div>
 
 
@@ -2144,12 +2135,12 @@
     function startNearbySearch(latLng) {
         let elememts = document.getElementsByName('hoge');
         let len = elememts.length;
-        let checkValue = '';
-        for (let i = 0; i < len; i++) {
-            if (elememts.item(i).checked) {
-                checkValue = elememts.item(i).value;
-            }
-        }
+        // let checkValue = '';
+        // for (let i = 0; i < len; i++) {
+        //     if (elememts.item(i).checked) {
+        //         checkValue = elememts.item(i).value;
+        //     }
+        // }
         //読み込み中表示
         const insertText =
             "<div class='wrapper'><div class='balls-guruguru'>"
@@ -2174,7 +2165,11 @@
         service.nearbySearch({
             location: latLng,
             radius: 800,
-            type: [checkValue],
+            type: [
+                'restaurant',
+                'tourist_attraction',
+                'lodging'
+            ],
             keyword: keywordInput,
             language: 'ja'
         },

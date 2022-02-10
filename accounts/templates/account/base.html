@@ -113,10 +113,11 @@
 
         .scroll-box {
             overflow-y: scroll;
-            height: 279px;
+            height: 409px;
         }
 
         #memo {
+            
             position: relative;
             left: -5px;
             top: 295px;
@@ -124,8 +125,8 @@
 
         .memoSpace {
             background-color: #DEDEDE;
-            width: 650px;
-            height: 400px;
+            width: 630px;
+            height: 700px;
             overflow: auto;
 
         }
@@ -271,21 +272,22 @@
 
         /* memoStyle.css */
         #memo {
+            width: 50px;
             position: absolute;
             left: -5px;
-            top: 400px;
+            top: 73px;
         }
 
         /* fiveMinPerPx = 16 */
 
         /* p {
-            position: absolute;
-            left: calc(50% + 5px);
-        } */
+    position: absolute;
+    left: calc(50% + 5px);
+} */
 
         #memoSpace {
             width: 650px;
-            height: 600px;
+            height: 700px;
             overflow: auto;
             /* margin-left: 45px; */
             padding-left: 45px;
@@ -298,7 +300,7 @@
             height: 4608px;
             /* fiveMinPerPx * 12ブロック * 24時間 */
 
-            background-color: #EEE;
+            background-color: #eee;
         }
 
         .thirty-box {
@@ -313,7 +315,7 @@
 
         .hour-box {
             width: 100%;
-            height: 96px;
+            /* height: 96px; */
             /* fiveMinPerPx * 6ブロック */
             position: absolute;
             right: 0;
@@ -324,11 +326,23 @@
             width: 45px;
             position: relative;
             left: -45px;
-            height: 192px;
+            /* height: 192px; */
             /* fiveMinPerPx * 12ブロック */
-            background-color: #EEE;
+            background-color: #eee;
         }
 
+        .schedule_card {
+            position: absolute;
+            width: 84%;
+            right: 0;
+
+            background-color: #fff;
+
+            margin: 0 8%;
+            user-select: none;
+        }
+
+        /* 
         .schedule_card {
             position: absolute;
             width: 84%;
@@ -339,6 +353,14 @@
 
             margin: 0 8%;
 
+            user-select: none;
+        } */
+        /* .schedule_card {
+            position: absolute;
+            width: 84%;
+            right: 0;
+
+            margin: 0 8%;
             user-select: none;
         }
 
@@ -375,6 +397,40 @@
 
         .schedule_card button:hover {
             background-color: #CCC;
+        } */
+        .card__wrap {
+            width: 100%;
+            border-radius: 2% 2% 0 0;
+            box-shadow: 4px 4px 10px #000;
+        }
+
+        .card__content {
+            width: 100%;
+            display: flex;
+            overflow-y: hidden;
+        }
+
+        .card__resize {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-width: 1px 0;
+            border-style: solid;
+            border-color: rgb(0, 0, 0);
+            border-radius: 0 0 2% 2%;
+        }
+
+        .card__route {
+            border-left-color: blue;
+            border-left-width: 6px;
+            border-left-style: dotted;
+        }
+
+        .card__image {
+            width: 33%;
+            height: fit-content;
+        }
+
+        .card__desc {
+            display: flex;
         }
 
         /* memoStyle.css */
@@ -528,10 +584,10 @@
                 <div class="flex-fill mx-xl-5 mb-2">
                     <ul class="nav navbar-nav d-flex justify-content-between mx-xl-5 text-dark">
                         <li class="nav-item">
-                            <a class="nav-link   rounded-pill px-3" href="">旅行計画</a>
+                            <a class="nav-link   rounded-pill px-3" href="{% url 'travel_planning:automap' %}">旅行計画</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link   rounded-pill px-3" href="">旅行検索</a>
+                            <a class="nav-link   rounded-pill px-3" href="{% url 'travel_planning:list' %}">旅行検索</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link   rounded-pill px-3" href="">散策モード</a>
@@ -540,11 +596,26 @@
                 <div class="align-self-center d-flex">
                     <div class="hidden fixed nav-item top-0 right-0 px-6 sm:block">
                         {% if user.is_authenticated %}
-                        <!-- 本来なら「if user.is_authenticated」を入れるはずである。 -->
-                        <a href="{% url 'account_logout' %}" class="nav-link   rounded-pill px-3 mb-2" style="float: left">ログアウト</a>
+                        <div class="dropdown">
+                            <div class="d-flex align-items-center hidden-arrow" href="#"
+                                id="navbarDropdownMenuAvatar btnOpenMenu" role="button" data-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="far fa-user-circle fa-2x btn"></i>
+                            </div>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'travel_planning:mylist' %}">保存プラン一覧</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'account_logout' %}">ログアウト</a>
+                                </li>
+                            </ul>
+                        </div>
                         {% else %}
-                        <a href="{% url 'account_login' %}" class="nav-link   rounded-pill px-3 mb-2" style="float: left">ログイン</a>
-                        <a href="{% url 'account_signup' %}" class="nav-link   rounded-pill px-3 mb-2" style="float: left">会員登録</a>
+                        <a href="{% url 'account_login' %}" class="nav-link   rounded-pill px-3 mb-2"
+                            style="float: left">ログイン</a>
+                        <a href="{% url 'account_signup' %}" class="nav-link   rounded-pill px-3 mb-2"
+                            style="float: left">会員登録</a>
                         {% endif %}
                     </div>
                 </div>
@@ -552,8 +623,8 @@
         </div>
     </nav>
 
-    <br>
     {% if messages %}
+    <br>
     <div class="container">
         <div class="row">
             <div class="my-div-style w-100">
@@ -567,76 +638,28 @@
     </div>
     {% endif %}
 
-    <div id="contents">
     {% block content %}
     {% endblock %}
-    </div>
 
-    <footer class="text-center text-white" style="background-color: #f1f1f1;">
-        <!-- Grid container -->
-        <div class="container pt-4">
-          <!-- Section: Social media -->
-          <section class="mb-4">
-            <!-- Facebook -->
-            <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button" data-mdb-ripple-color="dark">
-                <i class="fab fa-facebook-f"></i>
-            </a>
-      
-            <!-- Twitter -->
-            <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button" data-mdb-ripple-color="dark">
-                <i class="fab fa-twitter"></i>
-            </a>
-      
-            <!-- Google -->
-            <a  class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button" data-mdb-ripple-color="dark">
-                <i class="fab fa-google"></i>
-            </a>
-      
-            <!-- Instagram -->
-            <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button" data-mdb-ripple-color="dark">
-                <i class="fab fa-instagram"></i>
-            </a>
-      
-            <!-- Linkedin -->
-            <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button" data-mdb-ripple-color="dark">
-                <i class="fab fa-linkedin"></i>
-            </a>
-            <!-- Github -->
-            <a class="btn btn-link btn-floating btn-lg text-dark m-1"href="#!" role="button" data-mdb-ripple-color="dark">
-                <i class="fab fa-github"></i>
-            </a>
-          </section>
-          <!-- Section: Social media -->
-        </div>
-        <!-- Grid container -->
-      
-        <!-- Copyright -->
-        <div class="text-center text-dark p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-          © 2022
-          <a class="text-dark" href="https://school.o-hara.ac.jp/kashiwa/">TravelToFreedom.com</a>
-        </div>
-        <!-- Copyright -->
-      </footer>
-
-    <script>
+    <!-- <script>
         $(".openbtn4").click(function () {
             $(this).toggleClass('active');
             ToggleMemo();
         });
-    </script>
+    </script> -->
     <!-- bootstrap js -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
-    </script>
+        </script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-    </script>
+        </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
-    </script>
-    <script
+        </script>
+    <!-- <script
         src="https://maps.googleapis.com/maps/api/js?language=ja&key=AIzaSyDeL7_U--qzVwi963J1elplZfLTCIsduZQ&libraries=places&callback=initMap">
-    </script>
+        </script> -->
     <!-- <script src="https://maps.googleapis.com/maps/api/js?language=ja&key=AIzaSyAIvDT6aSB8xK3ASJLRpicJ_SZV8KngMLM&libraries=places&callback=initMap"></script> -->
 </body>
 
