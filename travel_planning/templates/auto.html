@@ -18,7 +18,7 @@
                 </div>
             </div>
         </nav>
-        <nav class="nav-l bg-light col-md-6">
+        <nav class="nav-l bg-light navStretch col-md-6">
             <div class="nav-l_item bg-white ml-5 mr-5">
                 <div class="nav-l_item_box m-1">
                     <div class="change" style="display: none;">
@@ -101,7 +101,7 @@
 
 
         </nav>
-        <aside class="nav-r col-md-6">
+        <aside class="nav-r navStretch col-md-6">
             <div id="map"></div>
         </aside>
     </div>
@@ -1294,6 +1294,7 @@
         const tableEl = document.getElementsByClassName("schedule_table")[0];
         const memoCont = document.getElementById("memoContainer");
 
+        const navStrArray = document.getElementsByClassName("navStretch");
 
         /**
          * 
@@ -1526,6 +1527,11 @@
         const open = function (scheduleArray) {
             memoCont.style.display = "block";
             memoSpace.style.height = "560px";
+
+            for (var i = 0; i < navStrArray.length; i++) {
+                navStrArray[i].classList.replace('col-md-6', 'col-md-4');
+            }
+
             reload(scheduleArray);
         }
 
@@ -1536,6 +1542,12 @@
         const close = function () {
             tableEl.innerHTML = '';
             memoCont.style.display = "none";
+
+            for (var i = 0; i < navStrArray.length; i++) {
+                navStrArray[i].classList.replace('col-md-4', 'col-md-6');
+                console.log(navStrArray[i].className);
+            }
+
             memoSpace.style.height = "0";
         }
 
