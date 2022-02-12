@@ -44,7 +44,7 @@ class Plan(models.Model):
         elif d.minute:
             return str(d.minute) + "分前"
         else:
-            return str(d.second) + "秒前"
+            return "数秒前"
 
 #いいねモデル（未使用）
 class Like(models.Model):
