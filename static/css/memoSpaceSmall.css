@@ -3,12 +3,13 @@
 #memo {
     position: relative;
     top: 0px;
-    left: -55px;
     
     width: 100%;
 }
 
 #memoSpace {
+    border: 2px solid #000;
+    border-radius: 10px;
     width: 100%;
     height: 400px;
 
@@ -20,7 +21,7 @@
     left: 55px;
     height: 3456px; /* fiveMinPerPx * 12ブロック * 24時間 */
 
-    background-color: #EEE;
+    background-color: #FFF;
 }
 .thirty-box {
     width: 90%;
@@ -42,7 +43,7 @@
     position: relative;
     left: -45px;
     height: 144px; /* fiveMinPerPx * 12ブロック */
-    background-color: #EEE;
+    background-color: #FFF;
 }
 .schedule_card {
     position: absolute;

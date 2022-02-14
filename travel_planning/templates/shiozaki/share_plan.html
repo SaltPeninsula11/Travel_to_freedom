@@ -19,8 +19,6 @@
 
         <input type="hidden" name="ID" value="{{ object.pk }}">
 
-        <p>{{ object.prefectural_names }}</p>
-
         <div class="space_1x1">
             <section>
                 <h2>
@@ -34,9 +32,7 @@
                 <div id="imageSpace">
                     <img src="" alt="" id="mainPhotoDisplay">
                 </div>
-            </section>
-            <br>
-            <section>
+                <br>
                 <textarea name="詳細" id="mainDescription" placeholder="32字以内で詳細を入力" maxlength="32" required>{{ object.detail }}</textarea>
             </section>
         </div>
