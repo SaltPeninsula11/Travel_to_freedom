@@ -227,17 +227,7 @@
             transform: rotate(-22.5deg);
         }
 
-        .openbtn4 span:nth-of-type(2)::after {
-            content: "Schedule";
-            /*3つ目の要素のafterにMenu表示を指定*/
-            position: absolute;
-            top: 5px;
-            left: -20px;
-            color: #fff;
-            font-size: 1px;
-            text-transform: uppercase;
-            transform: rotate(22.5deg);
-        }
+        
 
         /*activeクラスが付与されると線が回転して×になり、Menu⇒Closeに変更*/
 
@@ -255,12 +245,27 @@
             width: 30%;
         }
 
-        .openbtn4.active span:nth-of-type(2)::after {
-            content: "Close";
-            /*3つ目の要素のafterにClose表示を指定*/
-            transform: translateY(0) rotate(-45deg);
-            top: 5px;
-            left: 4px;
+        
+
+        .openbtn4 p {
+            color: #FFF;
+            -ms-writing-mode: tb-rl;
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            display: inline-block;
+
+            font-size: 16px;
+
+            letter-spacing: -7px;
+
+            position: relative;
+            top: 43px;
+        }
+        .openbtn4 p::after {
+            content: "SCHEDULE";
+        }
+        .openbtn4.active p::after {
+            content: "CLOSE";
         }
 
         /* memoStyle.css */
