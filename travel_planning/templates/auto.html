@@ -63,7 +63,8 @@
                             </div>
                         </div>
                         <div class="d-flex">
-                            <button class="btn btn-outline-primary mb-1" id="routeSearch">ルート検索</button>
+                            <button class="btn btn-outline-primary mb-1 mr-2" id="routeSearch">ルート検索</button>
+                            <input type="button" class="btn btn-outline-primary mb-1" id="autoSearch" value="オート">
                             <button class="btn btn-outline-primary mb-1" id="deleteRoute" style="display: none;">ルート削除</button>
                             <form id="planForm" method="post"
                                 action="{% if object.pk %}{% url 'travel_planning:plan-update' object.pk %}{% else %}{% url 'travel_planning:automap' %}{% endif%}"
@@ -80,7 +81,6 @@
                                     <input type="hidden" name="plan" id="id_plan">
                                 {% endif %}
                             </form>
-                            <input type="button" class="btn btn-outline-primary mb-1" id="autoSearch" value="オート">
                             <div class="change ml-auto">
                                 <button id="submitBtn" class="btn btn-outline-primary ml-1 mb-1">保存</button>
                             </div>
@@ -2233,9 +2233,9 @@
                 + `<div class="card-body">`
                 + `<h5 class="card-title">${omittedContent(place.name)}</h5>`
                 + `<p>${(place.rating)}</p>`
-                + `<a href="#" class="btn btn-primary"> 詳しく見る</a>`
                 + `<div class="btn btn-primary ml-1" name="togglePin" >追加</div>`
                 + `</div></div></div>`;
+            console.log(place);
         }
         cardDisplayEl.innerHTML = insertText;
 
