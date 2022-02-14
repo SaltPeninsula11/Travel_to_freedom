@@ -870,7 +870,7 @@
     </div>
     </div>`;
 
-            this.cardTop = this.beginTime * this.oneMinutesPixcel;
+            this.cardTop = (this.beginTime - this.beginHour * 60) * this.oneMinutesPixcel;
             this.cardInfo.style.top = this.cardTop + "px";
 
             this.size = this.stayTime * this.oneMinutesPixcel - 10;
@@ -945,8 +945,8 @@
             this.cardTop += yPos;
             this.cardInfo.style.top = this.cardTop + "px";
 
-            this.beginTime = Math.round(this.cardTop / this.oneMinutesPixcel);
-
+            this.beginTime = Math.round(this.cardTop / this.oneMinutesPixcel) + (60 * this.beginHour);
+            
             this.timeFormat();
         }
 
@@ -1278,7 +1278,7 @@
         const init = function () {
             _timeStamps = [];
             _cardClasses = [];
-            beginHour = 0;
+            beginHour = 10;
             endHour = 20;
 
             close();
@@ -1545,7 +1545,6 @@
 
             for (var i = 0; i < navStrArray.length; i++) {
                 navStrArray[i].classList.replace('col-md-4', 'col-md-6');
-                console.log(navStrArray[i].className);
             }
 
             memoSpace.style.height = "0";
