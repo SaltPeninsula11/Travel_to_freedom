@@ -1,0 +1,468 @@
+/* body {
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+} */
+
+.search-page {
+    display: flex;
+    flex: 1;
+
+}
+
+.main {
+    flex: 1;
+
+}
+
+.nav-l {
+    flex: 1.1;
+
+}
+
+.nav-r {
+    flex: 1;
+
+}
+
+#footer {
+    height: 100px;
+    color: #fff;
+    background-color: black;
+}
+
+@media screen and (max-width:900px) {
+
+    body,
+    nav-l,
+    nav-r {
+        width: 100%;
+    }
+
+    #container {
+        flex-direction: column;
+    }
+
+    .main {
+        order: -1;
+    }
+}
+
+.navbar {
+    height: 70px;
+    background: #fff;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-radius: 0;
+}
+
+.navbar .navbar-brand {
+    padding-left: 0;
+    font-size: 24px;
+    padding-right: 50px;
+}
+
+.navbar a {
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+}
+
+.navbar .sign-up-btn {
+    min-width: 110px;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+#results {
+    width: 98.5%;
+    height: 200px;
+    border: 1px dotted;
+    padding: 10px;
+    overflow-y: scroll;
+    background: white;
+}
+
+.p-0 {
+    padding-left: 0;
+}
+
+.scroll-box {
+    overflow-y: scroll;
+    height: 409px;
+}
+
+.memoSpace {
+    background-color: #FFF;
+    width: 100%;
+    height: 700px;
+    overflow: auto;
+
+}
+
+.memoTable {
+    padding: 20em 20em;
+    width: 100%;
+    height: 100px;
+    margin-left: 3px;
+}
+
+.timeDisplay {
+    width: 100px;
+}
+
+.placeTable {
+    border: 2px solid #000000;
+    background-color: #888888;
+    border-radius: 5px;
+
+    width: 80%;
+    height: 95%;
+}
+
+.placeTable table {
+    width: 100%;
+    height: 100%;
+}
+
+.placePhoto {
+    width: 90px;
+    height: 90px;
+    border: 2px solid #000000;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+}
+
+.placePhoto img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.radiobox {
+    position: relative;
+    top: 5px;
+
+}
+
+.a {
+    position: relative;
+    left: -2px;
+    margin-top: 9px;
+    margin-bottom: 5px;
+}
+
+.form-group {
+    position: relative;
+    left: -1px;
+}
+
+.btn:checked+label {
+    background-color: skyblue;
+}
+
+/*==================================================
+　5-2-4 MENUがCLOSEに
+===================================*/
+
+/*ボタン外側※レイアウトによってpositionや形状は適宜変更してください*/
+.openbtn4 {
+    position: absolute;
+    top: -35px;
+    left: -10px;
+    /*ボタン内側の基点となるためrelativeを指定*/
+    background: #707070;
+    cursor: pointer;
+    width: 60px;
+    height: 170px;
+    border-radius: 5px;
+
+    transform: scale(0.6);
+}
+
+/*ボタン内側*/
+.openbtn4 span {
+    display: inline-block;
+    transition: all .4s;
+    /*アニメーションの設定*/
+    position: absolute;
+    left: 19px;
+    height: 2px;
+    border-radius: 5px;
+    background: #fff;
+    width: 45%;
+}
+
+
+.openbtn4 span:nth-of-type(1) {
+    top: 19px;
+    transform: rotate(22.5deg);
+}
+
+.openbtn4 span:nth-of-type(2) {
+    top: 29px;
+    transform: rotate(-22.5deg);
+}
+
+
+
+/*activeクラスが付与されると線が回転して×になり、Menu⇒Closeに変更*/
+
+.openbtn4.active span:nth-of-type(1) {
+    top: 19px;
+    left: 23px;
+    transform: translateY(6px) rotate(-45deg);
+    width: 30%;
+}
+
+.openbtn4.active span:nth-of-type(2) {
+    top: 31px;
+    left: 23px;
+    transform: translateY(-6px) rotate(45deg);
+    width: 30%;
+}
+
+
+
+.openbtn4 p {
+    color: #FFF;
+    -ms-writing-mode: tb-rl;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    display: inline-block;
+
+    font-size: 16px;
+
+    letter-spacing: -7px;
+
+    position: relative;
+    top: 43px;
+}
+.openbtn4 p::after {
+    content: "SCHEDULE";
+}
+.openbtn4.active p::after {
+    content: "CLOSE";
+}
+
+/* memoStyle.css */
+#memo {
+    width: 100%;
+}
+
+#memoSpace {
+    width: 100%;
+    overflow: auto;
+}
+
+.schedule_table {
+    width: calc(100% - 55px);
+    position: relative;
+    left: 55px;
+    height: 4608px;
+    /* fiveMinPerPx * 12ブロック * 24時間 */
+
+    background-color: #fff;
+}
+
+.thirty-box {
+    width: 90%;
+    height: 96px;
+    /* fiveMinPerPx * 6ブロック */
+    position: absolute;
+    right: 0;
+    margin: 0 5%;
+    border-bottom: 1px solid #000;
+}
+
+.hour-box {
+    width: 100%;
+    /* fiveMinPerPx * 6ブロック */
+    position: absolute;
+    right: 0;
+    border-bottom: 1px solid #000;
+}
+
+.timestamp {
+    width: 45px;
+    position: relative;
+    left: -45px;
+    /* fiveMinPerPx * 12ブロック */
+    background-color: #fff;
+}
+
+.schedule_card {
+    position: absolute;
+    width: 84%;
+    right: 0;
+
+    background-color: #fff;
+
+    margin: 0 8%;
+    user-select: none;
+}
+
+.card__wrap {
+    width: 100%;
+    border-radius: 2% 2% 0 0;
+    box-shadow: 4px 4px 10px #000;
+}
+
+.card__content {
+    width: 100%;
+    display: flex;
+    overflow-y: hidden;
+}
+
+.card__resize {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-width: 1px 0;
+    border-style: solid;
+    border-color: rgb(0, 0, 0);
+    border-radius: 0 0 2% 2%;
+}
+
+.card__route {
+    border-left-color: blue;
+    border-left-width: 6px;
+    border-left-style: dotted;
+}
+
+.card__image {
+    width: 33%;
+    height: fit-content;
+}
+
+.card__desc {
+    display: flex;
+}
+
+/* memoStyle.css */
+
+.wrapper {
+    position: relative;
+    top: 1px;
+    left: 330px;
+}
+
+.balls-guruguru {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+}
+
+.ball {
+    width: 50%;
+    height: 20px;
+    position: absolute;
+    top: calc(50% - 10px);
+    transform-origin: 100% 50%;
+    left: 0;
+}
+
+.ball::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #333;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.ball-1::before {
+    animation: ball-guruguru 1s linear 0s infinite;
+}
+
+.ball-2 {
+    transform: rotate(45deg);
+}
+
+.ball-2::before {
+    animation: ball-guruguru 1s linear -0.125s infinite;
+}
+
+.ball-3 {
+    transform: rotate(90deg);
+}
+
+.ball-3::before {
+    animation: ball-guruguru 1s linear -0.25s infinite;
+}
+
+.ball-4 {
+    transform: rotate(135deg);
+}
+
+.ball-4::before {
+    animation: ball-guruguru 1s linear -0.375s infinite;
+}
+
+.ball-5 {
+    transform: rotate(180deg);
+}
+
+.ball-5::before {
+    animation: ball-guruguru 1s linear -0.5s infinite;
+}
+
+.ball-6 {
+    transform: rotate(225deg);
+}
+
+.ball-6::before {
+    animation: ball-guruguru 1s linear -0.625s infinite;
+}
+
+.ball-7 {
+    transform: rotate(270deg);
+}
+
+.ball-7::before {
+    animation: ball-guruguru 1s linear -0.75s infinite;
+}
+
+.ball-8 {
+    transform: rotate(315deg);
+}
+
+.ball-8::before {
+    animation: ball-guruguru 1s linear -0.875s infinite;
+}
+
+@keyframes ball-guruguru {
+    0% {
+        width: 20px;
+        height: 20px;
+        opacity: 1;
+    }
+
+    100% {
+        width: 6px;
+        height: 6px;
+        opacity: .2;
+        margin-left: 7px;
+    }
+}
+
+.addTime {
+    display: flex !important;
+}
+
+.eof {
+    position: relative;
+    top: 5px;
+    line-height: 0;
+}

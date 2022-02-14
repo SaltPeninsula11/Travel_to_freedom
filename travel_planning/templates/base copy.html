@@ -1,0 +1,117 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>{% block head_title %}{% endblock %}</title>
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer">
+    </script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/commonStyle.css' %}">
+    {% block new_style %}{% endblock %}
+
+</head>
+
+<body>
+    <nav id="main_nav" class="navbar navbar-expand-lg navbar-light bg-white shadow">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand h1" href="{% url 'travel_planning:index' %}">
+                TriPlan
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbar-toggler-success" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="align-self-center collapse navbar-collapse flex-fill bg-white d-lg-flex justify-content-lg-between"
+                id="navbar-toggler-success">
+                <div class="flex-fill mx-xl-5 mb-2">
+                    <ul class="nav navbar-nav d-flex justify-content-between mx-xl-5 text-dark">
+                        <li class="nav-item">
+                            <a class="nav-link   rounded-pill px-3" href="{% url 'travel_planning:automap' %}">旅行計画</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link   rounded-pill px-3" href="{% url 'travel_planning:list' %}">旅行検索</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link   rounded-pill px-3" href="">散策モード</a>
+                        </li>
+                </div>
+                <div class="align-self-center d-flex">
+                    <div class="hidden fixed nav-item top-0 right-0 px-6 sm:block">
+                        {% if user.is_authenticated %}
+                        <div class="dropdown">
+                            <div class="d-flex align-items-center hidden-arrow" href="#"
+                                id="navbarDropdownMenuAvatar btnOpenMenu" role="button" data-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="far fa-user-circle fa-2x btn"></i>
+                            </div>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'travel_planning:mylist' %}">保存プラン一覧</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'account_logout' %}">ログアウト</a>
+                                </li>
+                            </ul>
+                        </div>
+                        {% else %}
+                        <a href="{% url 'account_login' %}" class="nav-link   rounded-pill px-3 mb-2"
+                            style="float: left">ログイン</a>
+                        <a href="{% url 'account_signup' %}" class="nav-link   rounded-pill px-3 mb-2"
+                            style="float: left">会員登録</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    {% if messages %}
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="my-div-style w-100">
+                <ul class="messages" style="list-style: none;">
+                    {% for message in messages %}
+                    <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+
+    <!-- <script>
+        $(".openbtn4").click(function () {
+            $(this).toggleClass('active');
+            ToggleMemo();
+        });
+    </script> -->
+    <!-- bootstrap js -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+        </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+        </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+        </script>
+    <!-- <script
+        src="https://maps.googleapis.com/maps/api/js?language=ja&key=AIzaSyDeL7_U--qzVwi963J1elplZfLTCIsduZQ&libraries=places&callback=initMap">
+        </script> -->
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?language=ja&key=AIzaSyAIvDT6aSB8xK3ASJLRpicJ_SZV8KngMLM&libraries=places&callback=initMap"></script> -->
+</body>
+
+</html>
