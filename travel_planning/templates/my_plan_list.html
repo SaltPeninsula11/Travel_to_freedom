@@ -43,7 +43,7 @@
                             </a>
                             {% if plan.is_action %}
                             <a href="{% url 'travel_planning:mydetail' plan.pk %}" class="mr-1">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">編集</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary">閲覧</button>
                             </a>
                             {% else %}
                             <a href="{% url 'travel_planning:share' plan.pk %}">
