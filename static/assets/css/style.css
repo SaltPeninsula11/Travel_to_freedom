@@ -158,7 +158,7 @@ h1, h2, h3, h4, h5, h6 {
 .navbar .dropdown ul {
   display: block;
   position: absolute;
-  left: 0;
+  right: 0; /* 左に寄せる */
   top: 100%;
   margin: 0;
   padding: 10px 0;
