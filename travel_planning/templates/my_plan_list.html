@@ -16,9 +16,9 @@
 <main class="main mt-3">
     <div class="m-2">
         <div class="container">
-            <h1 class="text-center p-2 mb-5 mt-5">保存プラン一覧</h1>
+            <h1 class="text-center p-2 mb-5 mt-5 h2">保存プラン一覧</h1>
             <div class="row">
-                    
+
                 {% for plan in plan_list %}
                 <div class="card mr-auto al-auto mb-4">
                     <div class="card-horizontal">
@@ -32,20 +32,30 @@
                             <p class="card-text">{{ plan.detail }}</p>
                         </div>
                     </div>
+
                     <div class="card-footer">
                         <small class="text-muted">{{ plan.ago }}</small>
-                        
+                        <small class="text-muted">{{ plan.prefecture_name }}</small>
+
                         <div class="btn-group ml-5">
-                            <a href="{% url 'travel_planning:mydetail' plan.pk %}">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">見る</button>
+                            <a href="{% url 'travel_planning:plan-update' plan.pk %}" class="mr-1">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">詳細</button>
                             </a>
-                            {% if not plan.is_action %}
+                            {% if plan.is_action %}
+                            <a href="{% url 'travel_planning:mydetail' plan.pk %}" class="mr-1">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">編集</button>
+                            </a>
+                            {% else %}
                             <a href="{% url 'travel_planning:share' plan.pk %}">
                                 <button type="button" class="btn btn-sm btn-outline-secondary">投稿</button>
                             </a>
                             {% endif %}
+                            <a href="{% url 'travel_planning:mydelete' plan.pk %}" class="mr-1">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">削除</button>
+                            </a>
                         </div>
                     </div>
+
                 </div>
                 {% empty %}
                 保存している計画はありません。
@@ -53,5 +63,28 @@
 
             </div>
         </div>
-    </main>
+</main>
+
+<script>
+    const card_title = document.getElementsByClassName('card-title');
+
+    function omittedContent(string) {
+        // 定数で宣言
+        const MAX_LENGTH = 12;
+
+        // もしstringの文字数がMAX_LENGTH（今回は14）より大きかったら末尾に...を付け足して返す。
+        if (string.length > MAX_LENGTH) {
+
+            // substr(何文字目からスタートするか, 最大値);
+            return string.substr(0, MAX_LENGTH) + '...';
+        }
+        //　文字数がオーバーしていなければそのまま返す
+        return string;
+    }
+
+    for (var i = 0; i < card_title.length; i++) {
+        card_title[i].innerText = `${omittedContent(card_title[i].innerText)}`;
+    }
+</script>
+
 {% endblock %}
