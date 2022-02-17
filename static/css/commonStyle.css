@@ -1,4 +1,3 @@
-
 .search-page {
     display: flex;
     flex: 1;
@@ -41,7 +40,7 @@
 
 .scroll-box {
     overflow-y: scroll;
-    height: 409px;
+    height: calc(100vh - 160px);
 }
 
 .memoSpace {
